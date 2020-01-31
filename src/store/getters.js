@@ -1,1 +1,0 @@
-export const problem = state => state.problem
