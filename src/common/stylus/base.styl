@@ -1,0 +1,18 @@
+@import "variable.styl"
+
+body, html
+  line-height 1
+  font-family 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback'
+  user-select none
+  background-color $background-color-theme
+  font-size $font-size-regular
+  color $font-color
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}

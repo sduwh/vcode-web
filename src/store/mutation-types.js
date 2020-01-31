@@ -1,0 +1,1 @@
+export const SET_PROBLEM = 'SET_PROBLEM'
