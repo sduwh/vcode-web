@@ -32,18 +32,34 @@
       <el-col :md="3" class="logInfo hidden-sm-and-down">
         <template>
           <div style="display:flex;">
-            <div v-if="!isLogin" class="log" @click="login">
+            <div
+              v-if="this.$store.state.user.isLogin == false"
+              class="log"
+              @click="login"
+            >
               <span>Login</span>
             </div>
-            <div v-if="!isLogin" class="log" @click="siginIn">
+            <div
+              v-if="this.$store.state.user.isLogin == false"
+              class="log"
+              @click="siginIn"
+            >
               <span>Sign in</span>
             </div>
 
             <!-- logined -->
-            <div v-if="isLogin" class="log" @click="logout">
-              <span>User</span>
+            <div
+              v-if="this.$store.state.user.isLogin == true"
+              class="log"
+              @click="userCenter"
+            >
+              <span>{{ this.$store.state.user.nickname }}</span>
             </div>
-            <div v-if="isLogin" class="log" @click="logout">
+            <div
+              v-if="this.$store.state.user.isLogin == true"
+              class="log"
+              @click="logout"
+            >
               <span>Logout</span>
             </div>
           </div>
@@ -65,22 +81,23 @@ export default {
         { path: "/rank", name: "Rank", col: 3 },
         { path: "/notice", name: "Notice", col: 4 },
         { path: "/about", name: "About", col: 3 }
-      ],
-      isLogin: false
+      ]
     };
   },
   methods: {
     login() {
-      // this.$message("登录成功!");
-      this.isLogin = !this.isLogin;
+      // this.$store.commit("user/setLoginStatus", true);
+      console.log(this.$store.getters["user/getLoginStatus"]);
       this.$router.push("/login");
     },
     siginIn() {
       this.$router.push("/sign_in");
     },
     logout() {
-      this.isLogin = !this.isLogin;
-    }
+      this.$store.commit("user/setLoginStatus", false);
+      this.$store.commit("user/logout");
+    },
+    userCenter() {}
   }
 };
 </script>

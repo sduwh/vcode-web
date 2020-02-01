@@ -113,6 +113,7 @@ export default {
 .login-form {
   width: 30%;
 }
+
 .login-title {
   font-size: 26px;
 }

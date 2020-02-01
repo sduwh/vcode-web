@@ -36,14 +36,17 @@ import api from "api/api";
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
+      // 检查密码
       if (value === "") {
         callback(new Error("请输入密码"));
+        // } else if (value.length < 10) {
+        //   callback(new Error("密码长度小于10"));
       } else {
         callback();
       }
     };
     var validateAccount = (rule, value, callback) => {
-      console.log(value);
+      // 检查账号
       if (value === "") {
         callback(new Error("请输入账号"));
       } else {
@@ -63,6 +66,7 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      // 登录
       this.$refs[formName].validate(valid => {
         if (valid) {
           let params = {
@@ -70,15 +74,26 @@ export default {
             password: this.ruleForm.pass
           };
           api.login(params).then(res => {
-            console.log(res);
+            let data = res.data;
+            if (data.code == 1) {
+              data = data.data;
+              console.log(data);
+              this.$store.commit("user/setUserInfo", data);
+              this.$store.commit("user/setToken", data.token);
+              this.$store.commit("user/setLoginStatus", true);
+              this.$router.push("/home");
+            } else {
+              this.$message.error(data.message);
+              return false;
+            }
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
     },
     resetForm(formName) {
+      // 重置表单
       this.$refs[formName].resetFields();
     }
   }
