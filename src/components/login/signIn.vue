@@ -1,5 +1,5 @@
 <template>
-  <div id="login" class="login-div">
+  <div id="sign-in" class="login-div">
     <el-form
       :model="ruleForm"
       status-icon
@@ -8,7 +8,7 @@
       label-width="100px"
       class="login-form"
     >
-      <el-form-item><span class="login-title">登录</span></el-form-item>
+      <el-form-item><span class="login-title">注册</span></el-form-item>
       <el-form-item label="账号" prop="account">
         <el-input type="text" v-model="ruleForm.account"></el-input>
       </el-form-item>
@@ -16,6 +16,13 @@
         <el-input
           type="password"
           v-model="ruleForm.pass"
+          autocomplete="off"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-input
+          type="password"
+          v-model="ruleForm.checkPass"
           autocomplete="off"
         ></el-input>
       </el-form-item>
@@ -50,14 +57,25 @@ export default {
         callback();
       }
     };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       ruleForm: {
         pass: "",
+        checkPass: "",
         account: ""
       },
       rules: {
         pass: [{ validator: validatePass, trigger: "blur" }],
-        account: [{ validator: validateAccount, trigger: "blur" }]
+        account: [{ validator: validateAccount, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }]
       }
     };
   },
@@ -67,9 +85,10 @@ export default {
         if (valid) {
           let params = {
             account: this.ruleForm.account,
-            password: this.ruleForm.pass
+            password: this.ruleForm.pass,
+            rePassword: this.ruleForm.checkPass
           };
-          api.login(params).then(res => {
+          api.signIn(params).then(res => {
             console.log(res);
           });
         } else {
