@@ -14,6 +14,10 @@ const ProblemDetail = () => import("components/problems/problem-detail");
 const ConTestDetail = () => import("components/contests/contest-detail");
 const Login = () => import("components/login/login");
 const SignIn = () => import("components/login/signIn");
+const User = () => import("components/user/center");
+const UserEditInfo = () => import("components/user/edit-user-info");
+const UserMain = () => import("components/user/user");
+const UserChangePassword = () => import("components/user/change-password");
 
 export default new Router({
   mode: "history",
@@ -81,6 +85,31 @@ export default new Router({
           path: "/sign_in",
           name: "SiginIn",
           component: SignIn
+        },
+        {
+          path: "/user",
+          name: "User",
+          component: UserMain,
+          redirect: {
+            path: "/user/center"
+          },
+          children: [
+            {
+              path: "center",
+              name: "UserCenter",
+              component: User
+            },
+            {
+              path: "edit",
+              name: "EditUserInfo",
+              component: UserEditInfo
+            },
+            {
+              path: "change-password",
+              name: "ChangePassword",
+              component: UserChangePassword
+            }
+          ]
         }
       ]
     }

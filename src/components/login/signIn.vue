@@ -89,10 +89,19 @@ export default {
             rePassword: this.ruleForm.checkPass
           };
           api.signIn(params).then(res => {
-            console.log(res);
+            let data = res.data;
+            if (data.code == 1) {
+              data = data.data;
+              this.$store.commit("user/setUserInfo", data);
+              this.$store.commit("user/setToken", data.token);
+              this.$store.commit("user/setLoginStatus", true);
+              this.$router.push("/home");
+            } else {
+              this.$message.error(data.message);
+              return false;
+            }
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

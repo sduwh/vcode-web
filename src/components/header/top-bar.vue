@@ -40,7 +40,7 @@
               <span>Login</span>
             </div>
             <div
-              v-if="this.$store.state.user.isLogin == false"
+              v-if="this.$store.state.user.isLogin === false"
               class="log"
               @click="siginIn"
             >
@@ -49,14 +49,14 @@
 
             <!-- logined -->
             <div
-              v-if="this.$store.state.user.isLogin == true"
+              v-if="this.$store.state.user.isLogin === true"
               class="log"
               @click="userCenter"
             >
               <span>{{ this.$store.state.user.nickname }}</span>
             </div>
             <div
-              v-if="this.$store.state.user.isLogin == true"
+              v-if="this.$store.state.user.isLogin === true"
               class="log"
               @click="logout"
             >
@@ -96,8 +96,11 @@ export default {
     logout() {
       this.$store.commit("user/setLoginStatus", false);
       this.$store.commit("user/logout");
+      this.$router.push("/home");
     },
-    userCenter() {}
+    userCenter() {
+      this.$router.push("/user");
+    }
   }
 };
 </script>

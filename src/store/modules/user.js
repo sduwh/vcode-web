@@ -5,13 +5,18 @@ const state = {
     : null,
   email: window.sessionStorage.getItem("email")
     ? window.sessionStorage.getItem("email")
-    : null,
+    : "你还没有设置邮箱～",
   token: window.sessionStorage.getItem("token")
     ? window.sessionStorage.getItem("token")
     : null,
-  isLogin: window.sessionStorage.getItem("isLogin")
-    ? window.sessionStorage.getItem("isLogin")
-    : false
+  account: window.sessionStorage.getItem("account")
+    ? window.sessionStorage.getItem("account")
+    : null,
+  isLogin: JSON.parse(
+    window.sessionStorage.getItem("isLogin")
+      ? window.sessionStorage.getItem("isLogin")
+      : false
+  )
 };
 
 const getters = {
@@ -26,6 +31,9 @@ const getters = {
   },
   getLoginStatus: state => {
     return state.isLogin;
+  },
+  getAccount: state => {
+    return state.account;
   }
 };
 
@@ -44,10 +52,19 @@ const mutations = {
   setEmail(state, email) {
     if (email == undefined) {
       state.email = "";
-      window.sessionStorage.setItem("email", "");
+      window.sessionStorage.setItem("email", "你还没有设置邮箱～");
     } else {
       state.email = email;
       window.sessionStorage.setItem("email", email);
+    }
+  },
+  setAccount(state, account) {
+    if (account == undefined) {
+      state.account = "";
+      window.sessionStorage.setItem("account", "");
+    } else {
+      state.account = account;
+      window.sessionStorage.setItem("account", account);
     }
   },
   setToken(state, token) {
@@ -57,6 +74,7 @@ const mutations = {
   setUserInfo(state, data) {
     mutations.setNickname(state, data.nickname);
     mutations.setEmail(state, data.email);
+    mutations.setAccount(state, data.account);
   },
   setLoginStatus(state, status) {
     state.isLogin = status;
