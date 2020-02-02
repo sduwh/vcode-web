@@ -9,9 +9,21 @@
       <el-col :sm="24" :md="16" class="nav-wrap">
         <div class="nav">
           <el-row type="flex" justify="space-around">
-            <el-menu active-text-color="#409EFF" class="el-menu-demo" mode="horizontal" :default-active="this.$route.path" router>
-              <el-col :span="navInfo.col" v-for="(navInfo, index) in nav" :key="index">
-                <el-menu-item :index="navInfo.path" class="grid-content"><span>{{ navInfo.name }}</span></el-menu-item>
+            <el-menu
+              active-text-color="#409EFF"
+              class="el-menu-demo"
+              mode="horizontal"
+              :default-active="this.$route.path"
+              router
+            >
+              <el-col
+                :span="navInfo.col"
+                v-for="(navInfo, index) in nav"
+                :key="index"
+              >
+                <el-menu-item :index="navInfo.path" class="grid-content"
+                  ><span>{{ navInfo.name }}</span></el-menu-item
+                >
               </el-col>
             </el-menu>
           </el-row>
@@ -19,14 +31,39 @@
       </el-col>
       <el-col :md="3" class="logInfo hidden-sm-and-down">
         <template>
-          <div v-if="!isLogin" class="log" @click="login">
-            <span>Login</span>
-          </div>
-          <div v-if="isLogin" class="log" @click="logout">
-            <span>User</span>
+          <div style="display:flex;">
+            <div
+              v-if="this.$store.state.user.isLogin == false"
+              class="log"
+              @click="login"
+            >
+              <span>Login</span>
+            </div>
+            <div
+              v-if="this.$store.state.user.isLogin === false"
+              class="log"
+              @click="siginIn"
+            >
+              <span>Sign in</span>
+            </div>
+
+            <!-- logined -->
+            <div
+              v-if="this.$store.state.user.isLogin === true"
+              class="log"
+              @click="userCenter"
+            >
+              <span>{{ this.$store.state.user.nickname }}</span>
+            </div>
+            <div
+              v-if="this.$store.state.user.isLogin === true"
+              class="log"
+              @click="logout"
+            >
+              <span>Logout</span>
+            </div>
           </div>
         </template>
-        
       </el-col>
     </el-row>
   </div>
@@ -37,30 +74,38 @@ export default {
   data() {
     return {
       nav: [
-        { path: '/home', name: 'Home', col: 3 },
-        { path: '/problems', name: 'Problems', col: 4 },
-        { path: '/contests', name: 'Contests', col: 4 },
-        { path: '/status', name: 'Status', col: 3 },
-        { path: '/rank', name: 'Rank', col: 3 },
-        { path: '/notice', name: 'Notice', col: 4 },
-        { path: '/about', name: 'About', col: 3 },
-      ],
-      isLogin: false,
-    }
+        { path: "/home", name: "Home", col: 3 },
+        { path: "/problems", name: "Problems", col: 4 },
+        { path: "/contests", name: "Contests", col: 4 },
+        { path: "/status", name: "Status", col: 3 },
+        { path: "/rank", name: "Rank", col: 3 },
+        { path: "/notice", name: "Notice", col: 4 },
+        { path: "/about", name: "About", col: 3 }
+      ]
+    };
   },
   methods: {
     login() {
-      this.$message('登录成功! 每日登录积分 + 2')
-      this.isLogin = !this.isLogin
+      // this.$store.commit("user/setLoginStatus", true);
+      console.log(this.$store.getters["user/getLoginStatus"]);
+      this.$router.push("/login");
+    },
+    siginIn() {
+      this.$router.push("/sign_in");
     },
     logout() {
-      this.isLogin = !this.isLogin
+      this.$store.commit("user/setLoginStatus", false);
+      this.$store.commit("user/logout");
+      this.$router.push("/home");
     },
-  },
+    userCenter() {
+      this.$router.push("/user");
+    }
+  }
 };
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl'
   #top-bar
     padding 0 50px
@@ -85,7 +130,7 @@ export default {
           // border 1px solid yellow
           padding 15px 0
           .el-menu-demo
-            width 100%
+            width 90%
             border none
             .grid-content
               width 100%
@@ -135,5 +180,4 @@ export default {
             color #409EFF
             transition transform .3s ease
             transform scale3d(1.2, 1, 1)
-      
 </style>
