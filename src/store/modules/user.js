@@ -84,9 +84,11 @@ const mutations = {
     mutations.setNickname(state, "");
     mutations.setEmail(state, "");
     mutations.setToken(state, "");
+    mutations.setAccount(state, "");
     window.sessionStorage.removeItem("nickname");
     window.sessionStorage.removeItem("email");
     window.sessionStorage.removeItem("token");
+    window.sessionStorage.removeItem("account");
     mutations.setLoginStatus(state, false);
   }
 };
