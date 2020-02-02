@@ -42,6 +42,7 @@
 
 <script>
 import CenterWrap from "./center-wrap";
+
 export default {
   components: {
     CenterWrap
