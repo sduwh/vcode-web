@@ -25,7 +25,7 @@
               >
             </div>
           </el-card>
-          <el-card class="info-card">
+          <el-card class="info-card" style="width:25%">
             <p class="words">
               愿中国青年都摆脱冷气，只是向上走，不必听自暴自弃者流的话。能
               做事的做事，能发声的发声。有一分热，发一分光，就令萤火一般，也可以在黑暗里发一点
@@ -80,7 +80,7 @@ export default {
 }
 
 .info-card {
-  width: 45%;
+  width: 55%;
 }
 
 .info-card-item {
