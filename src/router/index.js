@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 Vue.use(Router);
+
 const VMain = () => import("views/v-main");
 const Home = () => import("components/home/home");
 const Problems = () => import("components/problems/problems");
@@ -19,10 +20,26 @@ const UserEditInfo = () => import("components/user/edit-user-info");
 const UserMain = () => import("components/user/user");
 const UserChangePassword = () => import("components/user/change-password");
 
+const AdminMain = () => import("views/v-admin");
+const AdminIndex = () => import("components/admin/pages/index");
+
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/admin",
+      name: "Admin",
+      component: AdminMain,
+      redirect: "/admin/index",
+      children: [
+        {
+          path: "index",
+          name: "AdminIndex",
+          component: AdminIndex
+        }
+      ]
+    },
     {
       path: "/",
       name: "VMain",
