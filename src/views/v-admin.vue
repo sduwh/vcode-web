@@ -5,7 +5,7 @@
         <AdminAside></AdminAside>
       </el-aside>
       <el-container>
-        <el-header style="  background: #99a9bf;">
+        <el-header style="background: #545c64;">
           <AdminHeader></AdminHeader>
         </el-header>
         <el-main>

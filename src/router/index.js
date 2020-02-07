@@ -22,6 +22,10 @@ const UserChangePassword = () => import("components/user/change-password");
 
 const AdminMain = () => import("views/v-admin");
 const AdminIndex = () => import("components/admin/pages/index");
+const AdminAdmin = () => import("components/admin/pages/admin");
+const AdminUser = () => import("components/admin/pages/user");
+const AdminProblem = () => import("components/admin/pages/problem");
+const AdminContest = () => import("components/admin/pages/contest");
 
 export default new Router({
   mode: "history",
@@ -37,6 +41,26 @@ export default new Router({
           path: "index",
           name: "AdminIndex",
           component: AdminIndex
+        },
+        {
+          path: "admin",
+          name: "AdminAdmin",
+          component: AdminAdmin
+        },
+        {
+          path: "user",
+          name: "AdminUser",
+          component: AdminUser
+        },
+        {
+          path: "problem",
+          name: "AdminProblem",
+          component: AdminProblem
+        },
+        {
+          path: "contest",
+          name: "AdminContest",
+          component: AdminContest
         }
       ]
     },
