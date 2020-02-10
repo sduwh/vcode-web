@@ -33,17 +33,17 @@
 </template>
 
 <script>
-import CenterWrap from "components/user/center-wrap";
+import CenterWrap from 'components/user/center-wrap';
 
 export default {
   components: {
-    CenterWrap
+    CenterWrap,
   },
   data() {
     return {
-      title: "About"
+      title: 'About',
     };
-  }
+  },
 };
 </script>
 
