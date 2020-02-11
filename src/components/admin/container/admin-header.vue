@@ -12,10 +12,10 @@
           @select="handleSelect"
           background-color="#545c64"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="white"
         >
           <el-submenu index="1">
-            <template slot="title">我的工作台</template>
+            <template slot="title">More</template>
             <el-menu-item index="2-1">返回首页</el-menu-item>
             <el-menu-item index="2-2">退出</el-menu-item>
           </el-submenu>
@@ -61,6 +61,7 @@ export default {
   justify-content: flex-end;
   align-items: center;
   height: 100%;
+  color: white;
 }
 
 .header-user div {
@@ -69,6 +70,6 @@ export default {
 
 .header-submenu {
   background: #99a9bf;
-  font: black;
+  font: white;
 }
 </style>

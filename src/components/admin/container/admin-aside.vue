@@ -1,7 +1,12 @@
 <template>
   <div id="aside" class="aside">
-    <el-menu style="height:100%" router="true">
-      <el-submenu index="1">
+    <el-menu
+      style="height:100%"
+      :router="true"
+      :default-active="activeIndex"
+      @select="handleSelect"
+    >
+      <el-submenu index="user-menu">
         <template slot="title"><i class="el-icon-user"></i>User</template>
         <el-menu-item index="admin">管理员</el-menu-item>
         <el-menu-item index="user">用户</el-menu-item>
@@ -17,7 +22,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      activeIndex: this.$store.state.admin.activeIndex,
+    };
+  },
+  methods: {
+    handleSelect(val) {
+      this.$store.commit('admin/setActiveIndex', val);
+    },
+  },
+};
 </script>
 
 <style scoped>
