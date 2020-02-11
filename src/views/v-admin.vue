@@ -11,27 +11,22 @@
         <el-main>
           <AdminMain></AdminMain>
         </el-main>
-        <el-footer style="height:120px">
-          <AdminFooter></AdminFooter>
-        </el-footer>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <script>
-import AdminAside from "components/admin/container/admin-aside";
-import AdminFooter from "components/admin/container/admin-footer";
-import AdminHeader from "components/admin/container/admin-header";
-import AdminMain from "components/admin/container/admin-main";
+import AdminAside from 'components/admin/container/admin-aside';
+import AdminHeader from 'components/admin/container/admin-header';
+import AdminMain from 'components/admin/container/admin-main';
 
 export default {
   components: {
     AdminAside,
-    AdminFooter,
     AdminHeader,
-    AdminMain
-  }
+    AdminMain,
+  },
 };
 </script>
 

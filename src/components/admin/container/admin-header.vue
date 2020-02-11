@@ -29,17 +29,17 @@
 export default {
   data() {
     return {
-      activeIndex: "1"
+      activeIndex: '1',
     };
   },
   methods: {
-    logout: function() {
-      console.log("logout");
+    logout: () => {
+      console.log('logout');
     },
     handleSelect: (key, keyPath) => {
       console.log(key, keyPath);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -53,6 +53,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   height: 100%;
+  color: white;
 }
 
 .header-user {
