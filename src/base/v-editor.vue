@@ -3,124 +3,32 @@
     <div class="main">
       <div class="e-tab">
         <div class="language">
-          <el-select size="mini" v-model="value">
+          <el-select size="mini" v-model="lableValue">
             <el-option
               v-for="item in language"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </div>
       </div>
       <div class="e-panel">
-          <div class="virtual-header">virtual header</div>
-          <div class="editor">
-            <pre v-highlightjs>
-              <code>
-class BinarySearchTree {
-
-  constructor() {
-    this.root = null;
-  }
-
-  insert(data) {
-    let n = new Node(data, null, null);
-    if (!this.root) {
-      return this.root = n;
-    }
-    let currentNode = this.root;
-    let parent = null;
-    while (1) {
-      parent = currentNode;
-      if (data < currentNode.data) {
-        currentNode = currentNode.left;
-        if (currentNode === null) {
-          parent.left = n;
-          break;
-        }
-      } else {
-        currentNode = currentNode.right;
-        if (currentNode === null) {
-          parent.right = n;
-          break;
-        }
-      }
-    }
-  }
-
-  remove(data) {
-    this.root = this.removeNode(this.root, data)
-  }
-
-  removeNode(node, data) {
-    if (node == null) {
-      return null;
-    }
-
-    if (data == node.data) {
-      // no children node
-      if (node.left == null && node.right == null) {
-        return null;
-      }
-      if (node.left == null) {
-        return node.right;
-      }
-      if (node.right == null) {
-        return node.left;
-      }
-
-      let getSmallest = function(node) {
-        if(node.left === null && node.right == null) {
-          return node;
-        }
-        if(node.left != null) {
-          return node.left;
-        }
-        if(node.right !== null) {
-          return getSmallest(node.right);
-        }
-
-      }
-      let temNode = getSmallest(node.right);
-      node.data = temNode.data;
-      node.right = this.removeNode(temNode.right,temNode.data);
-      return node;
-
-    } else if (data < node.data) {
-      node.left = this.removeNode(node.left,data);
-      return node;
-    } else {
-      node.right = this.removeNode(node.right,data);
-      return node;
-    }
-  }
-
-  find(data) {
-    var current = this.root;
-    while (current != null) {
-      if (data == current.data) {
-        break;
-      }
-      if (data < current.data) {
-        current = current.left;
-      } else {
-        current = current.right
-      }
-    }
-    return current.data;
-  }
-
-}
-
-module.exports = BinarySearchTree;
-              </code>
-            </pre>
-          </div>
+        <div class="virtual-header">virtual header</div>
+        <div class="editor">
+          <codemirror :value="code" ref="myEditor" :options="editorOption">
+          </codemirror>
+        </div>
       </div>
     </div>
     <div class="footer">
-      <div class="console-btn"><el-button size="mini" @click='changeIsConsoleShow'>Console</el-button></div>
+      <div class="console-btn">
+        <el-button size="mini" @click="changeIsConsoleShow">Console</el-button>
+        <el-button size="mini" type="primary" @click="handleSubmitClick"
+          >Submit</el-button
+        >
+      </div>
       <div class="console-body" v-show="isConsoleShow">
         <div class="result">['a', 'b', 'c']</div>
       </div>
@@ -129,101 +37,129 @@ module.exports = BinarySearchTree;
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        value: 'Javascript',
-        language: [{
+import { codemirror } from 'vue-codemirror-lite';
+
+require('codemirror/mode/python/python');
+require('codemirror/mode/clike/clike');
+
+require('codemirror/addon/hint/show-hint.js');
+require('codemirror/addon/hint/show-hint.css');
+
+export default {
+  components: {
+    codemirror,
+  },
+  mounted() {
+    this.editor.focus();
+    this.editor.setSize('auto', 'auto');
+  },
+  data() {
+    return {
+      lableValue: 'C++',
+      language: [
+        {
           label: 'C++',
-          value: 'C++',
-        }, {
+          value: 'text/x-c++src',
+        },
+        {
           label: 'Java',
-          value: 'Java',
-        },{
-          label: 'Python',
-          value: 'Python'
-        },{
+          value: 'text/x-java',
+        },
+        {
           label: 'Python3',
-          value: 'Python3',
-        },{
+          value: 'python',
+        },
+        {
           label: 'C',
-          value: 'C',
-        },{
-          label: 'C#',
-          value: 'C#',        
-        },{
-          label: 'Javascript',
-          value: 'Javascript',
-        },{
-          label: 'Go',
-          value: 'Go',
-        },{
-          label: 'PHP',
-          value: 'PHP'
-        }],
-        isConsoleShow: false,
+          value: 'text/x-csrc',
+        },
+      ],
+      isConsoleShow: false,
+      code: '',
+    };
+  },
+  methods: {
+    changeIsConsoleShow() {
+      this.isConsoleShow = !this.isConsoleShow;
+    },
+    handleSubmitClick() {
+      // 如果代码为空，则不发起网络请求
+      if (this.editor.getValue().length == 0) {
+        this.$message({ message: '请输入代码', type: 'warning' });
+      } else {
+        console.log('submit');
       }
     },
-    methods: {
-      changeIsConsoleShow() {
-        this.isConsoleShow = !this.isConsoleShow
-      },
+  },
+  computed: {
+    editor() {
+      return this.$refs.myEditor.editor;
     },
-  }
+    editorOption() {
+      return {
+        mode: this.lableValue,
+        tabSize: 2,
+        lineNumbers: true,
+        lineWrapping: true,
+        viewportMargin: Infinity,
+        extraKeys: { 'Ctrl-Space': 'autocomplete' },
+      };
+    },
+  },
+};
 </script>
-
-<style scoped lang='stylus' rel='stylesheet/stylus'>
-  @import '~common/stylus/variable.styl'
-  @import '~common/stylus/mixin.styl'
-    #v-editor
+<style scoped lang="stylus" rel="stylesheet/stylus">
+@import '~common/stylus/variable.styl'
+@import '~common/stylus/mixin.styl'
+  #v-editor
+    width 100%
+    height 100%
+    // border 1px solid #000
+    .main
+      position relative
       width 100%
-      height 100%
-      // border 1px solid #000
-      .main
-        position relative
+      height  calc(100vh - 100px - 40px)
+      // background-color gray
+      .e-tab
+        position absolute
+        top 0
+        left 0
         width 100%
-        height  calc(100vh - 100px - 40px)
-        // background-color gray
-        .e-tab
-          position absolute
-          top 0
-          left 0
-          width 100%
-          border 1px solid #e4e7ed
-          border-right none
-          border-left none
-          background-color #fff
-          .language
-            display inline-block
-            padding 4px 10px 5px
-        .e-panel
-          width 100%
-          height 100%
-          scroll-y()
-          .virtual-header
-            width 100%
-            height 39px
-      .footer
-        position relative
-        width 100%
-        height 40px
-        border-top 1px solid #e4e7ed
-        line-height 40px
-        .console-btn
+        border 1px solid #e4e7ed
+        border-right none
+        border-left none
+        background-color #fff
+        .language
           display inline-block
-        .console-body
-          position absolute
+          padding 4px 10px 5px
+      .e-panel
+        width 100%
+        height 100%
+        scroll-y()
+        .virtual-header
           width 100%
-          top -200px
-          left 0
-          min-height 200px
-          background-color #fff
-          border-top 1px solid #e4e7ed
-          .result
-            width 90%
-            height 170px
-            margin 15px auto
-            border 1px solid #e4e7ed
-            border-radius 5px
-            padding 0 10px
+          height 39px
+    .footer
+      position relative
+      width 100%
+      height 40px
+      border-top 1px solid #e4e7ed
+      line-height 40px
+      .console-btn
+        display inline-block
+      .console-body
+        position absolute
+        width 100%
+        top -200px
+        left 0
+        min-height 200px
+        background-color #fff
+        border-top 1px solid #e4e7ed
+        .result
+          width 90%
+          height 170px
+          margin 15px auto
+          border 1px solid #e4e7ed
+          border-radius 5px
+          padding 0 10px
 </style>

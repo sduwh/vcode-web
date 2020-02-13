@@ -6,8 +6,8 @@
       </el-col>
       <el-col :span="14">
         <v-editor></v-editor>
-      </el-col> </el-row
-    >1
+      </el-col>
+    </el-row>
   </div>
 </template>
 

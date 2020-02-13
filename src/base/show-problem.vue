@@ -2,15 +2,15 @@
   <div id="show-problem">
     <div class="main">
       <div class="v-tab">
-        <span @click="changeTab" class="description" ref="description"
-          ><i class="el-icon-reading"></i> Description</span
-        >
-        <span @click="changeTab" class="submission" ref="submission"
-          ><i class="el-icon-timer"></i> Submission</span
-        >
-        <span @click="changeTab" class="discuss" ref="discuss"
-          ><i class="el-icon-chat-line-round"></i> Discuss</span
-        >
+        <span @click="changeTab" class="description" ref="description">
+          <i class="el-icon-reading"></i> Description
+        </span>
+        <span @click="changeTab" class="submission" ref="submission">
+          <i class="el-icon-timer"></i> Submission
+        </span>
+        <!-- <span @click="changeTab" class="discuss" ref="discuss">
+          <i class="el-icon-chat-line-round"></i> Discuss
+        </span> -->
       </div>
       <div class="v-panel">
         <div class="virtual-header">virtual header</div>
@@ -30,15 +30,15 @@
 <script>
 import ProblemDesc from 'base/problem-desc';
 import TableWrap from 'base/table-wrap';
-import Discuss from 'components/discuss/discuss';
-import Status from 'components/status/status';
+// import Discuss from 'components/discuss/discuss';
+import ProblemStatus from 'components/status/problem-status';
 
 export default {
   components: {
     ProblemDesc,
     TableWrap,
-    Discuss,
-    Status,
+    // Discuss,
+    ProblemStatus,
   },
   data() {
     return {
@@ -56,11 +56,11 @@ export default {
           this.componentId = ProblemDesc;
           break;
         case 'submission':
-          this.componentId = Status;
+          this.componentId = ProblemStatus;
           break;
-        case 'discuss':
-          this.componentId = Discuss;
-          break;
+        // case 'discuss':
+        //   this.componentId = Discuss;
+        //   break;
         default:
           this.componentId = ProblemDesc;
           break;
@@ -69,7 +69,7 @@ export default {
     changeColor(className) {
       this.$refs.description.style.color = '#000';
       this.$refs.submission.style.color = '#000';
-      this.$refs.discuss.style.color = '#000';
+      // this.$refs.discuss.style.color = '#000';
       this.$refs[className].style.color = '#409EFF';
     },
   },

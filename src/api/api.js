@@ -5,7 +5,7 @@ const api = {
     return axios.get('/problem/list', { params });
   },
   getProblem(params) {
-    return axios.get('/problem', params);
+    return axios.get('/problem/detail', { params });
   },
   getContests(params) {
     return axios.get('/contests', params);
