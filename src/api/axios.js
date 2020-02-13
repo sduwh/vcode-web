@@ -1,19 +1,19 @@
-import axios from "axios";
-import { baseUrl } from "./config";
+import axios from 'axios';
+import { baseAPI } from './config';
 
-let instance = axios.create({
-  baseURL: baseUrl,
+const instance = axios.create({
+  baseURL: baseAPI,
   headers: {
-    "Content-Type": "application/json"
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 instance.interceptors.request.use(
-  function(config) {
+  config => {
     // 在发送请求之前做些什么
     return config;
   },
-  function(error) {
+  error => {
     // 对请求错误做些什么
     return Promise.reject(error);
   }
