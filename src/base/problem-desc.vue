@@ -5,9 +5,9 @@
       <span class="name">{{ problemInfo.title }}</span>
     </div>
     <div class="action">
-      <span class="level">
+      <!-- <span class="level">
         <el-tag size="mini" type="info">{{ firstTag }}</el-tag>
-      </span>
+      </span> -->
       <span class="good"></span>
       <span class="bad"></span>
       <span class="like"></span>
@@ -75,6 +75,9 @@ import { mapGetters } from 'vuex';
 import api from 'api/api';
 
 export default {
+  mounted() {
+    console.log(this.$route.params.id);
+  },
   data() {
     return {
       problemInfo: {},
@@ -82,11 +85,11 @@ export default {
   },
   computed: {
     ...mapGetters(['problem']),
-    firstTag() {
-      const tmp = this.problemInfo.tags;
-      // console.log(tmp)
-      return tmp[0];
-    },
+    // firstTag() {
+    //   const tmp = this.problemInfo.tags;
+    //   // console.log(tmp)
+    //   return tmp[0];
+    // },
   },
   created() {
     api.getProblem('').then(res => {

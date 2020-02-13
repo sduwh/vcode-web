@@ -12,13 +12,14 @@
 </template>
 
 <script>
-import ShowProblem from "base/show-problem";
-import VEditor from "base/v-editor";
+import ShowProblem from 'base/show-problem';
+import VEditor from 'base/v-editor';
+
 export default {
   components: {
     ShowProblem,
-    VEditor
-  }
+    VEditor,
+  },
 };
 </script>
 
