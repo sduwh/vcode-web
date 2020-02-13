@@ -3,10 +3,18 @@
     <el-card class="box-card">
       <div slot="header" class="header clearfix">
         <span class="desc">Tags</span>
-        <el-button style="float: right; padding: 3px 0" type="text">Pick One</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text"
+          >Pick One</el-button
+        >
       </div>
       <div class="tag-wrap">
-        <el-tag size="small" type="info" v-for="tag in tagsInfo" :key="tag.if">{{ tag.name }}</el-tag>
+        <el-tag
+          size="small"
+          type="info"
+          v-for="tag in tagsInfo"
+          :key="tag.name"
+          >{{ tag.name }}</el-tag
+        >
       </div>
     </el-card>
   </div>
@@ -23,7 +31,8 @@ export default {
 };
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
+
 @import '~common/stylus/variable.styl'
   #tags
     width 100%

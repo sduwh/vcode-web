@@ -2,7 +2,11 @@
   <div id="problems">
     <el-row type="flex" justify="sapce-around">
       <el-col :sm="24" :md="18">
-        <table-wrap :title="title" :paginationInfo="paginationInfo">
+        <table-wrap
+          :title="title"
+          :paginationInfo="paginationInfo"
+          @handleChangePage="getProblems($event, pageNum)"
+        >
           <template #mode>
             <div class="mode">
               <el-tag type="info" size="mini">Upgrade</el-tag>
@@ -45,15 +49,11 @@ export default {
       this.tagsInfo = res.data.data;
     });
     // 获取题目数据
-    api.getProblems('').then(res => {
-      this.tableInfoCnt = res.data.data.total;
-      this.solveTableInfo(res.data.data.results);
-      this.initPaginationInfo();
-      this.loadingStatus = false;
-    });
+    this.getProblems(1);
   },
   data() {
     return {
+      pageNum: 1,
       title: 'Problem List',
       actionInfo: {
         difficulty: ['all', 'low', 'mid', 'high'],
@@ -62,7 +62,7 @@ export default {
       tagsInfo: [],
       tableInfo: [],
       tableInfoCnt: 0,
-      tableLimit: 20,
+      tableLimit: 10,
       paginationInfo: {
         // 总条目数：对应 this.tableInfoCnt
         total: 0,
@@ -77,22 +77,22 @@ export default {
   methods: {
     // 处理返回的 problems 数据
     solveTableInfo(tableInfo) {
-      const len =
-        this.tableLimit < this.tableInfoCnt
-          ? this.tableLimit
-          : this.tableInfoCnt;
+      this.tableInfo = [];
+      const len = tableInfo.length;
       for (let i = 0; i < len; i++) {
         // eslint-disable-next-line prefer-object-spread
         const obj = Object.assign({}, tableInfo[i], {
           ac_rate:
             // eslint-disable-next-line prefer-template
-            (tableInfo[i].submission_number === 0
+            (tableInfo[i].submissionNumber === 0
               ? 0
               : (
-                  tableInfo[i].accepted_number / tableInfo[i].submission_number
+                  tableInfo[i].acceptedNumber / tableInfo[i].submissionNumber
                 ).toFixed(2)) + '%',
-          tagShow: tableInfo[i].tags[0],
+          // tagShow: tableInfo[i].tags[0],
         });
+
+        obj.id = obj.originId;
         this.tableInfo.push(obj);
       }
     },
@@ -100,6 +100,23 @@ export default {
     initPaginationInfo() {
       this.paginationInfo.total = this.tableInfoCnt;
       this.paginationInfo.page_size = this.tableLimit;
+    },
+    getProblems(pageNum) {
+      api
+        .getProblems({
+          page: pageNum,
+          size: 10,
+        })
+        .then(res => {
+          let { data } = res;
+          if (data.code === 1) {
+            data = data.data;
+            this.tableInfoCnt = data.total;
+            this.solveTableInfo(data.problem_list);
+            this.initPaginationInfo();
+            this.loadingStatus = false;
+          }
+        });
     },
   },
 };

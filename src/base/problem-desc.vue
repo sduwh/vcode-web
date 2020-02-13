@@ -1,13 +1,13 @@
 <template>
   <div id="problem-desc">
     <div class="title">
-      <span class="id">{{ `${problemInfo._id}.` }}</span>
+      <span class="id">{{ problemInfo.originId }}.</span>
       <span class="name">{{ problemInfo.title }}</span>
     </div>
     <div class="action">
-      <span class="level">
+      <!-- <span class="level">
         <el-tag size="mini" type="info">{{ firstTag }}</el-tag>
-      </span>
+      </span> -->
       <span class="good"></span>
       <span class="bad"></span>
       <span class="like"></span>
@@ -17,11 +17,11 @@
       <div class="in-out">
         <div class="in">
           <div class="in-title">Input</div>
-          <div class="in-desc" v-html="problemInfo.input_description"></div>
+          <div class="in-desc" v-html="problemInfo.sampleInput"></div>
         </div>
         <div class="out">
           <div class="out-title">Ouput</div>
-          <div class="out-desc" v-html="problemInfo.output_description"></div>
+          <div class="out-desc" v-html="problemInfo.sampleOutput"></div>
         </div>
       </div>
       <div
@@ -41,29 +41,29 @@
           </div>
         </div>
       </div>
-      <div class="hint" v-if="problemInfo.hint != ''">
+      <!-- <div class="hint" v-if="problemInfo.hint != ''">
         <div class="hint-title">Hint</div>
         <div class="hint-body" v-html="problemInfo.hint"></div>
-      </div>
-      <div class="source" v-if="problemInfo.source">
+      </div> -->
+      <!-- <div class="source" v-if="problemInfo.source">
         <div class="source-title">Source</div>
         <div class="source-body">{{ problemInfo.source }}</div>
-      </div>
+      </div> -->
       <div class="submit">
         <div class="accept">
           <span>Accept</span>
-          <span>{{ problemInfo.accepted_number }}</span>
+          <span>{{ problemInfo.acceptedNumber }}</span>
         </div>
         <span class="line">|</span>
         <div class="submission">
           <span>Submission</span>
-          <span>{{ problemInfo.submission_number }}</span>
+          <span>{{ problemInfo.submissionNumber }}</span>
         </div>
       </div>
       <div class="contributor">
         <div class="contributor-title">Contributor</div>
-        <div class="contributor-body" v-if="problemInfo.contributor">
-          {{ problemInfo.contributor }}
+        <div class="contributor-body" v-if="problemInfo.author">
+          {{ problemInfo.author }}
         </div>
       </div>
     </div>
@@ -75,6 +75,9 @@ import { mapGetters } from 'vuex';
 import api from 'api/api';
 
 export default {
+  mounted() {
+    console.log(this.$route.params.id);
+  },
   data() {
     return {
       problemInfo: {},
@@ -82,16 +85,25 @@ export default {
   },
   computed: {
     ...mapGetters(['problem']),
-    firstTag() {
-      const tmp = this.problemInfo.tags;
-      // console.log(tmp)
-      return tmp[0];
-    },
+    // firstTag() {
+    //   const tmp = this.problemInfo.tags;
+    //   // console.log(tmp)
+    //   return tmp[0];
+    // },
   },
   created() {
-    api.getProblem('').then(res => {
-      this.problemInfo = res.data.data;
-    });
+    api
+      .getProblem({
+        originId: this.$route.params.id,
+      })
+      .then(res => {
+        console.log(res);
+        let { data } = res;
+        if (data.code === 1) {
+          data = data.data;
+          this.problemInfo = data;
+        }
+      });
   },
 };
 </script>

@@ -8,17 +8,22 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column prop="id" label="ID"> </el-table-column>
       <el-table-column prop="result" label="Status">
         <template slot-scope="scope">
           <div slot="reference">
-            <el-tag size="small" :type="statusTag(scope.row.result)">{{ solveStatus(scope.row) }}</el-tag>
+            <el-tag size="small" :type="statusTag(scope.row.result)">{{
+              solveStatus(scope.row)
+            }}</el-tag>
           </div>
         </template>
       </el-table-column>
       <el-table-column prop="problem" label="Problem">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'ProblemDetail', params: {id: scope.row.problem} }">{{ scope.row.problem }}</router-link>
+          <router-link
+            :to="{ name: 'ProblemDetail', params: { id: scope.row.problem } }"
+            >{{ scope.row.problem }}</router-link
+          >
         </template>
       </el-table-column>
       <el-table-column prop="statistic_info.time_cost" label="Time">
@@ -42,56 +47,79 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      tableInfo: {
-        type: Array,
-        required: true,
-      },
-      tableLimit: {
-        type: Number,
-        default: 20,
+export default {
+  props: {
+    tableInfo: {
+      type: Array,
+      required: true,
+    },
+    tableLimit: {
+      type: Number,
+      default: 20,
+    },
+  },
+  methods: {
+    solveTime(row) {
+      return row.statistic_info.time_cost === undefined
+        ? '--'
+        : `${row.statistic_info.time_cost}ms`;
+    },
+    solveStatus(row) {
+      let map = {
+        '4': 'Runtime Error',
+        '-2': 'Compile Erroe',
+        '0': 'Accept',
+        '-1': 'Wrong Answer',
+        '1': 'Time Limit',
+      };
+      return map[row.result];
+    },
+    statusTag(status) {
+      switch (status) {
+        case 0:
+          return 'success';
+        case -1:
+          return 'danger';
+        case -2:
+          return 'warning';
+        case 1:
+          return 'warning';
+        case 4:
+          return 'danger';
+        default:
+          return 'danger';
       }
     },
-    methods: {
-      solveTime(row) {
-        return row.statistic_info.time_cost == undefined ? '--' : row.statistic_info.time_cost + 'ms'
-      },
-      solveStatus(row) {
-        let map = {
-          '4': 'Runtime Error',
-          '-2': 'Compile Erroe',
-          '0': 'Accept',
-          '-1': 'Wrong Answer',
-          '1': 'Time Limit',
-        }
-        return map[row.result]
-      },
-      statusTag(status) {
-        switch (status) {
-          case 0:
-            return 'success'
-          case -1:
-            return 'danger'
-          case -2:
-            return 'warning'
-          case 1:
-            return 'warning'
-          case 4:
-            return 'danger'
-        }
-      },
-      solveMemory(memory) {
-        return memory == undefined ? '--' : parseInt(memory / (1024 * 1024)) + 'MB'
-      },
-      timeFormat(d) {
-        var d = new Date(d)
-        return d.getFullYear() + '-' + (d.getMonth() + 1 < 10 ? '0'+ (d.getMonth() + 1):d.getMonth() + 1) + '-' + (d.getDate() <10?'0'+d.getDate():d.getDate()) + ' ' + (d.getHours()<10?'0'+d.getHours():d.getHours()) + ':' + (d.getMinutes()<10?'0'+d.getMinutes():d.getMinutes()) + ':' + (d.getSeconds()<10?'0'+d.getSeconds():d.getSeconds())
-      },
+    solveMemory(memory) {
+      return memory === undefined
+        ? '--'
+        : `${parseInt(memory / (1024 * 1024))}MB`;
     },
-  }
+    timeFormat(d) {
+      // eslint-disable-next-line no-var
+      var d = new Date(d);
+      return (
+        // eslint-disable-next-line prefer-template
+        d.getFullYear() +
+        '-' +
+        // eslint-disable-next-line prefer-template
+        (d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1) +
+        '-' +
+        // eslint-disable-next-line prefer-template
+        (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) +
+        ' ' +
+        // eslint-disable-next-line prefer-template
+        (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()) +
+        ':' +
+        // eslint-disable-next-line prefer-template
+        (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) +
+        ':' +
+        // eslint-disable-next-line prefer-template
+        (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds())
+      );
+    },
+  },
+};
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
-
-</style>
+<style scoped lang="stylus" rel="stylesheet/stylus"></style>
