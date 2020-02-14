@@ -69,7 +69,6 @@ export default {
 }
 
 .header-submenu {
-  background: #99a9bf;
   font: white;
 }
 </style>

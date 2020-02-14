@@ -1,14 +1,14 @@
 <template>
-  <div id="v-admin" class="v-admin">
+  <div id="v-admin" class="v-admin" style="background: rgb(244,244,245)">
     <el-container style="height:100%">
-      <el-aside style="height:100%" width="200px">
+      <el-aside style="height:100%; background: #fff;" width="200px">
         <AdminAside></AdminAside>
       </el-aside>
       <el-container>
-        <el-header style="background: #545c64;">
+        <el-header style="background: #545c64">
           <AdminHeader></AdminHeader>
         </el-header>
-        <el-main>
+        <el-main style="margin:20px; background: #FFF">
           <AdminMain></AdminMain>
         </el-main>
       </el-container>
