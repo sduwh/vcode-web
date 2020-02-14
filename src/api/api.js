@@ -8,7 +8,7 @@ const api = {
     return axios.get('/problem/detail', { params });
   },
   getContests(params) {
-    return axios.get('/contests', params);
+    return axios.get('/contest/list', { params });
   },
   getSubmissions(params) {
     return axios.get('/submissions', params);
