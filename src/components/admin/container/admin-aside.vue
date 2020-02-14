@@ -12,10 +12,11 @@
           <el-image
             style="width: 100px; height: 100px; border-radius: 50%"
             :src="url"
-            :fit="fit"></el-image>
+            :fit="fit"
+          ></el-image>
         </div>
       </div>
-      <el-menu-item index="homepage">
+      <el-menu-item index="index">
         <i class="el-icon-monitor"></i>
         <span slot="title">homepage</span>
       </el-menu-item>
@@ -24,14 +25,18 @@
         <el-menu-item index="admin">管理员</el-menu-item>
         <el-menu-item index="user">用户</el-menu-item>
       </el-submenu>
-      <el-submenu index="problrm-menu">
-        <template slot="title"><i class="el-icon-star-off"></i>Problem</template>
-        <el-menu-item index="">题目列表</el-menu-item>
-        <el-menu-item index="problem">创建题目</el-menu-item>        
+      <el-submenu index="problem-menu">
+        <template slot="title">
+          <i class="el-icon-star-off"></i>Problem
+        </template>
+        <el-menu-item index="problem-list">题目列表</el-menu-item>
+        <el-menu-item index="problem">创建题目</el-menu-item>
       </el-submenu>
-      <el-menu-item index="contest">
-        <i class="el-icon-medal"></i>Contest
-      </el-menu-item>
+      <el-submenu index="contest-menu">
+        <template slot="title"><i class="el-icon-medal"></i>Contest</template>
+        <el-menu-item index="contest-list">题目列表</el-menu-item>
+        <el-menu-item index="contest">创建题目</el-menu-item>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
@@ -42,7 +47,8 @@ export default {
     return {
       activeIndex: this.$store.state.admin.activeIndex,
       fits: ['fill'],
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url:
+        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
     };
   },
   methods: {
@@ -57,7 +63,7 @@ export default {
 .aside {
   height: 100%;
 }
-.image{
+.image {
   text-align: center;
   margin-top: 20%;
   margin-bottom: 10%;
