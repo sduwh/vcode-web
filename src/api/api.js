@@ -10,6 +10,12 @@ const api = {
   getContests(params) {
     return axios.get('/contest/list', { params });
   },
+  createContest(params) {
+    return axios.post('/contest/create', params);
+  },
+  deleteContest(params) {
+    return axios.post('/contest/delete', params);
+  },
   getSubmissions(params) {
     return axios.get('/submissions', params);
   },

@@ -41,30 +41,30 @@
 </template>
 
 <script>
-import CenterWrap from "./center-wrap";
+import CenterWrap from './center-wrap';
 
 export default {
   components: {
-    CenterWrap
+    CenterWrap,
   },
   data() {
     return {
-      title: "个人中心",
+      title: '个人中心',
       userinfo: {
         account: this.$store.state.user.account,
         nickname: this.$store.state.user.nickname,
-        email: this.$store.state.user.email
-      }
+        email: this.$store.state.user.email,
+      },
     };
   },
   methods: {
-    changePassword: function() {
-      this.$router.push("/user/change-password");
+    changePassword() {
+      this.$router.push('/user/change-password');
     },
-    editUserInfo: function() {
-      this.$router.push("/user/edit");
-    }
-  }
+    editUserInfo() {
+      this.$router.push('/user/edit');
+    },
+  },
 };
 </script>
 

@@ -22,20 +22,20 @@
       </el-menu-item>
       <el-submenu index="user-menu">
         <template slot="title"><i class="el-icon-user"></i>User</template>
-        <el-menu-item index="admin">管理员</el-menu-item>
-        <el-menu-item index="user">用户</el-menu-item>
+        <el-menu-item index="admin">admin</el-menu-item>
+        <el-menu-item index="user">user</el-menu-item>
       </el-submenu>
       <el-submenu index="problem-menu">
         <template slot="title">
           <i class="el-icon-star-off"></i>Problem
         </template>
-        <el-menu-item index="problem-list">题目列表</el-menu-item>
-        <el-menu-item index="problem">创建题目</el-menu-item>
+        <el-menu-item index="problem-list">ProblemList</el-menu-item>
+        <el-menu-item index="problem">Create</el-menu-item>
       </el-submenu>
       <el-submenu index="contest-menu">
         <template slot="title"><i class="el-icon-medal"></i>Contest</template>
-        <el-menu-item index="contest-list">题目列表</el-menu-item>
-        <el-menu-item index="contest">创建题目</el-menu-item>
+        <el-menu-item index="contest-list">ContestList</el-menu-item>
+        <el-menu-item index="contest">Create</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
