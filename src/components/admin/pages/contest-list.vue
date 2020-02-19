@@ -1,13 +1,6 @@
 <template>
   <div>
-    <el-table
-      :data="
-        tableData.filter(
-          data => !search || data.name.toLowerCase().includes(search)
-        )
-      "
-      style="width: 100%"
-    >
+    <el-table :data="tableData" style="width: 100%">
       <el-table-column label="Title" prop="name"></el-table-column>
       <el-table-column label="isAlways" prop="isAlways" v-slot="scope">
         <el-button
@@ -36,8 +29,8 @@
           icon="el-icon-check"
           circle
           size="mini"
-          v-if="scope.row.isLock"
-          @click="handleClick(scope.row.isLock)"
+          v-if="scope.row.lock"
+          @click="handleClick(scope.row.lock)"
         ></el-button>
         <el-button
           prop="isAlways"
@@ -46,7 +39,7 @@
           circle
           size="mini"
           v-else
-          @click="handleClick(scope.row.isLock)"
+          @click="handleClick(scope.row.lock)"
         ></el-button>
       </el-table-column>
       <el-table-column label="StartTime" width="170" v-slot="scope">
@@ -65,7 +58,12 @@
       <el-table-column label="Owner" prop="owner"></el-table-column>
       <el-table-column align="right" width="300">
         <template #header>
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="Title's keyword"
+            @change="getContestList(1)"
+          />
         </template>
         <template v-slot="scope">
           <el-button size="mini" @click="handleEdit(scope)">
@@ -73,7 +71,7 @@
           </el-button>
           <el-button
             size="mini"
-            @click="handleContestProblems(scope.$index, scope.row)"
+            @click="handleEditContestProblems(scope.$index, scope.row)"
           >
             Problems
           </el-button>
@@ -119,7 +117,8 @@
           :label-width="formLabelWidth"
         >
           <el-input
-            placeholder="请输入密码"
+            placeholder="The max-length of password is ten."
+            maxlength="10"
             v-model="contestForm.password"
             autocomplete="off"
             show-password
@@ -185,6 +184,28 @@ export default {
     };
   },
   methods: {
+    checkTime(always, startTime, endTime) {
+      if (always) {
+        return true;
+      }
+      if (!(startTime instanceof Date)) {
+        // eslint-disable-next-line no-param-reassign
+        startTime = new Date(startTime);
+      }
+      if (!(endTime instanceof Date)) {
+        // eslint-disable-next-line no-param-reassign
+        endTime = new Date(endTime);
+      }
+      if (startTime === null || endTime == null) {
+        this.$message.error('please check the time');
+        return false;
+      }
+      if (startTime.getTime() - endTime.getTime() > 0) {
+        this.$message.error('end time must be later than start time');
+        return false;
+      }
+      return true;
+    },
     handleEdit(scope) {
       this.dialogFormVisible = true;
       this.contestForm = scope.row;
@@ -203,25 +224,39 @@ export default {
         });
     },
     handleSave() {
-      this.dialogFormVisible = false;
-      console.log(this.contestForm);
+      if (
+        this.checkTime(
+          this.contestForm.always,
+          this.contestForm.startTime,
+          this.contestForm.endTime
+        )
+      ) {
+        this.dialogFormVisible = false;
+        api.editContest(this.contestForm).then(res => {
+          const { data } = res;
+          if (data.code === 1) {
+            this.$message.success('Edit Success');
+          }
+        });
+      }
     },
     handleCurrentChange(val) {
-      console.log(val);
       this.getContestList(val);
     },
-    handleContestProblems(index, row) {
+    handleEditContestProblems(index, row) {
       console.log(index, row);
-      this.$router.push('/admin/contest-detail');
+      this.$router.push({ name: 'AdminContestProblems' });
     },
     handleClick(scope) {
       console.log(scope);
     },
     getContestList(pageNum) {
+      console.log('asd');
       api
         .getContests({
           page: pageNum,
           size: 10,
+          search: this.search,
         })
         .then(res => {
           let { data } = res;

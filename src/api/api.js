@@ -13,6 +13,9 @@ const api = {
   createContest(params) {
     return axios.post('/contest/create', params);
   },
+  editContest(params) {
+    return axios.post('/contest/edit', params);
+  },
   deleteContest(params) {
     return axios.post('/contest/delete', params);
   },
