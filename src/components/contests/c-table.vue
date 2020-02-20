@@ -7,10 +7,7 @@
           :to="{ name: 'ConTestDetail', params: { id: contest.id } }"
         >
           {{ contest.name }}
-          <i
-            class="el-icon-lock"
-            v-show="contest.contestType == 'password'"
-          ></i>
+          <i class="el-icon-lock" v-show="contest.lock"></i>
         </router-link>
         <div v-if="contest.always"><el-tag>always</el-tag></div>
         <div v-else class="status-block">
@@ -51,16 +48,22 @@ export default {
     timeFormat(d) {
       var d = new Date(d);
       return (
+        // eslint-disable-next-line prefer-template
         d.getFullYear() +
         '-' +
+        // eslint-disable-next-line prefer-template
         (d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1) +
         '-' +
+        // eslint-disable-next-line prefer-template
         (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) +
         ' ' +
+        // eslint-disable-next-line prefer-template
         (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()) +
         ':' +
+        // eslint-disable-next-line prefer-template
         (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) +
         ':' +
+        // eslint-disable-next-line prefer-template
         (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds())
       );
     },

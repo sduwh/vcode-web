@@ -16,9 +16,9 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

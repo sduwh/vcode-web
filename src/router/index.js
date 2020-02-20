@@ -27,6 +27,9 @@ const AdminUser = () => import('components/admin/pages/user');
 const AdminProblem = () => import('components/admin/pages/problem');
 const AdminProblemList = () => import('components/admin/pages/problemlist');
 const AdminContest = () => import('components/admin/pages/contest');
+const AdminContestList = () => import('components/admin/pages/contest-list');
+const AdminContestProblems = () =>
+  import('components/admin/pages/contest-problems');
 
 export default new Router({
   mode: 'history',
@@ -59,14 +62,24 @@ export default new Router({
           component: AdminProblem,
         },
         {
+          path: 'problem-list',
+          name: 'AdminProblemList',
+          component: AdminProblemList,
+        },
+        {
           path: 'contest',
           name: 'AdminContest',
           component: AdminContest,
         },
         {
-          path: 'problem-list',
-          name: 'ProblemList',
-          component: AdminProblemList,
+          path: 'contest-list',
+          name: 'AdminContestList',
+          component: AdminContestList,
+        },
+        {
+          path: 'contest-problems',
+          name: 'AdminContestProblems',
+          component: AdminContestProblems,
         },
       ],
     },

@@ -23,14 +23,15 @@
 
 <script>
 import TableWrap from 'base/table-wrap';
-import VPagination from 'base/v-pagination';
+// import VPagination from 'base/v-pagination';
 import CTable from 'components/contests/c-table';
 import CAction from 'components/contests/c-action';
 import api from 'api/api';
+
 export default {
   components: {
     TableWrap,
-    VPagination,
+    // VPagination,
     CTable,
     CAction,
   },
@@ -38,7 +39,6 @@ export default {
     return {
       pageNum: 1,
       title: 'Contests',
-      paginationInfo: {},
       tableInfo: [],
       tableLimit: 10,
       tableInfoCnt: 0,
@@ -57,14 +57,16 @@ export default {
   methods: {
     solveTableInfo(tableInfo) {
       this.tableInfo = [];
-      let len = tableInfo.length;
-      let nowTimeStamp = new Date().getTime();
+      const len = tableInfo.length;
+      const nowTimeStamp = new Date().getTime();
       for (let i = 0; i < len; i++) {
         // eslint-disable-next-line prefer-object-spread
-        let objStartTimeStamp = new Date(tableInfo[i].startTime).getTime();
-        let objEndTimeStamp = new Date(tableInfo[i].endTime).getTime();
+        const objStartTimeStamp = new Date(tableInfo[i].startTime).getTime();
+        const objEndTimeStamp = new Date(tableInfo[i].endTime).getTime();
+        // eslint-disable-next-line prefer-object-spread
         const obj = Object.assign({}, tableInfo[i], {
           status:
+            // eslint-disable-next-line no-nested-ternary
             objStartTimeStamp > nowTimeStamp
               ? 'ready'
               : objEndTimeStamp < nowTimeStamp
@@ -87,11 +89,9 @@ export default {
           size: 10,
         })
         .then(res => {
-          console.log(res);
           let { data } = res;
           if (data.code === 1) {
             data = data.data;
-            console.log(data);
             this.tableInfoCnt = data.total;
             this.initPaginationInfo();
             this.solveTableInfo(data.contestList);
