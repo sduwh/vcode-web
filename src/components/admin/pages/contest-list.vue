@@ -62,7 +62,7 @@
             v-model="search"
             size="mini"
             placeholder="Title's keyword"
-            @change="getContestList(1)"
+            @input="getContestList(1)"
           />
         </template>
         <template v-slot="scope">
@@ -71,7 +71,7 @@
           </el-button>
           <el-button
             size="mini"
-            @click="handleEditContestProblems(scope.$index, scope.row)"
+            @click="handleEditContestProblems(scope.row.name)"
           >
             Problems
           </el-button>
@@ -243,15 +243,16 @@ export default {
     handleCurrentChange(val) {
       this.getContestList(val);
     },
-    handleEditContestProblems(index, row) {
-      console.log(index, row);
-      this.$router.push({ name: 'AdminContestProblems' });
+    handleEditContestProblems(contestName) {
+      this.$router.push({
+        name: 'AdminContestProblems',
+        params: { title: contestName },
+      });
     },
     handleClick(scope) {
       console.log(scope);
     },
     getContestList(pageNum) {
-      console.log('asd');
       api
         .getContests({
           page: pageNum,

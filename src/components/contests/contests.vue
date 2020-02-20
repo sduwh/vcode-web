@@ -57,8 +57,8 @@ export default {
   methods: {
     solveTableInfo(tableInfo) {
       this.tableInfo = [];
-      let len = tableInfo.length;
-      let nowTimeStamp = new Date().getTime();
+      const len = tableInfo.length;
+      const nowTimeStamp = new Date().getTime();
       for (let i = 0; i < len; i++) {
         // eslint-disable-next-line prefer-object-spread
         const objStartTimeStamp = new Date(tableInfo[i].startTime).getTime();

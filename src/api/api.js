@@ -19,6 +19,15 @@ const api = {
   deleteContest(params) {
     return axios.post('/contest/delete', params);
   },
+  getContestProblemList(params) {
+    return axios.get('/contest/problems', { params });
+  },
+  addProblemToContest(params) {
+    return axios.post('/contest/problem', params);
+  },
+  removeProblemFromContest(params) {
+    return axios.delete('/contest/problem', { params });
+  },
   getSubmissions(params) {
     return axios.get('/submissions', params);
   },

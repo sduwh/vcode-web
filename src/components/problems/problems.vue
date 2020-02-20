@@ -106,6 +106,7 @@ export default {
         .getProblems({
           page: pageNum,
           size: 10,
+          search: '',
         })
         .then(res => {
           let { data } = res;
