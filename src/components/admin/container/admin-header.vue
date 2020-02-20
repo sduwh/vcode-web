@@ -9,15 +9,16 @@
         <el-menu
           class="el-menu-demo"
           mode="horizontal"
-          @select="handleSelect"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="white"
         >
-          <el-submenu index="1">
+          <el-submenu index="more">
             <template slot="title">More</template>
-            <el-menu-item index="2-1">返回首页</el-menu-item>
-            <el-menu-item index="2-2">退出</el-menu-item>
+            <el-menu-item index="index" @click="handleBackIndex"
+              >返回首页</el-menu-item
+            >
+            <el-menu-item index="logout">退出</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -33,11 +34,11 @@ export default {
     };
   },
   methods: {
-    logout: () => {
-      console.log('logout');
+    logout() {
+      // this.$router.push({ name: 'VMain' });
     },
-    handleSelect: (key, keyPath) => {
-      console.log(key, keyPath);
+    handleBackIndex() {
+      this.$router.push({ name: 'VMain' });
     },
   },
 };
