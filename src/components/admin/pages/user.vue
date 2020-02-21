@@ -1,21 +1,31 @@
 <template>
   <div>
+    <div class="theader">
+      <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
+        <el-col :span="16">
+          <div>用户列表</div>
+        </el-col>
+        <el-col :span="6">
+          <el-input
+            placeholder="请输入关键字"
+            prefix-icon="el-icon-search"
+            v-model="search">
+          </el-input>
+        </el-col>
+      </el-row>
+    </div>
+    <el-divider class="divider"></el-divider>
     <el-table
-      :data="
-        tableData.filter(
-          data => !search || data.name.toLowerCase().includes(search)
-        )
-      "
-      style="width: 100%"
-    >
+      @selection-change="handleSelectionChange"
+      :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize).filter(
+          data => !search || data.title.toLowerCase().includes(search))"
+      style="width: 100%">
+      <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="Account" prop="account"></el-table-column>
       <el-table-column label="Nickname" prop="name"></el-table-column>
       <el-table-column label="CreateTime" prop="name"></el-table-column>
       <el-table-column label="Email" prop="name"></el-table-column>
       <el-table-column align="right">
-        <template #header>
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-        </template>
         <template v-slot="scope">
           <el-button size="mini" @click="dialogFormVisible = true"
             >Edit</el-button
@@ -29,16 +39,20 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination">
-      <!-- 默认每页显示10条，暂时不提供修改page-size功能 -->
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="itemTotal"
-        @current-change="handleCurrentChange"
-      >
-      </el-pagination>
-    </div>
+    <div style="width:100%;" class="pagination">
+        <el-pagination class="page"
+          background
+          width="40%"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[5, 10, 20, 30, 40]"
+          :page-size="pagesize"
+          :total="tableData.length"
+          layout="total, sizes, prev, pager, next, jumper"
+          >
+        </el-pagination>
+      </div>  
 
     <el-dialog title="User" :visible.sync="dialogFormVisible">
       <el-form :model="userForm">
@@ -162,27 +176,44 @@ export default {
         value2: [],
       },
       formLabelWidth: '120px',
+      currentPage:1,
+      pagesize:10,
+      multipleSelection: [],
     };
   },
   methods: {
+    handleSizeChange(val) {
+      this.pagesize = val
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+    },
     handleEdit(index, row) {
       console.log(index, row);
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      this.tableData.splice(index,1);
     },
     handleCurrentChange: val => {
       // Todo: 调用api获取User列表
       console.log(val);
     },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+      console.log(multipleSelection);
+    }
   },
 };
 </script>
 
 <style scoped>
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
+.page{
+  text-align: right;
+}
+.divider{
+  margin: 10px 0;
+}
+.pagination{
+  margin-top: 20px;
 }
 </style>

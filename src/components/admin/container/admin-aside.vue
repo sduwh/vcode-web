@@ -26,8 +26,8 @@
       </el-submenu>
       <el-submenu index="problrm-menu">
         <template slot="title"><i class="el-icon-star-off"></i>Problem</template>
-        <el-menu-item index="">题目列表</el-menu-item>
-        <el-menu-item index="problem">创建题目</el-menu-item>        
+        <el-menu-item index="problemlist">题目列表</el-menu-item>
+        <el-menu-item index="problemcreate">创建题目</el-menu-item>        
       </el-submenu>
       <el-menu-item index="contest">
         <i class="el-icon-medal"></i>Contest

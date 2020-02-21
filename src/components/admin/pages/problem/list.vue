@@ -2,22 +2,24 @@
   <div>
     <div class="theader">
       <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
-        <el-col :span="18">
+        <el-col :span="16">
           <div>题目列表</div>
         </el-col>
         <el-col :span="6">
           <el-input
             placeholder="请输入关键字"
             prefix-icon="el-icon-search"
-            v-model="input2">
+            v-model="search">
           </el-input>
         </el-col>
       </el-row>
     </div>
-    <el-divider></el-divider>
+    <el-divider class="divider"></el-divider>
     <div class="mytable">
       <el-table
-        :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+        :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize).filter(
+          data => !search || data.title.toLowerCase().includes(search)
+        )"
         style="width: 100%">
         <el-table-column
           prop="id"
@@ -90,6 +92,7 @@
   export default {
     data() {
       return {
+        search: "",
         tableData: [{
           id: '1001',
           title: '最大子序和',
@@ -104,7 +107,7 @@
           time: '2019-4-23 22:05:47',
           value: true
         },{
-          id: '1001',
+          id: '1004',
           title: '最大子序和',
           author: 'lsh',
           time: '2019-4-23 22:05:47',
@@ -174,6 +177,12 @@
         this.tableData = this.allData.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
         this.totalCount = this.allData.length
       },
+      handleEdit(index, row){
+        this.$router.push('/admin/problemupdate/'+ this.tableData[index].id);
+      },
+      handleDelete(index, row){
+        this.tableData.splice(index,1);
+      }
     }
   }
 </script>
@@ -184,5 +193,8 @@
 }
 .pagination{
   margin-top: 20px;
+}
+.divider{
+  margin: 10px 0;
 }
 </style>

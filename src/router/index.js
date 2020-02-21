@@ -24,7 +24,9 @@ const AdminMain = () => import("views/v-admin");
 const AdminIndex = () => import("components/admin/pages/index");
 const AdminAdmin = () => import("components/admin/pages/admin");
 const AdminUser = () => import("components/admin/pages/user");
-const AdminProblem = () => import("components/admin/pages/problem");
+const AdminProblemCreate = () => import("components/admin/pages/problem/create");
+const AdminProblemUpdate = () => import("components/admin/pages/problem/update");
+const AdminProblemList = () => import("components/admin/pages/problem/list");
 const AdminContest = () => import("components/admin/pages/contest");
 
 export default new Router({
@@ -53,9 +55,19 @@ export default new Router({
           component: AdminUser
         },
         {
-          path: "problem",
-          name: "AdminProblem",
-          component: AdminProblem
+          path: "problemcreate",
+          name: "AdminProblemCreate",
+          component: AdminProblemCreate
+        },
+        {
+          path: "problemupdate/:id",
+          name: "AdminProblemUpdate",
+          component: AdminProblemUpdate
+        },
+        {
+          path: "problemlist",
+          name: "AdminProblemList",
+          component: AdminProblemList
         },
         {
           path: "contest",
