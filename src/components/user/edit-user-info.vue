@@ -42,68 +42,69 @@
 </template>
 
 <script>
-import CenterWrap from "./center-wrap";
+import CenterWrap from './center-wrap';
+
 export default {
   components: {
-    CenterWrap
+    CenterWrap,
   },
   data() {
-    var validateNickname = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入昵称"));
+    const validateNickname = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入昵称'));
       } else {
         callback();
       }
     };
-    var validateEmail = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入邮箱"));
+    const validateEmail = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入邮箱'));
       } else {
         callback();
       }
     };
     return {
-      title: "个人中心",
+      title: '个人中心',
       userinfo: {
         account: this.$store.state.user.account,
         nickname: this.$store.state.user.nickname,
-        email: this.$store.state.user.email
+        email: this.$store.state.user.email,
       },
       ruleForm: {
         nickname: this.$store.state.user.nickname,
-        email: this.$store.state.user.email
+        email: this.$store.state.user.email,
       },
       rules: {
-        nickname: [{ validator: validateNickname, trigger: "blur" }],
-        email: [{ validator: validateEmail, trigger: "blur" }]
-      }
+        nickname: [{ validator: validateNickname, trigger: 'blur' }],
+        email: [{ validator: validateEmail, trigger: 'blur' }],
+      },
     };
   },
   methods: {
-    changePassword: function() {
-      this.$router.push("/user/change-password");
+    changePassword() {
+      this.$router.push('/user/change-password');
     },
-    editUserInfo: function() {
-      this.$router.push("/user/edit");
+    editUserInfo() {
+      this.$router.push('/user/edit');
     },
-    submitForm: function(formName) {
+    submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          alert('submit!');
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
     },
-    resetForm: function(formName) {
+    resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    goBack: function() {
-      this.$router.push("/user/center");
-      console.log("go back");
-    }
-  }
+    goBack() {
+      this.$router.push('/user/center');
+      console.log('go back');
+    },
+  },
 };
 </script>
 

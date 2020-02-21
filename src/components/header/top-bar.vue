@@ -74,34 +74,34 @@ export default {
   data() {
     return {
       nav: [
-        { path: "/home", name: "Home", col: 3 },
-        { path: "/problems", name: "Problems", col: 4 },
-        { path: "/contests", name: "Contests", col: 4 },
-        { path: "/status", name: "Status", col: 3 },
-        { path: "/rank", name: "Rank", col: 3 },
-        { path: "/notice", name: "Notice", col: 4 },
-        { path: "/about", name: "About", col: 3 }
-      ]
+        { path: '/home', name: 'Home', col: 3 },
+        { path: '/problems', name: 'Problems', col: 4 },
+        { path: '/contests', name: 'Contests', col: 4 },
+        { path: '/status', name: 'Status', col: 3 },
+        { path: '/rank', name: 'Rank', col: 3 },
+        // { path: "/notice", name: "Notice", col: 4 },
+        { path: '/about', name: 'About', col: 3 },
+      ],
     };
   },
   methods: {
     login() {
       // this.$store.commit("user/setLoginStatus", true);
-      console.log(this.$store.getters["user/getLoginStatus"]);
-      this.$router.push("/login");
+      console.log(this.$store.getters['user/getLoginStatus']);
+      this.$router.push('/login');
     },
     siginIn() {
-      this.$router.push("/sign_in");
+      this.$router.push('/sign_in');
     },
     logout() {
-      this.$store.commit("user/setLoginStatus", false);
-      this.$store.commit("user/logout");
-      this.$router.push("/home");
+      this.$store.commit('user/setLoginStatus', false);
+      this.$store.commit('user/logout');
+      this.$router.push('/home');
     },
     userCenter() {
-      this.$router.push("/user");
-    }
-  }
+      this.$router.push('/user');
+    },
+  },
 };
 </script>
 

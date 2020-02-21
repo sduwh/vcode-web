@@ -1,16 +1,16 @@
 <template>
   <div id="footer">
-    <div class="share">
-      <a class="wechat"><img src="./wechat.svg" alt=""></a>
-      <a class="github" :href="footerInfo.github" target="_blank"><img src="./github.svg" alt=""></a>
-      <a class="weibo"><img src="./weibo.svg" alt=""></a>
-    </div>
     <div class="info">
       <div class="title">
         <span>{{ footerInfo.title }}</span>
       </div>
       <div class="desc">
-        <span class="copyright">Powered by <a :href="footerInfo.github" target="_blank">{{ footerInfo.copyright }}</a></span>
+        <span class="copyright"
+          >Powered by
+          <a :href="footerInfo.github" target="_blank">{{
+            footerInfo.copyright
+          }}</a></span
+        >
         <span>|</span>
         <span class="version">Version {{ footerInfo.version }}</span>
       </div>
@@ -24,20 +24,16 @@ export default {
     // 关于「footer」组件的信息
     footerInfo: {
       type: Object,
-      default: {
-        title: 'Virtual Code',
-        copyright: 'Sduwh Start Code Team',
-        version: '1.0',
-        github: 'https://github.com/sduwh',
-        wechat: '',
-        weibo: '',
-      },
+      title: 'Virtual Code',
+      copyright: 'Sduwh Vcode Team',
+      version: '0',
+      github: 'https://github.com/sduwh',
     },
   },
-}
+};
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl'
   #footer
     width 100%
@@ -81,6 +77,4 @@ export default {
           color $color-font-gray
           a
             color $color-font-theme
-
-    
 </style>

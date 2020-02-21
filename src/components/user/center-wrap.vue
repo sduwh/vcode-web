@@ -3,6 +3,11 @@
     <div class="header">
       <div class="title">
         <span class="desc">{{ title }}</span>
+        <span style="margin-left: 20px;">
+          <el-button size="mini" round type="primary" @click="goAdmin()"
+            >Management</el-button
+          >
+        </span>
       </div>
     </div>
     <div class="body">
@@ -16,9 +21,14 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
+  methods: {
+    goAdmin() {
+      this.$router.push({ name: 'Admin' });
+    },
+  },
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

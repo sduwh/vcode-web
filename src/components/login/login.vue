@@ -31,37 +31,37 @@
 </template>
 
 <script>
-import api from "api/api";
+import api from 'api/api';
 
 export default {
   data() {
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       // 检查密码
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'));
         // } else if (value.length < 10) {
         //   callback(new Error("密码长度小于10"));
       } else {
         callback();
       }
     };
-    var validateAccount = (rule, value, callback) => {
+    const validateAccount = (rule, value, callback) => {
       // 检查账号
-      if (value === "") {
-        callback(new Error("请输入账号"));
+      if (value === '') {
+        callback(new Error('请输入账号'));
       } else {
         callback();
       }
     };
     return {
       ruleForm: {
-        pass: "",
-        account: ""
+        pass: '',
+        account: '',
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        account: [{ validator: validateAccount, trigger: "blur" }]
-      }
+        pass: [{ validator: validatePass, trigger: 'blur' }],
+        account: [{ validator: validateAccount, trigger: 'blur' }],
+      },
     };
   },
   methods: {
@@ -69,34 +69,31 @@ export default {
       // 登录
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let params = {
+          const params = {
             account: this.ruleForm.account,
-            password: this.ruleForm.pass
+            password: this.ruleForm.pass,
           };
           api.login(params).then(res => {
-            let data = res.data;
-            if (data.code == 1) {
+            let { data } = res;
+            if (data.code === 1) {
               data = data.data;
               console.log(data);
-              this.$store.commit("user/setUserInfo", data);
-              this.$store.commit("user/setToken", data.token);
-              this.$store.commit("user/setLoginStatus", true);
-              this.$router.push("/home");
+              this.$store.commit('user/setUserInfo', data);
+              this.$store.commit('user/setToken', data.token);
+              this.$store.commit('user/setLoginStatus', true);
+              this.$router.push('/home');
             } else {
               this.$message.error(data.message);
-              return false;
             }
           });
-        } else {
-          return false;
         }
       });
     },
     resetForm(formName) {
       // 重置表单
       this.$refs[formName].resetFields();
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -6,19 +6,20 @@
       </el-col>
       <el-col :span="14">
         <v-editor></v-editor>
-      </el-col> </el-row
-    >1
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import ShowProblem from "base/show-problem";
-import VEditor from "base/v-editor";
+import ShowProblem from 'base/show-problem';
+import VEditor from 'base/v-editor';
+
 export default {
   components: {
     ShowProblem,
-    VEditor
-  }
+    VEditor,
+  },
 };
 </script>
 

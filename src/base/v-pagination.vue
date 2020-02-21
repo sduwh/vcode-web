@@ -1,11 +1,13 @@
 <template>
   <div id="v-pagination">
-    <el-pagination background
+    <el-pagination
+      background
       layout="prev, pager, next"
       :pager-count="pager_count"
       :total="paginationInfo.total"
       :hide-on-single-page="paginationInfo.hide_on_single_page"
       :page-size="paginationInfo.page_size"
+      @current-change="handleCurrentChange"
     ></el-pagination>
   </div>
 </template>
@@ -20,13 +22,18 @@ export default {
   },
   data() {
     return {
-      pager_count: 5
-    }
+      pager_count: 5,
+    };
+  },
+  methods: {
+    handleCurrentChange(pageNum) {
+      this.$emit('handleChangePage', pageNum);
+    },
   },
 };
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
-  #v-pagination
-    display inline-block
+<style scoped lang="stylus" rel="stylesheet/stylus">
+#v-pagination
+  display inline-block
 </style>

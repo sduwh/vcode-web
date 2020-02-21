@@ -1,17 +1,17 @@
 <template>
- <div id="create" class="create">
-   <Edit></Edit>
- </div>
+  <div id="create" class="create">
+    <Edit></Edit>
+  </div>
 </template>
 
 <script>
-import Edit from "components/admin/pages/problem/edit"
-export default{
+import Edit from 'components/admin/pages/problem/edit';
+
+export default {
   components: {
-    Edit
+    Edit,
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

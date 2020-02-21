@@ -5,24 +5,26 @@
         <div class="body-card">
           <el-card class="info-card">
             <div class="info-card-item">
-              <span class="info-card-title">账号</span>
+              <span class="info-card-title">Account</span>
               <span class="info-card-info">
                 {{ userinfo.account }}
               </span>
             </div>
             <div class="info-card-item">
-              <span class="info-card-title">昵称</span>
+              <span class="info-card-title">Nickname</span>
               <span class="info-card-info"> {{ userinfo.nickname }}</span>
             </div>
             <div class="info-card-item">
-              <span class="info-card-title">邮箱</span>
+              <span class="info-card-title">Email</span>
               <span class="info-card-info"> {{ userinfo.email }}</span>
             </div>
             <div class="info-card-button">
-              <el-button plain @click="changePassword">修改密码</el-button>
-              <el-button type="primary" plain @click="editUserInfo"
-                >编辑资料</el-button
-              >
+              <el-button plain @click="changePassword">
+                Reset password
+              </el-button>
+              <el-button type="primary" plain @click="editUserInfo">
+                Edit
+              </el-button>
             </div>
           </el-card>
           <el-card class="info-card" style="width:25%">
@@ -41,30 +43,30 @@
 </template>
 
 <script>
-import CenterWrap from "./center-wrap";
+import CenterWrap from './center-wrap';
 
 export default {
   components: {
-    CenterWrap
+    CenterWrap,
   },
   data() {
     return {
-      title: "个人中心",
+      title: 'User Center',
       userinfo: {
         account: this.$store.state.user.account,
         nickname: this.$store.state.user.nickname,
-        email: this.$store.state.user.email
-      }
+        email: this.$store.state.user.email,
+      },
     };
   },
   methods: {
-    changePassword: function() {
-      this.$router.push("/user/change-password");
+    changePassword() {
+      this.$router.push('/user/change-password');
     },
-    editUserInfo: function() {
-      this.$router.push("/user/edit");
-    }
-  }
+    editUserInfo() {
+      this.$router.push('/user/edit');
+    },
+  },
 };
 </script>
 

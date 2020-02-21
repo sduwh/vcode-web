@@ -11,13 +11,18 @@
       <slot name="table"></slot>
     </div>
     <div class="footer">
-      <v-pagination class="pagination" :paginationInfo="paginationInfo"></v-pagination>
+      <v-pagination
+        class="pagination"
+        :paginationInfo="paginationInfo"
+        @handleChangePage="handleChangePage($event, pageNum)"
+      ></v-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import VPagination from 'base/v-pagination'
+import VPagination from 'base/v-pagination';
+
 export default {
   props: {
     title: {
@@ -27,15 +32,25 @@ export default {
     paginationInfo: {
       type: Object,
       required: true,
-    }
+    },
   },
   components: {
     VPagination,
   },
-}
+  data() {
+    return {
+      pageNum: 1,
+    };
+  },
+  methods: {
+    handleChangePage(val) {
+      this.$emit('handleChangePage', val);
+    },
+  },
+};
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl'
   #table-wrap
     width 100%

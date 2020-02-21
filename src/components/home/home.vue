@@ -3,7 +3,7 @@
     <div class="desc transition-box" v-show="showPageDesc">
       <span>{{ pageDesc }}</span>
     </div>
-    <div class="challenge">
+    <!-- <div class="challenge">
       <ul>
         <li v-for="(item, index) in challenge" :key="index" @click="changeRoute">
           <div class="top">
@@ -15,7 +15,7 @@
           </div>
         </li>
       </ul>
-    </div>
+    </div> -->
     <div class="calendar">
       <el-calendar v-model="date"></el-calendar>
     </div>
@@ -28,21 +28,25 @@ export default {
     return {
       pageDesc: 'Virtual Code',
       showPageDesc: false,
-      challenge: [{
-        desc: 'More than 5 easy problems...',
-        title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
-        img: '../../common/image/challenge.svg',
-      }, {
-        desc: 'More than 5 medium problems...',
-        title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
-        img: '../../common/image/challenge.svg',
-      }, {
-        desc: 'More than 5 hard problems...',
-        title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
-        img: '../../common/image/challenge.svg',
-      }],
+      // challenge: [
+      //   {
+      //     desc: 'More than 5 easy problems...',
+      //     title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
+      //     img: '../../common/image/challenge.svg',
+      //   },
+      //   {
+      //     desc: 'More than 5 medium problems...',
+      //     title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
+      //     img: '../../common/image/challenge.svg',
+      //   },
+      //   {
+      //     desc: 'More than 5 hard problems...',
+      //     title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
+      //     img: '../../common/image/challenge.svg',
+      //   },
+      // ],
       date: new Date(),
-    }
+    };
   },
   mounted() {
     this.showPageDesc = true;
@@ -51,12 +55,12 @@ export default {
     changeRoute() {
       // this.$route.path.push('/problem')
       // this.$route.path = '/problems'
-    }
+    },
   },
-}
+};
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl'
   #home
     width 100%
