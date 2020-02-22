@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import TinymceEditor from './tinymce-editor/tinymce-editor';
+import TinymceEditor from './problem/tinymce-editor/tinymce-editor';
 import api from 'api/api';
 
 export default {

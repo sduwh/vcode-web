@@ -19,13 +19,15 @@ const User = () => import('components/user/center');
 const UserEditInfo = () => import('components/user/edit-user-info');
 const UserMain = () => import('components/user/user');
 const UserChangePassword = () => import('components/user/change-password');
-
+const AdminProblemCreate = () =>
+  import('components/admin/pages/problem/create');
+const AdminProblemUpdate = () =>
+  import('components/admin/pages/problem/update');
+const AdminProblemList = () => import('components/admin/pages/problem/list');
 const AdminMain = () => import('views/v-admin');
 const AdminIndex = () => import('components/admin/pages/index');
 const AdminAdmin = () => import('components/admin/pages/admin');
 const AdminUser = () => import('components/admin/pages/user');
-const AdminProblem = () => import('components/admin/pages/problem');
-const AdminProblemList = () => import('components/admin/pages/problemlist');
 const AdminContest = () => import('components/admin/pages/contest');
 const AdminContestList = () => import('components/admin/pages/contest-list');
 const AdminContestProblems = () =>
@@ -57,12 +59,17 @@ export default new Router({
           component: AdminUser,
         },
         {
-          path: 'problem',
-          name: 'AdminProblem',
-          component: AdminProblem,
+          path: 'problemcreate',
+          name: 'AdminProblemCreate',
+          component: AdminProblemCreate,
         },
         {
-          path: 'problem-list',
+          path: 'problemupdate/:id',
+          name: 'AdminProblemUpdate',
+          component: AdminProblemUpdate,
+        },
+        {
+          path: 'problemlist',
           name: 'AdminProblemList',
           component: AdminProblemList,
         },
