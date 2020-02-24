@@ -29,8 +29,8 @@
         <template slot="title">
           <i class="el-icon-star-off"></i>Problem
         </template>
-        <el-menu-item index="problemlist">ProblemList</el-menu-item>
-        <el-menu-item index="problemcreate">Create</el-menu-item>
+        <el-menu-item index="problem-list">ProblemList</el-menu-item>
+        <el-menu-item index="problem-create">Create</el-menu-item>
       </el-submenu>
       <el-submenu index="contest-menu">
         <template slot="title"><i class="el-icon-medal"></i>Contest</template>

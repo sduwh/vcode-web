@@ -3,11 +3,11 @@
     <div class="theader">
       <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
         <el-col :span="16">
-          <div>题目列表</div>
+          <div>ProblemList</div>
         </el-col>
         <el-col :span="6">
           <el-input
-            placeholder="请输入关键字"
+            placeholder="Keywords"
             prefix-icon="el-icon-search"
             v-model="search"
           >
@@ -45,20 +45,18 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="Operation" width="250%">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
-            >
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >下载</el-button
-            >
+            <el-button size="mini" @click="handleEdit(scope.$index)">
+              Edit
+            </el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
-              >删除</el-button
+              @click="handleDelete(scope.$index)"
             >
+              Delete
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -70,10 +68,9 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[5, 10, 20, 30, 40]"
           :page-size="pagesize"
           :total="tableData.length"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="prev, pager, next"
         >
         </el-pagination>
       </div>
@@ -186,10 +183,10 @@ export default {
       );
       this.totalCount = this.allData.length;
     },
-    handleEdit(index, row) {
-      this.$router.push(`/admin/problemupdate/${this.tableData[index].id}`);
+    handleEdit(index) {
+      this.$router.push(`/admin/problem-update/${this.tableData[index].id}`);
     },
-    handleDelete(index, row) {
+    handleDelete(index) {
       this.tableData.splice(index, 1);
     },
   },
@@ -202,6 +199,9 @@ export default {
 }
 .pagination {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .divider {
   margin: 10px 0;

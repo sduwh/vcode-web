@@ -5,7 +5,7 @@
         <AdminAside></AdminAside>
       </el-aside>
       <el-container>
-        <el-header style="background: #545c64">
+        <el-header class="admin-header">
           <AdminHeader></AdminHeader>
         </el-header>
         <el-main style="margin:20px; background: #FFF">
@@ -33,5 +33,9 @@ export default {
 <style scoped>
 .v-admin {
   height: 100%;
+}
+
+.admin-header {
+  background: #545c64;
 }
 </style>

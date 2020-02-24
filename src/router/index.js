@@ -59,17 +59,17 @@ export default new Router({
           component: AdminUser,
         },
         {
-          path: 'problemcreate',
+          path: 'problem-create',
           name: 'AdminProblemCreate',
           component: AdminProblemCreate,
         },
         {
-          path: 'problemupdate/:id',
+          path: 'problem-update/:id',
           name: 'AdminProblemUpdate',
           component: AdminProblemUpdate,
         },
         {
-          path: 'problemlist',
+          path: 'problem-list',
           name: 'AdminProblemList',
           component: AdminProblemList,
         },

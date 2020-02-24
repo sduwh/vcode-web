@@ -6,7 +6,7 @@
           style="height:100%; font-size:18px; color:grey; line-height:38px"
         >
           <el-col :span="18">
-            <div>编辑题目</div>
+            <div>{{ title }}</div>
           </el-col>
         </el-row>
       </div>
@@ -14,7 +14,7 @@
     </div>
     <div class="body">
       <el-form
-        ref="form"
+        ref="ruleForm"
         :model="ruleForm"
         :rules="rules"
         label-width="140px"
@@ -22,9 +22,9 @@
       >
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="Problem ID" prop="ID">
+            <el-form-item label="Problem ID" prop="originId">
               <el-input
-                v-model="cid"
+                v-model="ruleForm.originId"
                 placeholder="ID"
                 maxlength="5"
                 show-word-limit
@@ -33,9 +33,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="16">
-            <el-form-item label="Problem Title" prop="Title">
+            <el-form-item label="Problem Title" prop="title">
               <el-input
-                v-model="ruleForm.Title"
+                v-model="ruleForm.title"
                 placeholder="Title"
                 maxlength="20"
                 show-word-limit
@@ -46,19 +46,19 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="Time Limit(ms)" prop="TimeLimit">
-              <el-input type="number" v-model="ruleForm.TimeLimit"> </el-input>
+            <el-form-item label="Time Limit(ms)" prop="timeLimit">
+              <el-input type="number" v-model="ruleForm.timeLimit"> </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="Memory limit(MB)" prop="MemoryLimit">
-              <el-input type="number" v-model="ruleForm.MemoryLimit">
+            <el-form-item label="Memory limit(MB)" prop="memoryLimit">
+              <el-input type="number" v-model="ruleForm.memoryLimit">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="Difficulty" prop="Difficulty">
-              <el-select v-model="ruleForm.Difficulty">
+            <el-form-item label="Difficulty" prop="difficulty">
+              <el-select v-model="ruleForm.difficulty">
                 <el-option label="Low" value="Low"></el-option>
                 <el-option label="Mid" value="Mid"></el-option>
                 <el-option label="High" value="High"></el-option>
@@ -74,73 +74,50 @@
               style="margin-left:30px"
               label-width="60px"
             >
-              <el-switch v-model="ruleForm.Visible"></el-switch>
+              <el-switch v-model="ruleForm.visible"></el-switch>
             </el-form-item>
           </el-col>
-          <el-col :span="4">
+          <!-- <el-col :span="4">
             <el-form-item label="Share Submission" prop="ShareSubmission">
               <el-switch v-model="ruleForm.ShareSubmission"></el-switch>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item
-              style="margin-left:30px"
-              label-width="60px"
-              label="Tags"
-              prop="Tags"
-            >
-              <el-tag
-                :key="tag"
-                v-for="tag in dynamicTags"
-                closable
-                :disable-transitions="false"
-                @close="handleClose(tag)"
-              >
-                {{ tag }}
-              </el-tag>
-              <el-input
-                class="input-new-tag"
-                v-if="inputVisible"
-                v-model="inputValue"
-                ref="saveTagInput"
-                size="small"
-                @keyup.enter.native="handleInputConfirm"
-                @blur="handleInputConfirm"
-              >
-              </el-input>
-              <el-button
-                v-else
-                class="button-new-tag"
-                size="small"
-                @click="showInput"
-                >+ New Tag</el-button
-              >
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="Language" prop="Language">
-              <el-checkbox-group v-model="ruleForm.Language">
-                <el-checkbox label="C" name="Language"></el-checkbox>
-                <el-checkbox label="C++" name="Language"></el-checkbox>
-                <el-checkbox label="Python3" name="Language"></el-checkbox>
-                <el-checkbox label="Java" name="Language"></el-checkbox>
+          </el-col> -->
+          <el-col :span="16">
+            <el-form-item label="Language" prop="language">
+              <el-checkbox-group v-model="ruleForm.languages">
+                <el-checkbox label="C" name="C"></el-checkbox>
+                <el-checkbox label="C++" name="C++"></el-checkbox>
+                <el-checkbox label="Python3" name="Python3"></el-checkbox>
+                <el-checkbox label="Java" name="Java"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="Description" prop="Description">
-            <tinymce-editor ref="editor"> </tinymce-editor>
+          <el-form-item label="Description" prop="description">
+            <tinymce-editor
+              ref="editor"
+              @input="updateEditorValue"
+              valueName="description"
+            ></tinymce-editor>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item label="Input Description" prop="InputDescription">
-            <tinymce-editor ref="editor"> </tinymce-editor>
+          <el-form-item label="Input Description" prop="input">
+            <tinymce-editor
+              ref="editor"
+              @input="updateEditorValue"
+              valueName="input"
+            ></tinymce-editor>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item label="Output Description" prop="OutputDescription">
-            <tinymce-editor ref="editor"> </tinymce-editor>
+          <el-form-item label="Output Description" prop="output">
+            <tinymce-editor
+              ref="editor"
+              @input="updateEditorValue"
+              valueName="output"
+            ></tinymce-editor>
           </el-form-item>
         </el-row>
         <el-row style="border:1px solid #eee">
@@ -153,10 +130,10 @@
           <el-row style="margin:10px;" :gutter="20">
             <el-col :span="12">
               <el-form-item
-                v-for="(input, index) in ruleForm.inputs"
+                v-for="(_input, index) in ruleForm.sampleInput"
                 :label="'Input Sample' + (index + 1)"
-                :key="input.key"
-                :prop="'inputs.' + index + '.value'"
+                :key="index"
+                :prop="'sampleInput.' + index"
                 :rules="{
                   required: true,
                   message: '请输入input',
@@ -167,17 +144,17 @@
                   type="textarea"
                   :rows="3"
                   placeholder="Input Samples"
-                  v-model="input.value"
+                  v-model="ruleForm.sampleInput[index]"
                 >
                 </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item
-                v-for="(output, index) in ruleForm.outputs"
+                v-for="(_output, index) in ruleForm.sampleOutput"
                 :label="'Output Sample' + (index + 1)"
-                :key="output.key"
-                :prop="'outputs.' + index + '.value'"
+                :key="index"
+                :prop="'sampleOutput.' + index"
                 :rules="{
                   required: true,
                   message: '请输入output',
@@ -188,7 +165,7 @@
                   type="textarea"
                   :rows="3"
                   placeholder="Output Samples"
-                  v-model="output.value"
+                  v-model="ruleForm.sampleOutput[index]"
                 >
                 </el-input>
               </el-form-item>
@@ -203,13 +180,20 @@
               style="width:40%"
               plain
               @click="deleteSample"
-              >Delete Last Sample</el-button
             >
+              Delete Last Sample
+            </el-button>
           </el-row>
         </el-row>
         <el-row style="margin-top: 25px">
-          <el-form-item label="Hint" prop="Hint">
-            <tinymce-editor ref="editor"> </tinymce-editor>
+          <el-form-item label="Hint" prop="hint">
+            <tinymce-editor
+              ref="editor"
+              @input="updateEditorValue"
+              valueName="hint"
+              :value="ruleForm.hint"
+            >
+            </tinymce-editor>
           </el-form-item>
         </el-row>
         <el-row>
@@ -217,7 +201,8 @@
             <el-input v-model="ruleForm.source"> </el-input>
           </el-form-item>
         </el-row>
-        <el-row>
+        <!-- 此功能延后 -->
+        <!-- <el-row>
           <el-col :span="6">
             <el-form-item label="Type" prop="Type">
               <el-radio-group v-model="ruleForm.type">
@@ -226,26 +211,27 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="6">
             <el-form-item label="TestCase" prop="TestCase">
               <el-upload
                 class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :before-remove="beforeRemove"
                 multiple
-                :on-exceed="handleExceed"
-                :file-list="fileList"
+                :action="uploadUrl"
+                :on-success="handleUploadSuccess"
+                :on-error="handleUploadError"
+                :on-exceed="handleOnExceed"
+                :on-remove="handleOnRemove"
+                :limit="1"
               >
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button size="small" type="primary">upload</el-button>
               </el-upload>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
+        <!-- 此功能延后 -->
+        <!-- <el-row :gutter="20">
           <el-col :span="10">
             <el-form-item label="IOMode" prop="IOMode">
               <el-radio-group v-model="ruleForm.IOMode" @click="showFileIO">
@@ -264,109 +250,131 @@
               <el-input v-model="ruleForm.OutputFileName"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-form>
+      <div class="button-area">
+        <el-button type="primary" @click="submitForm('ruleForm')">
+          Save
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import TinymceEditor from './tinymce-editor/tinymce-editor';
+import { testCaseUploadAPI } from 'api/config';
 
 export default {
   components: {
     TinymceEditor,
   },
   props: {
-    cid: {
+    problemOriginId: {
       type: String,
-      default: '',
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
     },
   },
   data() {
     return {
-      dynamicTags: [],
+      uploadUrl: testCaseUploadAPI,
       inputVisible: false,
       inputValue: '',
       ruleForm: {
-        Title: '',
-        Description: '',
-        InputDescription: '',
-        OutputDescription: '',
-        Hint: '',
-        TimeLimit: '1000',
-        MemoryLimit: '256',
-        Difficulty: 'Low',
-        Visible: true,
-        ShareSubmission: false,
-        Language: [],
+        origin: 'vcode',
+        title: '',
+        originId: this.problemOriginId,
+        description: '',
+        input: '',
+        output: '',
+        hint: '',
+        timeLimit: '1000',
+        memoryLimit: '256',
+        difficulty: 'Low',
+        visible: true,
+        // ShareSubmission: false,
+        languages: [],
         source: '',
-        type: 'ACM',
-        IOMode: 'Standard IO',
-        InputFileName: 'input.txt',
-        OutputFileName: 'output.txt',
-        inputs: [
-          {
-            value: '',
-          },
-        ],
-        outputs: [
-          {
-            value: '',
-          },
-        ],
+        // type: 'ACM',
+        // IOMode: 'Standard IO',
+        // InputFileName: 'input.txt',
+        // OutputFileName: 'output.txt',
+        sampleInput: [''],
+        sampleOutput: [''],
+        testCaseId: '',
       },
       rules: {
-        ID: [{ required: true, message: '请输入题目ID', trigger: 'blur' }],
-        Title: [
-          { required: true, message: '请输入题目Title', trigger: 'blur' },
+        originId: [
+          {
+            required: true,
+            message: 'Please Input Problem ID',
+            trigger: 'blur',
+          },
         ],
-        Description: [{ required: true }],
-        InputDescription: [{ required: true }],
-        OutputDescription: [{ required: true }],
-        TimeLimit: [
-          { required: true, message: '请输入Time Limit', trigger: 'blur' },
+        title: [
+          {
+            required: true,
+            message: 'Please Input Problem Title',
+            trigger: 'blur',
+          },
         ],
-        MemoryLimit: [
-          { required: true, message: '请输入Memory Limit', trigger: 'blur' },
+        description: [{ required: true }],
+        input: [{ required: true }],
+        output: [{ required: true }],
+        timeLimit: [
+          {
+            required: true,
+            message: 'Please Input Time Limit',
+            trigger: 'blur',
+          },
         ],
-        Language: [
+        memoryLimit: [
+          {
+            required: true,
+            message: 'Please Input Memory Limit',
+            trigger: 'blur',
+          },
+        ],
+        languages: [
           {
             type: 'array',
             required: true,
-            message: '请至少选择一种语言',
+            message: 'Please select at least one language',
             trigger: 'change',
           },
         ],
       },
-      fileList: [],
     };
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
+          if (this.$refs[formName].model.testCaseId === '') {
+            this.$message.error('please upload test case file');
+          } else {
+            const difficultMap = {
+              Low: 0,
+              Mid: 1,
+              High: 2,
+            };
+            const { difficulty } = this.$refs[formName].model;
+            this.$refs[formName].model.difficulty = difficultMap[difficulty];
+            this.$refs[formName].model.author = 'admin';
+            this.$emit('saveFubction', this.$refs[formName].model);
+          }
         } else {
-          console.log('error submit!!');
-          return false;
+          this.$message.error('check the input data');
         }
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
-
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
-    },
-
     handleInputConfirm() {
       const { inputValue } = this;
       if (inputValue) {
@@ -376,27 +384,35 @@ export default {
       this.inputValue = '';
     },
     addSample() {
-      this.ruleForm.inputs.push({
-        value: '',
-        key: Date.now(),
-      });
-      this.ruleForm.outputs.push({
-        value: '',
-        key: Date.now(),
-      });
+      this.ruleForm.sampleInput.push('');
+      this.ruleForm.sampleOutput.push('');
     },
     deleteSample() {
-      this.ruleForm.inputs.pop();
-      this.ruleForm.outputs.pop();
+      this.ruleForm.sampleInput.pop();
+      this.ruleForm.sampleOutput.pop();
     },
-    showFileIO() {
-      // if (this.IOMode == 'File IO') {
-      // }
+    updateEditorValue(valueName, newValue) {
+      this.ruleForm[valueName] = newValue;
     },
-    handlePreview() {},
-    handleRemove() {},
-    beforeRemove() {},
-    handleExceed() {},
+    handleUploadSuccess(response) {
+      if (response.code === 1) {
+        const { data } = response;
+        this.ruleForm.testCaseId = data.testCaseId;
+      } else {
+        this.$message.error('upload file error');
+      }
+    },
+    handleUploadError(err) {
+      this.$message.error(err);
+    },
+    handleOnExceed() {
+      this.$message.error(
+        'the files number limit 1, please remove ohter files'
+      );
+    },
+    handleOnRemove() {
+      this.ruleForm.testCaseId = '';
+    },
   },
 };
 </script>
@@ -416,5 +432,10 @@ export default {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+}
+.button-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

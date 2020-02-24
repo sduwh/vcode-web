@@ -7,6 +7,9 @@ const api = {
   getProblem(params) {
     return axios.get('/problem/detail', { params });
   },
+  createProblem(params) {
+    return axios.post('/problem/create', params);
+  },
   getContests(params) {
     return axios.get('/contest/list', { params });
   },

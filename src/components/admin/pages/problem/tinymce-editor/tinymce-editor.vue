@@ -1,7 +1,7 @@
 <template>
   <div class="tinymce-editor">
     <editor
-      v-model="myValue"
+      v-model="localValue"
       :init="init"
       :disabled="disabled"
       @onClick="onClick"
@@ -14,8 +14,6 @@ import tinymce from 'tinymce/tinymce';
 import Editor from '@tinymce/tinymce-vue';
 import 'tinymce/themes/silver';
 import 'tinymce/plugins/image'; // 插入上传图片插件
-import 'tinymce/plugins/media'; // 插入视频插件
-import 'tinymce/plugins/table'; // 插入表格插件
 import 'tinymce/plugins/lists'; // 列表插件
 import 'tinymce/plugins/wordcount'; // 字数统计插件
 
@@ -28,6 +26,10 @@ export default {
       type: String,
       default: '',
     },
+    valueName: {
+      type: String,
+      required: true,
+    },
     baseUrl: {
       type: String,
       default: '',
@@ -38,12 +40,12 @@ export default {
     },
     plugins: {
       type: [String, Array],
-      default: 'lists image media table wordcount',
+      default: 'lists image wordcount',
     },
     toolbar: {
       type: [String, Array],
       default:
-        'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat',
+        'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image | removeformat',
     },
   },
   data() {
@@ -67,7 +69,7 @@ export default {
           success(img);
         },
       },
-      myValue: this.value,
+      localValue: this.value,
     };
   },
   mounted() {
@@ -79,15 +81,15 @@ export default {
     },
     // 可以添加一些自己的自定义事件，如清空内容
     clear() {
-      this.myValue = '';
+      this.localValue = '';
     },
   },
   watch: {
     value(newValue) {
-      this.myValue = newValue;
+      this.localValue = newValue;
     },
-    myValue(newValue) {
-      this.$emit('input', newValue);
+    localValue(newValue) {
+      this.$emit('input', this.valueName, newValue);
     },
   },
 };
