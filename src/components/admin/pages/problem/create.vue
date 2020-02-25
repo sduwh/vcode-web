@@ -1,7 +1,7 @@
 <template>
   <div id="create" class="create">
     <Edit
-      problemOriginId=""
+      :problem="problem"
       title="CreateProblem"
       @saveFubction="createProblem"
     ></Edit>
@@ -16,10 +16,16 @@ export default {
   components: {
     Edit,
   },
+  data() {
+    return {
+      problem: {
+        originId: '',
+      },
+    };
+  },
   methods: {
     createProblem(params) {
       api.createProblem(params).then(res => {
-        console.log(res);
         if (res.data.code === 1) {
           this.$message.success('create success');
         } else {

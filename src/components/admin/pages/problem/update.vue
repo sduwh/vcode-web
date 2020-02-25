@@ -1,7 +1,7 @@
 <template>
   <div id="create" class="create">
     <Edit
-      :problemOriginId="this.$route.params.id"
+      :problem="problem"
       title="EditProblem"
       @saveFubction="updateProblem"
     ></Edit>
@@ -10,15 +10,30 @@
 
 <script>
 import Edit from 'components/admin/pages/problem/edit';
+import api from 'api/api';
 
 export default {
   components: {
     Edit,
   },
+  data() {
+    return {
+      problem: JSON.parse(this.$route.params.problem),
+    };
+  },
   methods: {
     updateProblem(params) {
-      console.log('update');
-      console.log(params);
+      api.updateProblem(params).then(res => {
+        console.log(res);
+        if (res.data.code === 1) {
+          this.$message.success('update success');
+          this.$router.push({
+            name: 'AdminProblemList',
+          });
+        } else {
+          this.$message.error('update error');
+        }
+      });
     },
   },
 };

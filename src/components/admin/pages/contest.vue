@@ -167,7 +167,6 @@ export default {
         if (valid) {
           const form = this.$refs[formName].model;
           form.ownerAccount = 'admin';
-          console.log(form);
           api.createContest(form).then(res => {
             const { data } = res;
             if (data.code === 1) {

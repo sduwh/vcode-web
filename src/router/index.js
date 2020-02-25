@@ -64,7 +64,7 @@ export default new Router({
           component: AdminProblemCreate,
         },
         {
-          path: 'problem-update/:id',
+          path: 'problem-update',
           name: 'AdminProblemUpdate',
           component: AdminProblemUpdate,
         },

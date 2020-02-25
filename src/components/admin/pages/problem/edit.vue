@@ -22,7 +22,11 @@
       >
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="Problem ID" prop="originId">
+            <el-form-item
+              label="Problem ID"
+              prop="originId"
+              label-width="150px"
+            >
               <el-input
                 v-model="ruleForm.originId"
                 placeholder="ID"
@@ -33,7 +37,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="16">
-            <el-form-item label="Problem Title" prop="title">
+            <el-form-item
+              label="Problem Title"
+              prop="title"
+              label-width="150px"
+            >
               <el-input
                 v-model="ruleForm.title"
                 placeholder="Title"
@@ -46,19 +54,31 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="Time Limit(ms)" prop="timeLimit">
+            <el-form-item
+              label="Time Limit(ms)"
+              prop="timeLimit"
+              label-width="150px"
+            >
               <el-input type="number" v-model="ruleForm.timeLimit"> </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="Memory limit(MB)" prop="memoryLimit">
+            <el-form-item
+              label="Memory limit(MB)"
+              prop="memoryLimit"
+              label-width="150px"
+            >
               <el-input type="number" v-model="ruleForm.memoryLimit">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="Difficulty" prop="difficulty">
-              <el-select v-model="ruleForm.difficulty">
+            <el-form-item
+              label="Difficulty"
+              prop="difficulty"
+              label-width="150px"
+            >
+              <el-select v-model="ruleForm.difficulty" style="margin:-50px;">
                 <el-option label="Low" value="Low"></el-option>
                 <el-option label="Mid" value="Mid"></el-option>
                 <el-option label="High" value="High"></el-option>
@@ -94,29 +114,44 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="Description" prop="description">
+          <el-form-item
+            label="Description"
+            prop="description"
+            label-width="150px"
+          >
             <tinymce-editor
               ref="editor"
               @input="updateEditorValue"
               valueName="description"
+              :value="ruleForm.description"
             ></tinymce-editor>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item label="Input Description" prop="input">
+          <el-form-item
+            label="Input Description"
+            prop="input"
+            label-width="150px"
+          >
             <tinymce-editor
               ref="editor"
               @input="updateEditorValue"
               valueName="input"
+              :value="ruleForm.input"
             ></tinymce-editor>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item label="Output Description" prop="output">
+          <el-form-item
+            label="Output Description"
+            prop="output"
+            label-width="150px"
+          >
             <tinymce-editor
               ref="editor"
               @input="updateEditorValue"
               valueName="output"
+              :value="ruleForm.output"
             ></tinymce-editor>
           </el-form-item>
         </el-row>
@@ -266,12 +301,27 @@ import TinymceEditor from './tinymce-editor/tinymce-editor';
 import { testCaseUploadAPI } from 'api/config';
 
 export default {
+  created() {
+    if (this.problem.originId !== '') {
+      const difficultMap = {
+        0: 'Low',
+        1: 'Mid',
+        2: 'High',
+      };
+      this.ruleForm = this.problem;
+      this.ruleForm.originId = this.ruleForm.originId.slice(
+        this.ruleForm.origin.length + 1,
+        this.ruleForm.originId.length
+      );
+      this.ruleForm.difficulty = difficultMap[this.ruleForm.difficulty];
+    }
+  },
   components: {
     TinymceEditor,
   },
   props: {
-    problemOriginId: {
-      type: String,
+    problem: {
+      type: Object,
       required: true,
     },
     title: {
@@ -287,7 +337,7 @@ export default {
       ruleForm: {
         origin: 'vcode',
         title: '',
-        originId: this.problemOriginId,
+        originId: '',
         description: '',
         input: '',
         output: '',
@@ -366,6 +416,7 @@ export default {
             this.$refs[formName].model.difficulty = difficultMap[difficulty];
             this.$refs[formName].model.author = 'admin';
             this.$emit('saveFubction', this.$refs[formName].model);
+            this.$refs[formName].model.difficulty = difficulty;
           }
         } else {
           this.$message.error('check the input data');
