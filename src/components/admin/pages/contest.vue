@@ -87,7 +87,12 @@
         </el-row>
         <el-row>
           <el-form-item label="Description" prop="description">
-            <tinymce-editor ref="editor" v-model="contestForm.description">
+            <tinymce-editor
+              ref="editor"
+              valueName="description"
+              :value="contestForm.description"
+              @input="updateEditorValue"
+            >
             </tinymce-editor>
           </el-form-item>
         </el-row>
@@ -185,6 +190,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    updateEditorValue(valueName, newValue) {
+      this.contestForm[valueName] = newValue;
     },
   },
   watch: {
