@@ -37,6 +37,10 @@
         <el-menu-item index="contest-list">ContestList</el-menu-item>
         <el-menu-item index="contest">Create</el-menu-item>
       </el-submenu>
+      <el-menu-item index="about">
+        <i class="el-icon-warning-outline"></i>
+        <span slot="title">About</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
