@@ -61,6 +61,12 @@ const api = {
   signIn(params) {
     return axios.post('/user/sign_in', params);
   },
+  editAbout(params) {
+    return axios.post('/about/doc', params);
+  },
+  getAbout() {
+    return axios.get('/about/doc');
+  },
 };
 
 export default api;

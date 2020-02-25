@@ -32,6 +32,7 @@ const AdminContest = () => import('components/admin/pages/contest');
 const AdminContestList = () => import('components/admin/pages/contest-list');
 const AdminContestProblems = () =>
   import('components/admin/pages/contest-problems');
+const AdminAbout = () => import('components/admin/pages/about/about');
 
 export default new Router({
   mode: 'history',
@@ -87,6 +88,11 @@ export default new Router({
           path: 'contest-problems',
           name: 'AdminContestProblems',
           component: AdminContestProblems,
+        },
+        {
+          path: 'about',
+          name: 'adminAbout',
+          component: AdminAbout,
         },
       ],
     },
