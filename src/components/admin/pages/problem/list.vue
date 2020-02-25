@@ -3,13 +3,14 @@
     <div class="theader">
       <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
         <el-col :span="16">
-          <div>题目列表</div>
+          <div>ProblemList</div>
         </el-col>
         <el-col :span="6">
           <el-input
-            placeholder="请输入关键字"
+            placeholder="Title Keywords"
             prefix-icon="el-icon-search"
             v-model="search"
+            @input="getProblems(1)"
           >
           </el-input>
         </el-col>
@@ -17,48 +18,41 @@
     </div>
     <el-divider class="divider"></el-divider>
     <div class="mytable">
-      <el-table
-        :data="
-          tableData
-            .slice((currentPage - 1) * pagesize, currentPage * pagesize)
-            .filter(
-              data => !search || data.title.toLowerCase().includes(search)
-            )
-        "
-        style="width: 100%"
-      >
-        <el-table-column prop="id" label="ID" width="150%"> </el-table-column>
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column prop="originId" label="ID" width="150%">
+        </el-table-column>
         <el-table-column prop="title" label="Title" width="150%">
         </el-table-column>
         <el-table-column prop="author" label="Author" width="200%">
         </el-table-column>
-        <el-table-column prop="time" label="Create Time" width="250%">
+        <el-table-column prop="createTime" label="Create Time" width="250%">
+          <template slot-scope="scope">
+            {{
+              new Date(scope.row.createTime) | dateFormat('YYYY-MM-DD HH:mm:ss')
+            }}
+          </template>
         </el-table-column>
         <el-table-column label="Visible" width="200%">
           <template slot-scope="scope">
             <el-switch
-              v-model="scope.row.status"
-              active-color="rgb(160,207,255)"
-              inactive-color="rgb(160,207,255)"
-              @change="change(scope.$index, scope.row)"
+              v-model="scope.row.visible"
+              @change="handleVisibleChange(scope.$index)"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="Operation" width="250%">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
-            >
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >下载</el-button
-            >
+            <el-button size="mini" @click="handleEdit(scope.$index)">
+              Edit
+            </el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
-              >删除</el-button
+              @click="handleDelete(scope.$index)"
             >
+              Delete
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -67,13 +61,11 @@
           class="page"
           background
           width="40%"
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[5, 10, 20, 30, 40]"
           :page-size="pagesize"
-          :total="tableData.length"
-          layout="total, sizes, prev, pager, next, jumper"
+          :total="tableInfoCnt"
+          layout="prev, pager, next"
         >
         </el-pagination>
       </div>
@@ -82,115 +74,88 @@
 </template>
 
 <script>
+import api from 'api/api';
+
 export default {
+  mounted() {
+    this.getProblems(1);
+  },
   data() {
     return {
       search: '',
-      tableData: [
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1004',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-        {
-          id: '1001',
-          title: '最大子序和',
-          author: 'lsh',
-          time: '2019-4-23 22:05:47',
-          value: true,
-        },
-      ],
+      tableData: [],
       currentPage: 1,
       pagesize: 10,
+      tableInfoCnt: 0,
     };
   },
   methods: {
-    handleSizeChange(val) {
-      this.pagesize = val;
-      this.tableData = this.allData.slice(
-        (this.currentPage - 1) * this.pagesize,
-        this.currentPage * this.pagesize
-      );
-      this.totalCount = this.allData.length;
-    },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.tableData = this.allData.slice(
-        (this.currentPage - 1) * this.pagesize,
-        this.currentPage * this.pagesize
-      );
-      this.totalCount = this.allData.length;
+      this.getProblems(val);
     },
-    handleEdit(index, row) {
-      this.$router.push(`/admin/problemupdate/${this.tableData[index].id}`);
+    handleEdit(index) {
+      this.$router.push({
+        name: 'AdminProblemUpdate',
+        params: { problem: JSON.stringify(this.tableData[index]) },
+      });
     },
-    handleDelete(index, row) {
-      this.tableData.splice(index, 1);
+    handleDelete(index) {
+      this.$confirm('Please confim your option', 'Warning', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        const problem = this.tableData[index];
+        api
+          .delProblem({
+            originId: problem.originId,
+          })
+          .then(res => {
+            const { data } = res;
+            if (data.code === 1) {
+              this.tableData.splice(index, 1);
+            }
+          });
+        this.$message({
+          type: 'success',
+          message: 'Delete success',
+        });
+      });
+    },
+    handleVisibleChange(index) {
+      const problem = this.tableData[index];
+      api
+        .updateProblemVisible({
+          originId: problem.originId,
+          visible: problem.visible,
+        })
+        .then(res => {
+          const { data } = res;
+          if (data.code !== 1) {
+            this.tableData[index].visible = !problem.visible;
+            this.$message({
+              message: 'update error',
+              type: 'error',
+            });
+          }
+        });
+    },
+    getProblems(pageNum) {
+      api
+        .getProblems({
+          page: pageNum,
+          size: this.pagesize,
+          search: this.search,
+          visible: false,
+        })
+        .then(res => {
+          let { data } = res;
+          if (data.code === 1) {
+            data = data.data;
+            this.tableInfoCnt = data.total;
+            this.tableData = data.problem_list;
+          }
+        });
     },
   },
 };
@@ -202,6 +167,9 @@ export default {
 }
 .pagination {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .divider {
   margin: 10px 0;

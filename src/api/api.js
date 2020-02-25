@@ -7,6 +7,18 @@ const api = {
   getProblem(params) {
     return axios.get('/problem/detail', { params });
   },
+  createProblem(params) {
+    return axios.post('/admin/problem/create', params);
+  },
+  delProblem(params) {
+    return axios.delete('/admin/problem/delete', { params });
+  },
+  updateProblem(params) {
+    return axios.post('/admin/problem/edit', params);
+  },
+  updateProblemVisible(params) {
+    return axios.post('/admin/problem/visible', params);
+  },
   getContests(params) {
     return axios.get('/contest/list', { params });
   },

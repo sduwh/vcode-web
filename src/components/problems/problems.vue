@@ -107,6 +107,7 @@ export default {
           page: pageNum,
           size: 10,
           search: '',
+          visible: true,
         })
         .then(res => {
           let { data } = res;
