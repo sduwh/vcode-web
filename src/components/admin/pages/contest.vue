@@ -87,13 +87,7 @@
         </el-row>
         <el-row>
           <el-form-item label="Description" prop="description">
-            <tinymce-editor
-              ref="editor"
-              valueName="description"
-              :value="contestForm.description"
-              @input="updateEditorValue"
-            >
-            </tinymce-editor>
+            <Markdown v-model="contestForm.description" :height="400" />
           </el-form-item>
         </el-row>
         <el-form-item>
@@ -115,12 +109,12 @@
 </template>
 
 <script>
-import TinymceEditor from './problem/tinymce-editor/tinymce-editor';
 import api from 'api/api';
+import Markdown from 'vue-meditor';
 
 export default {
   components: {
-    TinymceEditor,
+    Markdown,
   },
   data() {
     const validateStartTime = (rule, value, callback) => {

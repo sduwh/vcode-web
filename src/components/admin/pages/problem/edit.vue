@@ -119,12 +119,7 @@
             prop="description"
             label-width="150px"
           >
-            <tinymce-editor
-              ref="editor"
-              @input="updateEditorValue"
-              valueName="description"
-              :value="ruleForm.description"
-            ></tinymce-editor>
+            <Markdown v-model="ruleForm.description" :height="400" />
           </el-form-item>
         </el-row>
         <el-row>
@@ -133,12 +128,7 @@
             prop="input"
             label-width="150px"
           >
-            <tinymce-editor
-              ref="editor"
-              @input="updateEditorValue"
-              valueName="input"
-              :value="ruleForm.input"
-            ></tinymce-editor>
+            <Markdown v-model="ruleForm.input" :height="400" />
           </el-form-item>
         </el-row>
         <el-row>
@@ -147,12 +137,7 @@
             prop="output"
             label-width="150px"
           >
-            <tinymce-editor
-              ref="editor"
-              @input="updateEditorValue"
-              valueName="output"
-              :value="ruleForm.output"
-            ></tinymce-editor>
+            <Markdown v-model="ruleForm.output" :height="400" />
           </el-form-item>
         </el-row>
         <el-row style="border:1px solid #eee">
@@ -222,13 +207,7 @@
         </el-row>
         <el-row style="margin-top: 25px">
           <el-form-item label="Hint" prop="hint">
-            <tinymce-editor
-              ref="editor"
-              @input="updateEditorValue"
-              valueName="hint"
-              :value="ruleForm.hint"
-            >
-            </tinymce-editor>
+            <Markdown v-model="ruleForm.hint" :height="400" />
           </el-form-item>
         </el-row>
         <el-row>
@@ -297,8 +276,8 @@
 </template>
 
 <script>
-import TinymceEditor from './tinymce-editor/tinymce-editor';
 import { testCaseUploadAPI } from 'api/config';
+import Markdown from 'vue-meditor';
 
 export default {
   created() {
@@ -317,7 +296,7 @@ export default {
     }
   },
   components: {
-    TinymceEditor,
+    Markdown,
   },
   props: {
     problem: {
@@ -413,26 +392,15 @@ export default {
               High: 2,
             };
             const { difficulty } = this.$refs[formName].model;
-            this.$refs[formName].model.difficulty = difficultMap[difficulty];
-            this.$refs[formName].model.author = 'admin';
-            this.$emit('saveFubction', this.$refs[formName].model);
-            this.$refs[formName].model.difficulty = difficulty;
+            const problem = this.$refs[formName].model;
+            problem.difficulty = difficultMap[difficulty];
+            problem.author = 'admin';
+            this.$emit('saveFubction', problem);
           }
         } else {
           this.$message.error('check the input data');
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    handleInputConfirm() {
-      const { inputValue } = this;
-      if (inputValue) {
-        this.dynamicTags.push(inputValue);
-      }
-      this.inputVisible = false;
-      this.inputValue = '';
     },
     addSample() {
       this.ruleForm.sampleInput.push('');
@@ -442,9 +410,8 @@ export default {
       this.ruleForm.sampleInput.pop();
       this.ruleForm.sampleOutput.pop();
     },
-    updateEditorValue(valueName, newValue) {
-      this.ruleForm[valueName] = newValue;
-    },
+
+    // upload file
     handleUploadSuccess(response) {
       if (response.code === 1) {
         const { data } = response;

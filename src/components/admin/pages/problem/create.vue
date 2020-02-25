@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     createProblem(params) {
+      console.log(params);
       api.createProblem(params).then(res => {
         if (res.data.code === 1) {
           this.$message.success('create success');
