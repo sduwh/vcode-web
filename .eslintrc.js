@@ -14,6 +14,11 @@ module.exports = {
   //   },
   // },
   // plugins: ['vue'],
+  parserOptions: {
+    parser: 'babel-eslint',
+    ecmaVersion: 2017,
+    sourceType: 'module',
+  },
   rules: {
     'prettier/prettier': 1,
     'no-undef': 2,

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from 'store';
 
 Vue.use(Router);
 
@@ -34,7 +35,7 @@ const AdminContestProblems = () =>
   import('components/admin/pages/contest-problems');
 const AdminAbout = () => import('components/admin/pages/about/about');
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -47,51 +48,91 @@ export default new Router({
         {
           path: 'index',
           name: 'AdminIndex',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminIndex,
         },
         {
           path: 'admin',
           name: 'AdminAdmin',
+          meta: {
+            roles: ['admin'],
+            requireLogin: true,
+          },
           component: AdminAdmin,
         },
         {
           path: 'user',
           name: 'AdminUser',
+          meta: {
+            roles: ['admin'],
+            requireLogin: true,
+          },
           component: AdminUser,
         },
         {
           path: 'problem-create',
           name: 'AdminProblemCreate',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminProblemCreate,
         },
         {
           path: 'problem-update',
           name: 'AdminProblemUpdate',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminProblemUpdate,
         },
         {
           path: 'problem-list',
           name: 'AdminProblemList',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminProblemList,
         },
         {
           path: 'contest',
           name: 'AdminContest',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminContest,
         },
         {
           path: 'contest-list',
           name: 'AdminContestList',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminContestList,
         },
         {
           path: 'contest-problems',
           name: 'AdminContestProblems',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: AdminContestProblems,
         },
         {
           path: 'about',
           name: 'adminAbout',
+          meta: {
+            roles: ['admin'],
+            requireLogin: true,
+          },
           component: AdminAbout,
         },
       ],
@@ -170,16 +211,19 @@ export default new Router({
             {
               path: 'center',
               name: 'UserCenter',
+              meta: { requireLogin: true },
               component: User,
             },
             {
               path: 'edit',
               name: 'EditUserInfo',
+              meta: { requireLogin: true },
               component: UserEditInfo,
             },
             {
               path: 'change-password',
               name: 'ChangePassword',
+              meta: { requireLogin: true },
               component: UserChangePassword,
             },
           ],
@@ -188,3 +232,47 @@ export default new Router({
     },
   ],
 });
+
+function checkUserLogin(to) {
+  const { meta } = to;
+  if (meta.requireLogin === true) {
+    if (store.state.user.isLogin !== true) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkUserRole(to) {
+  const { role } = store.state.user;
+  const { meta } = to;
+  const { roles } = meta;
+  // Check the url is require authentication
+  if (roles === undefined || roles === null) return true;
+
+  if (Array.isArray(roles)) {
+    for (let i = 0; i < roles.length; i++)
+      if (role === roles[i]) {
+        return true;
+      }
+  }
+  return false;
+}
+
+router.beforeEach((to, from, next) => {
+  console.log(to);
+  if (!checkUserLogin(to)) {
+    // logout && cleanInfo && redirect login page
+    store.commit('user/setLoginStatus', false);
+    store.commit('user/logout');
+    next({ path: '/login' });
+  }
+  if (checkUserRole(to) === true) {
+    next();
+  } else {
+    // redirect 403 page
+    next({ path: '/' });
+  }
+});
+
+export default router;

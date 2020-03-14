@@ -38,78 +38,75 @@
 </template>
 
 <script>
-import api from "api/api";
+import api from 'api/api';
 
 export default {
   data() {
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
       } else {
         callback();
       }
     };
-    var validateAccount = (rule, value, callback) => {
+    const validateAccount = (rule, value, callback) => {
       console.log(value);
-      if (value === "") {
-        callback(new Error("请输入账号"));
+      if (value === '') {
+        callback(new Error('请输入账号'));
       } else {
         callback();
       }
     };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
+    const validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
       } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error('两次输入密码不一致!'));
       } else {
         callback();
       }
     };
     return {
       ruleForm: {
-        pass: "",
-        checkPass: "",
-        account: ""
+        pass: '',
+        checkPass: '',
+        account: '',
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        account: [{ validator: validateAccount, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }]
-      }
+        pass: [{ validator: validatePass, trigger: 'blur' }],
+        account: [{ validator: validateAccount, trigger: 'blur' }],
+        checkPass: [{ validator: validatePass2, trigger: 'blur' }],
+      },
     };
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let params = {
+          const params = {
             account: this.ruleForm.account,
             password: this.ruleForm.pass,
-            rePassword: this.ruleForm.checkPass
+            rePassword: this.ruleForm.checkPass,
           };
           api.signIn(params).then(res => {
-            let data = res.data;
-            if (data.code == 1) {
+            let { data } = res;
+            if (data.code === 1) {
               data = data.data;
-              this.$store.commit("user/setUserInfo", data);
-              this.$store.commit("user/setToken", data.token);
-              this.$store.commit("user/setLoginStatus", true);
-              this.$router.push("/home");
+              this.$store.commit('user/setUserInfo', data);
+              this.$store.commit('user/setToken', data.token);
+              this.$store.commit('user/setLoginStatus', true);
+              this.$router.push('/home');
             } else {
               this.$message.error(data.message);
-              return false;
             }
           });
-        } else {
-          return false;
         }
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    }
-  }
+    },
+  },
 };
 </script>
 

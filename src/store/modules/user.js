@@ -1,22 +1,28 @@
-// 尝试从sessionStorage恢复数据
+// 尝试从localStorage恢复数据
 const state = {
-  nickname: window.sessionStorage.getItem('nickname')
-    ? window.sessionStorage.getItem('nickname')
+  nickname: window.localStorage.getItem('nickname')
+    ? window.localStorage.getItem('nickname')
     : null,
-  email: window.sessionStorage.getItem('email')
-    ? window.sessionStorage.getItem('email')
+  email: window.localStorage.getItem('email')
+    ? window.localStorage.getItem('email')
     : '你还没有设置邮箱～',
-  token: window.sessionStorage.getItem('token')
-    ? window.sessionStorage.getItem('token')
+  token: window.localStorage.getItem('token')
+    ? window.localStorage.getItem('token')
     : null,
-  account: window.sessionStorage.getItem('account')
-    ? window.sessionStorage.getItem('account')
+  account: window.localStorage.getItem('account')
+    ? window.localStorage.getItem('account')
     : null,
   isLogin: JSON.parse(
-    window.sessionStorage.getItem('isLogin')
-      ? window.sessionStorage.getItem('isLogin')
+    window.localStorage.getItem('isLogin')
+      ? window.localStorage.getItem('isLogin')
       : false
   ),
+  permissions: window.localStorage.getItem('permissions')
+    ? window.localStorage.getItem('permissions')
+    : null,
+  role: window.localStorage.getItem('role')
+    ? window.localStorage.getItem('role')
+    : null,
 };
 
 const getters = {
@@ -35,41 +41,47 @@ const getters = {
   getAccount: state => {
     return state.account;
   },
+  getPermissions: state => {
+    return state.permissions;
+  },
+  getRole: state => {
+    return state.role;
+  },
 };
 
 const actions = {};
-// 信息同步至sessionStorage,防止页面刷新数据丢失造成用户体验不好
+// 信息同步至localStorage,防止页面刷新数据丢失造成用户体验不好
 const mutations = {
   setNickname(state, nickname) {
     if (nickname === undefined) {
       state.nickname = 'NULL';
-      window.sessionStorage.setItem('nickname', 'NULL');
+      window.localStorage.setItem('nickname', 'NULL');
     } else {
       state.nickname = nickname;
-      window.sessionStorage.setItem('nickname', nickname);
+      window.localStorage.setItem('nickname', nickname);
     }
   },
   setEmail(state, email) {
     if (email === undefined) {
       state.email = '';
-      window.sessionStorage.setItem('email', '你还没有设置邮箱～');
+      window.localStorage.setItem('email', '你还没有设置邮箱～');
     } else {
       state.email = email;
-      window.sessionStorage.setItem('email', email);
+      window.localStorage.setItem('email', email);
     }
   },
   setAccount(state, account) {
     if (account === undefined) {
       state.account = '';
-      window.sessionStorage.setItem('account', '');
+      window.localStorage.setItem('account', '');
     } else {
       state.account = account;
-      window.sessionStorage.setItem('account', account);
+      window.localStorage.setItem('account', account);
     }
   },
   setToken(state, token) {
     state.token = token;
-    window.sessionStorage.setItem('token', token);
+    window.localStorage.setItem('token', token);
   },
   setUserInfo(state, data) {
     mutations.setNickname(state, data.nickname);
@@ -78,17 +90,29 @@ const mutations = {
   },
   setLoginStatus(state, status) {
     state.isLogin = status;
-    window.sessionStorage.setItem('isLogin', status);
+    window.localStorage.setItem('isLogin', status);
+  },
+  setPermissions(state, user) {
+    state.permissions = user.permission;
+    window.localStorage.setItem('permissions', user.permission);
+  },
+  setRole(state, user) {
+    state.role = user.role;
+    window.localStorage.setItem('role', user.role);
   },
   logout(state) {
     mutations.setNickname(state, '');
     mutations.setEmail(state, '');
     mutations.setToken(state, '');
     mutations.setAccount(state, '');
-    window.sessionStorage.removeItem('nickname');
-    window.sessionStorage.removeItem('email');
-    window.sessionStorage.removeItem('token');
-    window.sessionStorage.removeItem('account');
+    mutations.setRole(state, { role: '' });
+    mutations.setPermissions(state, { permission: '' });
+    window.localStorage.removeItem('nickname');
+    window.localStorage.removeItem('email');
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('account');
+    window.localStorage.removeItem('permissions');
+    window.localStorage.removeItem('role');
     mutations.setLoginStatus(state, false);
   },
 };
