@@ -20,10 +20,8 @@ const User = () => import('components/user/center');
 const UserEditInfo = () => import('components/user/edit-user-info');
 const UserMain = () => import('components/user/user');
 const UserChangePassword = () => import('components/user/change-password');
-const AdminProblemCreate = () =>
-  import('components/admin/pages/problem/create');
-const AdminProblemUpdate = () =>
-  import('components/admin/pages/problem/update');
+const AdminProblemCreate = () => import('components/admin/pages/problem/create');
+const AdminProblemUpdate = () => import('components/admin/pages/problem/update');
 const AdminProblemList = () => import('components/admin/pages/problem/list');
 const AdminMain = () => import('views/v-admin');
 const AdminIndex = () => import('components/admin/pages/index');
@@ -31,8 +29,7 @@ const AdminAdmin = () => import('components/admin/pages/admin');
 const AdminUser = () => import('components/admin/pages/user');
 const AdminContest = () => import('components/admin/pages/contest');
 const AdminContestList = () => import('components/admin/pages/contest-list');
-const AdminContestProblems = () =>
-  import('components/admin/pages/contest-problems');
+const AdminContestProblems = () => import('components/admin/pages/contest-problems');
 const AdminAbout = () => import('components/admin/pages/about/about');
 
 const router = new Router({

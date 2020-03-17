@@ -1,73 +1,46 @@
 <template>
   <div>
     <el-table
-      :data="
-        tableData.filter(
-          data => !search || data.name.toLowerCase().includes(search)
-        )
-      "
+      :data="tableData.filter(data => !search || data.nickname.toLowerCase().includes(search))"
       style="width: 100%"
     >
       <el-table-column label="Account" prop="account"></el-table-column>
-      <el-table-column label="Nickname" prop="name"></el-table-column>
-      <el-table-column label="Permissions" prop="name"></el-table-column>
+      <el-table-column label="Nickname" prop="nickname"></el-table-column>
+      <el-table-column label="Role" prop="role"></el-table-column>
       <el-table-column align="right">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         </template>
         <template v-slot="scope">
-          <el-button size="mini" @click="dialogFormVisible = true"
-            >Edit</el-button
-          >
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >Delete</el-button
-          >
+          <el-button size="mini" @click="handleEdit(scope.row)">Edit</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="pagination">
       <!-- 默认每页显示10条，暂时不提供修改page-size功能 -->
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="itemTotal"
-        @current-change="handleCurrentChange"
-      >
+      <el-pagination background layout="prev, pager, next" :total="total" @current-change="handleCurrentChange">
       </el-pagination>
     </div>
 
     <el-dialog title="User" :visible.sync="dialogFormVisible">
       <el-form :model="userForm">
         <el-form-item label="Nickname" :label-width="formLabelWidth">
-          <el-input v-model="userForm.name" autocomplete="off"></el-input>
+          <el-input v-model="userForm.nickname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Email" :label-width="formLabelWidth">
-          <el-input v-model="userForm.name" autocomplete="off"></el-input>
+          <el-input v-model="userForm.email" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="Permissions" :label-width="formLabelWidth">
-          <el-select
-            v-model="userForm.value1"
-            multiple
-            placeholder="请选择"
-            style="width:100%"
-          >
-            <el-option
-              v-for="item in userForm.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
+        <el-form-item label="Role" :label-width="formLabelWidth">
+          <el-select v-model="userForm.role" placeholder="请选择">
+            <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogFormVisible = false">Cancle</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">
-          确 定
+          Save
         </el-button>
       </div>
     </el-dialog>
@@ -75,104 +48,87 @@
 </template>
 
 <script>
+import api from 'api/api';
+
 export default {
+  mounted() {
+    this.getUsers(1);
+  },
   data() {
     return {
-      itemTotal: 100,
-      tableData: [
+      total: 0,
+      tableData: [],
+      search: '',
+      pagesize: 10,
+      dialogFormVisible: false,
+      userForm: {},
+      roles: [
         {
-          account: '2016-05-02',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1518 弄',
+          value: 'teacher',
+          label: 'teacher',
         },
         {
-          account: '2016-05-04',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1517 弄',
+          value: 'caption',
+          label: 'caption',
         },
         {
-          account: '2016-05-01',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1519 弄',
+          value: 'admin',
+          label: 'admin',
         },
         {
-          account: '2016-05-03',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1516 弄',
-        },
-        {
-          account: '2016-05-02',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          account: '2016-05-04',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          account: '2016-05-01',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          account: '2016-05-02',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          account: '2016-05-02',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          account: '2016-05-02',
-          name: '王小虎',
-          permissions: '上海市普陀区金沙江路 1518 弄',
+          value: 'user',
+          label: 'user',
         },
       ],
-      search: '',
-      dialogFormVisible: false,
-      userForm: {
-        name: '',
-        options: [
-          {
-            value: '选项1',
-            label: '黄金糕',
-          },
-          {
-            value: '选项2',
-            label: '双皮奶',
-          },
-          {
-            value: '选项3',
-            label: '蚵仔煎',
-          },
-          {
-            value: '选项4',
-            label: '龙须面',
-          },
-          {
-            value: '选项5',
-            label: '北京烤鸭',
-          },
-        ],
-        value1: [],
-        value2: [],
-      },
       formLabelWidth: '120px',
     };
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(row) {
+      this.dialogFormVisible = true;
+      this.userForm = row;
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    handleCurrentChange(val) {
+      this.getUsers(val);
     },
-    handleCurrentChange: val => {
-      // Todo: 调用api获取User列表
-      console.log(val);
+    handleUserFormSave() {
+      api.updateUserInfoByAdmin(this.userForm).then(res => {
+        const { data } = res;
+        if (data.code === 1) {
+          this.$message.success('update success');
+        } else {
+          this.$message.error('update fail');
+          this.getUsers(this.currentPage);
+        }
+      });
+      this.dialogFormVisible = false;
+    },
+    handleDelete(row) {
+      api.deleteUserByAdmin(row).then(res => {
+        const { data } = res;
+        if (data.code === 1) {
+          this.$message.success('delete success');
+        } else {
+          this.$message.error('delete fail');
+        }
+        this.getUsers(this.currentPage);
+      });
+    },
+    getUsers(pageNum) {
+      api
+        .getAdmins({
+          page: pageNum,
+          size: this.pagesize,
+          search: this.search,
+        })
+        .then(res => {
+          const { data } = res;
+          if (data.code === 1) {
+            const userData = data.data;
+            this.tableData = userData.adminList;
+            this.total = userData.total;
+          }
+        });
     },
   },
 };

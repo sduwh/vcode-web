@@ -67,6 +67,18 @@ const api = {
   getAbout() {
     return axios.get('/about/doc');
   },
+  getUsers(params) {
+    return axios.get('/admin/user/list', { params });
+  },
+  getAdmins(params) {
+    return axios.get('/admin/user/admin-list', { params });
+  },
+  updateUserInfoByAdmin(params) {
+    return axios.post('/admin/user/info', params);
+  },
+  deleteUserByAdmin(params) {
+    return axios.delete('/admin/user/', { params });
+  },
 };
 
 export default api;
