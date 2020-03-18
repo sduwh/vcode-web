@@ -31,6 +31,8 @@ const AdminContest = () => import('components/admin/pages/contest');
 const AdminContestList = () => import('components/admin/pages/contest-list');
 const AdminContestProblems = () => import('components/admin/pages/contest-problems');
 const AdminAbout = () => import('components/admin/pages/about/about');
+const NoPermission = () => import('components/error/403');
+const ErrorPage = () => import('components/error/error');
 
 const router = new Router({
   mode: 'history',
@@ -225,6 +227,16 @@ const router = new Router({
             },
           ],
         },
+        {
+          path: '403',
+          name: '403',
+          component: NoPermission,
+        },
+        {
+          path: 'error',
+          name: 'Error',
+          component: ErrorPage,
+        },
       ],
     },
   ],
@@ -257,19 +269,17 @@ function checkUserRole(to) {
 }
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
   if (!checkUserLogin(to)) {
     // logout && cleanInfo && redirect login page
     store.commit('user/setLoginStatus', false);
     store.commit('user/logout');
-    next({ path: '/login' });
+    return next({ path: '/login' });
   }
   if (checkUserRole(to) === true) {
-    next();
-  } else {
-    // redirect 403 page
-    next({ path: '/' });
+    return next();
   }
+  // redirect 403 page
+  return next({ path: '/403' });
 });
 
 export default router;

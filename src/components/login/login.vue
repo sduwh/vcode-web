@@ -1,29 +1,18 @@
 <template>
   <div id="login" class="login-div">
-    <el-form
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      ref="ruleForm"
-      label-width="100px"
-      class="login-form"
-    >
-      <el-form-item><span class="login-title">登录</span></el-form-item>
-      <el-form-item label="账号" prop="account">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-form">
+      <el-form-item><span class="login-title">Login</span></el-form-item>
+      <el-form-item label="Account" prop="account">
         <el-input type="text" v-model="ruleForm.account"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass">
-        <el-input
-          type="password"
-          v-model="ruleForm.pass"
-          autocomplete="off"
-        ></el-input>
+      <el-form-item label="Password" prop="pass">
+        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">
-          提交
+          Login
         </el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
