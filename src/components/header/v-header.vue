@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import TopBar from './top-bar'
+import TopBar from './top-bar';
+
 export default {
   // props: {
   //   isHeaderShow: {
@@ -20,7 +21,7 @@ export default {
   },
 };
 </script>
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl'
   #v-header
     position fixed
