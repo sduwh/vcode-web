@@ -1,28 +1,12 @@
 // 尝试从localStorage恢复数据
 const state = {
-  nickname: window.localStorage.getItem('nickname')
-    ? window.localStorage.getItem('nickname')
-    : null,
-  email: window.localStorage.getItem('email')
-    ? window.localStorage.getItem('email')
-    : '你还没有设置邮箱～',
-  token: window.localStorage.getItem('token')
-    ? window.localStorage.getItem('token')
-    : null,
-  account: window.localStorage.getItem('account')
-    ? window.localStorage.getItem('account')
-    : null,
-  isLogin: JSON.parse(
-    window.localStorage.getItem('isLogin')
-      ? window.localStorage.getItem('isLogin')
-      : false
-  ),
-  permissions: window.localStorage.getItem('permissions')
-    ? window.localStorage.getItem('permissions')
-    : null,
-  role: window.localStorage.getItem('role')
-    ? window.localStorage.getItem('role')
-    : null,
+  nickname: window.localStorage.getItem('nickname') ? window.localStorage.getItem('nickname') : null,
+  email: window.localStorage.getItem('email') ? window.localStorage.getItem('email') : '你还没有设置邮箱～',
+  token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : null,
+  account: window.localStorage.getItem('account') ? window.localStorage.getItem('account') : null,
+  isLogin: JSON.parse(window.localStorage.getItem('isLogin') ? window.localStorage.getItem('isLogin') : false),
+  permissions: window.localStorage.getItem('permissions') ? window.localStorage.getItem('permissions') : null,
+  role: window.localStorage.getItem('role') ? window.localStorage.getItem('role') : null,
 };
 
 const getters = {

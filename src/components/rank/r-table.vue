@@ -31,9 +31,7 @@ export default {
   methods: {
     calcRate(row) {
       if (row.submission_number) {
-        const tempNumber = parseInt(
-          (row.accepted_number / row.submission_number) * 100
-        );
+        const tempNumber = parseInt((row.accepted_number / row.submission_number) * 100);
         return `${tempNumber}%`;
       }
       return '';

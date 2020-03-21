@@ -4,7 +4,7 @@
       <el-header v-show="isHeaderShow">
         <v-header />
       </el-header>
-      <el-main>
+      <el-main class="main">
         <router-view />
       </el-main>
       <el-footer v-show="isFooterShow">
@@ -81,7 +81,17 @@ export default {
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-@import '~common/stylus/variable.styl'
-  #v-main, .el-container, .el-header, .el-main, .el-footer
-    min-width $page-min-width
+// @import '~common/stylus/variable.styl'
+//   #v-main, .el-container, .el-header, .el-main, .el-footer
+//     min-width $page-min-width
+.main {
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid rgba(100, 100, 100, .1);
+  box-shadow: 0px 0px 5px rgba(100, 100, 100, .1);
+  background-color: #fff
+}
+#v-main{
+  background-color: rgba(100, 100, 100, 0.01)
+}
 </style>

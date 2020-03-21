@@ -44,10 +44,7 @@ export default {
   },
   methods: {
     solveTableInfo() {
-      let len =
-        this.tableLimit < this.tableInfoCnt
-          ? this.tableLimit
-          : this.tableInfoCnt;
+      const len = this.tableLimit < this.tableInfoCnt ? this.tableLimit : this.tableInfoCnt;
       this.tableInfo = this.tableInfo.slice(0, len);
     },
     initPaginationInfo() {

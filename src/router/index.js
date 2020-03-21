@@ -8,12 +8,12 @@ const VMain = () => import('views/v-main');
 const Home = () => import('components/home/home');
 const Problems = () => import('components/problems/problems');
 const Contests = () => import('components/contests/contests');
+const Contest = () => import('components/contests/contest');
 const Status = () => import('components/status/status');
 const Rank = () => import('components/rank/rank');
 const Notice = () => import('components/notice/notice');
 const About = () => import('components/about/about');
 const ProblemDetail = () => import('components/problems/problem-detail');
-const ConTestDetail = () => import('components/contests/contest-detail');
 const Login = () => import('components/login/login');
 const SignIn = () => import('components/login/signIn');
 const User = () => import('components/user/center');
@@ -160,6 +160,11 @@ const router = new Router({
           component: Contests,
         },
         {
+          path: 'contest/:id',
+          name: 'Contest',
+          component: Contest,
+        },
+        {
           path: 'status',
           name: 'Status',
           component: Status,
@@ -183,11 +188,6 @@ const router = new Router({
           path: 'problem/:id',
           name: 'ProblemDetail',
           component: ProblemDetail,
-        },
-        {
-          path: 'contest/:id',
-          name: 'ConTestDetail',
-          component: ConTestDetail,
         },
         {
           path: '/login',

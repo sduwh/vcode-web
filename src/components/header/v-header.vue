@@ -31,4 +31,5 @@ export default {
     min-width $page-min-width
     z-index $z-index-regular
     background-color $color-background-theme
+    box-shadow: 0px 0px 5px rgba(100, 100, 100, .1);
 </style>
