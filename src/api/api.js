@@ -7,6 +7,18 @@ const api = {
   getProblem(params) {
     return axios.get('/problem/detail', { params });
   },
+  createProblem(params) {
+    return axios.post('/admin/problem/create', params);
+  },
+  delProblem(params) {
+    return axios.delete('/admin/problem/delete', { params });
+  },
+  updateProblem(params) {
+    return axios.post('/admin/problem/edit', params);
+  },
+  updateProblemVisible(params) {
+    return axios.post('/admin/problem/visible', params);
+  },
   getContests(params) {
     return axios.get('/contest/list', { params });
   },
@@ -48,6 +60,24 @@ const api = {
   },
   signIn(params) {
     return axios.post('/user/sign_in', params);
+  },
+  editAbout(params) {
+    return axios.post('/about/doc', params);
+  },
+  getAbout() {
+    return axios.get('/about/doc');
+  },
+  getUsers(params) {
+    return axios.get('/admin/user/list', { params });
+  },
+  getAdmins(params) {
+    return axios.get('/admin/user/admin-list', { params });
+  },
+  updateUserInfoByAdmin(params) {
+    return axios.post('/admin/user/info', params);
+  },
+  deleteUserByAdmin(params) {
+    return axios.delete('/admin/user/', { params });
   },
 };
 

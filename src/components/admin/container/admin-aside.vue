@@ -29,14 +29,18 @@
         <template slot="title">
           <i class="el-icon-star-off"></i>Problem
         </template>
-        <el-menu-item index="problemlist">ProblemList</el-menu-item>
-        <el-menu-item index="problemcreate">Create</el-menu-item>
+        <el-menu-item index="problem-list">ProblemList</el-menu-item>
+        <el-menu-item index="problem-create">Create</el-menu-item>
       </el-submenu>
       <el-submenu index="contest-menu">
         <template slot="title"><i class="el-icon-medal"></i>Contest</template>
         <el-menu-item index="contest-list">ContestList</el-menu-item>
         <el-menu-item index="contest">Create</el-menu-item>
       </el-submenu>
+      <el-menu-item index="about">
+        <i class="el-icon-warning-outline"></i>
+        <span slot="title">About</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

@@ -1,30 +1,18 @@
 <template>
   <div id="login" class="login-div">
-    <el-form
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      ref="ruleForm"
-      label-width="100px"
-      class="login-form"
-    >
-      <el-form-item><span class="login-title">登录</span></el-form-item>
-      <el-form-item label="账号" prop="account">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-form">
+      <el-form-item><span class="login-title">Login</span></el-form-item>
+      <el-form-item label="Account" prop="account">
         <el-input type="text" v-model="ruleForm.account"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass">
-        <el-input
-          type="password"
-          v-model="ruleForm.pass"
-          autocomplete="off"
-        ></el-input>
+      <el-form-item label="Password" prop="pass">
+        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
       </el-form-item>
-
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >提交</el-button
-        >
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">
+          Login
+        </el-button>
+        <el-button @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -39,8 +27,8 @@ export default {
       // 检查密码
       if (value === '') {
         callback(new Error('请输入密码'));
-        // } else if (value.length < 10) {
-        //   callback(new Error("密码长度小于10"));
+      } else if (value.length < 6) {
+        callback(new Error('密码长度小于6'));
       } else {
         callback();
       }
@@ -77,10 +65,11 @@ export default {
             let { data } = res;
             if (data.code === 1) {
               data = data.data;
-              console.log(data);
-              this.$store.commit('user/setUserInfo', data);
+              this.$store.commit('user/setUserInfo', data.user);
               this.$store.commit('user/setToken', data.token);
               this.$store.commit('user/setLoginStatus', true);
+              this.$store.commit('user/setPermissions', data.user);
+              this.$store.commit('user/setRole', data.user);
               this.$router.push('/home');
             } else {
               this.$message.error(data.message);

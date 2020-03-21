@@ -87,8 +87,7 @@
         </el-row>
         <el-row>
           <el-form-item label="Description" prop="description">
-            <tinymce-editor ref="editor" v-model="contestForm.description">
-            </tinymce-editor>
+            <Markdown v-model="contestForm.description" :height="400" />
           </el-form-item>
         </el-row>
         <el-form-item>
@@ -110,12 +109,12 @@
 </template>
 
 <script>
-import TinymceEditor from './problem/tinymce-editor/tinymce-editor';
 import api from 'api/api';
+import Markdown from 'vue-meditor';
 
 export default {
   components: {
-    TinymceEditor,
+    Markdown,
   },
   data() {
     const validateStartTime = (rule, value, callback) => {
@@ -167,7 +166,6 @@ export default {
         if (valid) {
           const form = this.$refs[formName].model;
           form.ownerAccount = 'admin';
-          console.log(form);
           api.createContest(form).then(res => {
             const { data } = res;
             if (data.code === 1) {
@@ -186,6 +184,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    updateEditorValue(valueName, newValue) {
+      this.contestForm[valueName] = newValue;
     },
   },
   watch: {

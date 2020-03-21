@@ -2,22 +2,14 @@
   <div id="problems">
     <el-row type="flex" justify="sapce-around">
       <el-col :sm="24" :md="18">
-        <table-wrap
-          :title="title"
-          :paginationInfo="paginationInfo"
-          @handleChangePage="getProblems($event, pageNum)"
-        >
+        <table-wrap :title="title" :paginationInfo="paginationInfo" @handleChangePage="getProblems($event, pageNum)">
           <template #mode>
             <div class="mode">
               <el-tag type="info" size="mini">Upgrade</el-tag>
             </div>
           </template>
           <template #table>
-            <p-table
-              v-loading="loadingStatus"
-              :tableInfo="tableInfo"
-              :tableLimit="tableLimit"
-            ></p-table>
+            <p-table v-loading="loadingStatus" :tableInfo="tableInfo" :tableLimit="tableLimit"></p-table>
           </template>
         </table-wrap>
       </el-col>
@@ -86,9 +78,7 @@ export default {
             // eslint-disable-next-line prefer-template
             (tableInfo[i].submissionNumber === 0
               ? 0
-              : (
-                  tableInfo[i].acceptedNumber / tableInfo[i].submissionNumber
-                ).toFixed(2)) + '%',
+              : (tableInfo[i].acceptedNumber / tableInfo[i].submissionNumber).toFixed(2)) + '%',
           // tagShow: tableInfo[i].tags[0],
         });
 
@@ -107,6 +97,7 @@ export default {
           page: pageNum,
           size: 10,
           search: '',
+          visible: true,
         })
         .then(res => {
           let { data } = res;

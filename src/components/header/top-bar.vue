@@ -16,11 +16,7 @@
               :default-active="this.$route.path"
               router
             >
-              <el-col
-                :span="navInfo.col"
-                v-for="(navInfo, index) in nav"
-                :key="index"
-              >
+              <el-col :span="navInfo.col" v-for="(navInfo, index) in nav" :key="index">
                 <el-menu-item :index="navInfo.path" class="grid-content"
                   ><span>{{ navInfo.name }}</span></el-menu-item
                 >
@@ -32,34 +28,18 @@
       <el-col :md="3" class="logInfo hidden-sm-and-down">
         <template>
           <div style="display:flex;">
-            <div
-              v-if="this.$store.state.user.isLogin == false"
-              class="log"
-              @click="login"
-            >
+            <div v-if="this.$store.state.user.isLogin == false" class="log" @click="login">
               <span>Login</span>
             </div>
-            <div
-              v-if="this.$store.state.user.isLogin === false"
-              class="log"
-              @click="siginIn"
-            >
+            <div v-if="this.$store.state.user.isLogin === false" class="log" @click="siginIn">
               <span>Sign in</span>
             </div>
 
             <!-- logined -->
-            <div
-              v-if="this.$store.state.user.isLogin === true"
-              class="log"
-              @click="userCenter"
-            >
+            <div v-if="this.$store.state.user.isLogin === true" class="log" @click="userCenter">
               <span>{{ this.$store.state.user.nickname }}</span>
             </div>
-            <div
-              v-if="this.$store.state.user.isLogin === true"
-              class="log"
-              @click="logout"
-            >
+            <div v-if="this.$store.state.user.isLogin === true" class="log" @click="logout">
               <span>Logout</span>
             </div>
           </div>

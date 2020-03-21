@@ -85,7 +85,7 @@ export default {
 //   #v-main, .el-container, .el-header, .el-main, .el-footer
 //     min-width $page-min-width
 .main {
-  width: 85%;
+  width: 90%;
   margin: 0 auto;
   border: 1px solid rgba(100, 100, 100, .1);
   box-shadow: 0px 0px 5px rgba(100, 100, 100, .1);
