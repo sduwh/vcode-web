@@ -3,17 +3,12 @@
     <el-table :data="tableInfo" style="width: 100%">
       <el-table-column prop="id" label="#" width="120">
         <template slot-scope="scope">
-          <router-link
-            :to="{ name: 'ProblemDetail', params: { id: scope.row.id } }"
-            >{{ scope.row.id }}</router-link
-          >
+          <router-link :to="{ name: 'ProblemDetail', params: { id: scope.row.id } }">{{ scope.row.id }}</router-link>
         </template>
       </el-table-column>
       <el-table-column prop="title" label="Title">
         <template slot-scope="scope">
-          <router-link
-            :to="{ name: 'ProblemDetail', params: { id: scope.row.id } }"
-          >
+          <router-link :to="{ name: 'ProblemDetail', params: { id: scope.row.id } }">
             {{ scope.row.title }}
           </router-link>
         </template>
@@ -27,16 +22,8 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="submissionNumber"
-        label="Total"
-        width="120"
-      ></el-table-column>
-      <el-table-column
-        prop="ac_rate"
-        label="AC Rate"
-        width="120"
-      ></el-table-column>
+      <el-table-column prop="submissionNumber" label="Total" width="120"></el-table-column>
+      <el-table-column prop="ac_rate" label="AC Rate" width="120"></el-table-column>
       <!-- <el-table-column prop="tags" label="Tags" width='120'>
         <template slot-scope="scope">
           <div slot="reference">

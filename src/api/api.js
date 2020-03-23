@@ -41,10 +41,13 @@ const api = {
     return axios.delete('/contest/problem', { params });
   },
   getSubmissions(params) {
-    return axios.get('/submissions', params);
+    return axios.get('/submission/problem/user', { params });
   },
   getSubmission(params) {
     return axios.get('/submission', params);
+  },
+  uploadSubmussion(params) {
+    return axios.post('/submission', params);
   },
   getRank(params) {
     return axios.get('/rank', params);
