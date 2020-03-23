@@ -5,9 +5,7 @@
         <span @click="changeTab" class="description" ref="description">
           <i class="el-icon-reading"></i> Description
         </span>
-        <span @click="changeTab" class="submission" ref="submission">
-          <i class="el-icon-timer"></i> Submission
-        </span>
+        <span @click="changeTab" class="submission" ref="submission"> <i class="el-icon-timer"></i> Submission </span>
         <!-- <span @click="changeTab" class="discuss" ref="discuss">
           <i class="el-icon-chat-line-round"></i> Discuss
         </span> -->
@@ -15,11 +13,7 @@
       <div class="v-panel">
         <div class="virtual-header">virtual header</div>
         <keep-alive>
-          <component
-            :is="componentId"
-            :title="'bind title'"
-            :paginationInfo="{}"
-          ></component>
+          <component :is="componentId" :title="'bind title'" :paginationInfo="{}"></component>
         </keep-alive>
       </div>
     </div>

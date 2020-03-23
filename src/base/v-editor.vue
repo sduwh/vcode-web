@@ -4,30 +4,21 @@
       <div class="e-tab">
         <div class="language">
           <el-select size="mini" v-model="lableValue">
-            <el-option
-              v-for="item in language"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
+            <el-option v-for="item in language" :key="item.value" :label="item.label" :value="item.value"> </el-option>
           </el-select>
         </div>
       </div>
       <div class="e-panel">
         <div class="virtual-header">virtual header</div>
         <div class="editor">
-          <codemirror :value="code" ref="myEditor" :options="editorOption">
-          </codemirror>
+          <codemirror v-model="code" ref="myEditor" :options="editorOption"></codemirror>
         </div>
       </div>
     </div>
     <div class="footer">
       <div class="console-btn">
         <el-button size="mini" @click="changeIsConsoleShow">Console</el-button>
-        <el-button size="mini" type="primary" @click="handleSubmitClick"
-          >Submit</el-button
-        >
+        <el-button size="mini" type="primary" @click="handleSubmitClick">Submit</el-button>
       </div>
       <div class="console-body" v-show="isConsoleShow">
         <div class="result">['a', 'b', 'c']</div>
@@ -38,6 +29,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror-lite';
+import api from 'api/api';
 
 require('codemirror/mode/python/python');
 require('codemirror/mode/clike/clike');
@@ -52,10 +44,11 @@ export default {
   mounted() {
     this.editor.focus();
     this.editor.setSize('auto', 'auto');
+    console.log(this.$route.params.id);
   },
   data() {
     return {
-      lableValue: 'C++',
+      lableValue: 'text/x-c++src',
       language: [
         {
           label: 'C++',
@@ -84,11 +77,27 @@ export default {
     },
     handleSubmitClick() {
       // 如果代码为空，则不发起网络请求
-      if (this.editor.getValue().length == 0) {
+      if (this.editor.getValue().length === 0) {
         this.$message({ message: '请输入代码', type: 'warning' });
       } else {
-        console.log('submit');
+        api
+          .uploadSubmussion({
+            problemOriginId: this.$route.params.id,
+            language: this.mapLanguage(this.editorOption.mode),
+            code: this.code,
+          })
+          .then(res => {
+            console.log(res);
+          });
       }
+    },
+    mapLanguage(mode) {
+      for (let i = 0; i < this.language.length; i++) {
+        if (this.language[i].value === mode) {
+          return this.language[i].label.toLowerCase();
+        }
+      }
+      return '';
     },
   },
   computed: {

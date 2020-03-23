@@ -187,6 +187,10 @@ const router = new Router({
         {
           path: 'problem/:id',
           name: 'ProblemDetail',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
           component: ProblemDetail,
         },
         {

@@ -44,9 +44,7 @@
       </el-table-column>
       <el-table-column label="StartTime" width="170" v-slot="scope">
         <div v-show="scope.row.startTime !== null">
-          {{
-            new Date(scope.row.startTime) | dateFormat('YYYY-MM-DD HH:mm:ss')
-          }}
+          {{ new Date(scope.row.startTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}
         </div>
       </el-table-column>
 
@@ -58,21 +56,13 @@
       <el-table-column label="Owner" prop="owner"></el-table-column>
       <el-table-column align="right" width="300">
         <template #header>
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="Title's keyword"
-            @input="getContestList(1)"
-          />
+          <el-input v-model="search" size="mini" placeholder="Title's keyword" @input="getContestList(1)" />
         </template>
         <template v-slot="scope">
           <el-button size="mini" @click="handleEdit(scope)">
             Edit
           </el-button>
-          <el-button
-            size="mini"
-            @click="handleEditContestProblems(scope.row.name)"
-          >
+          <el-button size="mini" @click="handleEditContestProblems(scope.row.name)">
             Problems
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">
@@ -100,22 +90,14 @@
           <el-input v-model="contestForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="always" :label-width="formLabelWidth">
-          <el-radio v-model="contestForm.always" :label="true"
-            >Always open</el-radio
-          >
-          <el-radio v-model="contestForm.always" :label="false"
-            >Time limit</el-radio
-          >
+          <el-radio v-model="contestForm.always" :label="true">Always open</el-radio>
+          <el-radio v-model="contestForm.always" :label="false">Time limit</el-radio>
         </el-form-item>
         <el-form-item label="isLock" :label-width="formLabelWidth">
           <el-radio v-model="contestForm.lock" :label="true">Lock</el-radio>
           <el-radio v-model="contestForm.lock" :label="false">UnLock</el-radio>
         </el-form-item>
-        <el-form-item
-          v-show="contestForm.lock"
-          label="password"
-          :label-width="formLabelWidth"
-        >
+        <el-form-item v-show="contestForm.lock" label="password" :label-width="formLabelWidth">
           <el-input
             placeholder="The max-length of password is ten."
             maxlength="10"
@@ -124,27 +106,11 @@
             show-password
           ></el-input>
         </el-form-item>
-        <el-form-item
-          v-show="contestForm.always == false"
-          label="startTime"
-          :label-width="formLabelWidth"
-        >
-          <el-date-picker
-            v-model="contestForm.startTime"
-            type="datetime"
-            placeholder="选择日期时间"
-          />
+        <el-form-item v-show="contestForm.always == false" label="startTime" :label-width="formLabelWidth">
+          <el-date-picker v-model="contestForm.startTime" type="datetime" placeholder="选择日期时间" />
         </el-form-item>
-        <el-form-item
-          v-show="contestForm.always == false"
-          label="endTime"
-          :label-width="formLabelWidth"
-        >
-          <el-date-picker
-            v-model="contestForm.endTime"
-            type="datetime"
-            placeholder="选择日期时间"
-          />
+        <el-form-item v-show="contestForm.always == false" label="endTime" :label-width="formLabelWidth">
+          <el-date-picker v-model="contestForm.endTime" type="datetime" placeholder="选择日期时间" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -224,13 +190,7 @@ export default {
         });
     },
     handleSave() {
-      if (
-        this.checkTime(
-          this.contestForm.always,
-          this.contestForm.startTime,
-          this.contestForm.endTime
-        )
-      ) {
+      if (this.checkTime(this.contestForm.always, this.contestForm.startTime, this.contestForm.endTime)) {
         this.dialogFormVisible = false;
         api.editContest(this.contestForm).then(res => {
           const { data } = res;

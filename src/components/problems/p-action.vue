@@ -13,7 +13,12 @@
         </el-form-item>
         <el-form-item label="难度">
           <el-select v-model="level" placeholder="难度">
-            <el-option v-for="(level, index) in actionInfo.difficulty" :key="index" :label="level" :value="level"></el-option>
+            <el-option
+              v-for="(level, index) in actionInfo.difficulty"
+              :key="index"
+              :label="level"
+              :value="level"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="模式">
@@ -31,7 +36,7 @@
 
 <script>
 export default {
-  props: ["actionInfo"],
+  props: ['actionInfo'],
   data() {
     return {
       search: '',
@@ -44,7 +49,7 @@ export default {
 };
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl';
 
 #p-action {

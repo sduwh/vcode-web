@@ -24,11 +24,7 @@
           <div class="out-desc" v-html="problemInfo.sampleOutput"></div>
         </div>
       </div>
-      <div
-        class="example"
-        v-for="(sample, index) in problemInfo.samples"
-        :key="index"
-      >
+      <div class="example" v-for="(sample, index) in problemInfo.samples" :key="index">
         <div class="num">{{ `Example${index + 1}` }}</div>
         <div class="put-wrap">
           <div class="input">
