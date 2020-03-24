@@ -20,7 +20,16 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'prettier/prettier': 1,
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        trailingComma: 'none',
+        bracketSpacing: true,
+        jsxBracketSameLine: true,
+        parser: 'flow',
+      },
+    ],
     'no-undef': 2,
     'no-extend-native': 2,
     'no-return-assign': 2,

@@ -2,9 +2,7 @@
   <div>
     <div class="header">
       <div class="theader">
-        <el-row
-          style="height:100%; font-size:18px; color:grey; line-height:38px"
-        >
+        <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
           <el-col :span="18">
             <div>{{ title }}</div>
           </el-col>
@@ -13,71 +11,32 @@
       <el-divider></el-divider>
     </div>
     <div class="body">
-      <el-form
-        ref="ruleForm"
-        :model="ruleForm"
-        :rules="rules"
-        label-width="140px"
-        label-position="left"
-      >
+      <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="140px" label-position="left">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="Problem ID"
-              prop="originId"
-              label-width="150px"
-            >
-              <el-input
-                v-model="ruleForm.originId"
-                placeholder="ID"
-                maxlength="5"
-                show-word-limit
-              >
-              </el-input>
+            <el-form-item label="Problem ID" prop="originId" label-width="150px">
+              <el-input v-model="ruleForm.originId" placeholder="ID" maxlength="5" show-word-limit> </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="16">
-            <el-form-item
-              label="Problem Title"
-              prop="title"
-              label-width="150px"
-            >
-              <el-input
-                v-model="ruleForm.title"
-                placeholder="Title"
-                maxlength="20"
-                show-word-limit
-              >
-              </el-input>
+            <el-form-item label="Problem Title" prop="title" label-width="150px">
+              <el-input v-model="ruleForm.title" placeholder="Title" maxlength="20" show-word-limit> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="Time Limit(ms)"
-              prop="timeLimit"
-              label-width="150px"
-            >
+            <el-form-item label="Time Limit(ms)" prop="timeLimit" label-width="150px">
               <el-input type="number" v-model="ruleForm.timeLimit"> </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="Memory limit(MB)"
-              prop="memoryLimit"
-              label-width="150px"
-            >
-              <el-input type="number" v-model="ruleForm.memoryLimit">
-              </el-input>
+            <el-form-item label="Memory limit(MB)" prop="memoryLimit" label-width="150px">
+              <el-input type="number" v-model="ruleForm.memoryLimit"> </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="Difficulty"
-              prop="difficulty"
-              label-width="150px"
-            >
+            <el-form-item label="Difficulty" prop="difficulty" label-width="150px">
               <el-select v-model="ruleForm.difficulty" style="margin:-50px;">
                 <el-option label="Low" value="Low"></el-option>
                 <el-option label="Mid" value="Mid"></el-option>
@@ -88,12 +47,7 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4">
-            <el-form-item
-              label="Visible"
-              prop="Visible"
-              style="margin-left:30px"
-              label-width="60px"
-            >
+            <el-form-item label="Visible" prop="Visible" style="margin-left:30px" label-width="60px">
               <el-switch v-model="ruleForm.visible"></el-switch>
             </el-form-item>
           </el-col>
@@ -114,36 +68,22 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item
-            label="Description"
-            prop="description"
-            label-width="150px"
-          >
+          <el-form-item label="Description" prop="description" label-width="150px">
             <Markdown v-model="ruleForm.description" :height="400" />
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item
-            label="Input Description"
-            prop="input"
-            label-width="150px"
-          >
+          <el-form-item label="Input Description" prop="input" label-width="150px">
             <Markdown v-model="ruleForm.input" :height="400" />
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item
-            label="Output Description"
-            prop="output"
-            label-width="150px"
-          >
+          <el-form-item label="Output Description" prop="output" label-width="150px">
             <Markdown v-model="ruleForm.output" :height="400" />
           </el-form-item>
         </el-row>
         <el-row style="border:1px solid #eee">
-          <h2
-            style="height:100%; font-size:18px; margin-top:20px; color:#606266; text-align:center"
-          >
+          <h2 style="height:100%; font-size:18px; margin-top:20px; color:#606266; text-align:center">
             Samples
           </h2>
           <el-divider></el-divider>
@@ -160,12 +100,7 @@
                   trigger: 'blur',
                 }"
               >
-                <el-input
-                  type="textarea"
-                  :rows="3"
-                  placeholder="Input Samples"
-                  v-model="ruleForm.sampleInput[index]"
-                >
+                <el-input type="textarea" :rows="3" placeholder="Input Samples" v-model="ruleForm.sampleInput[index]">
                 </el-input>
               </el-form-item>
             </el-col>
@@ -181,26 +116,14 @@
                   trigger: 'blur',
                 }"
               >
-                <el-input
-                  type="textarea"
-                  :rows="3"
-                  placeholder="Output Samples"
-                  v-model="ruleForm.sampleOutput[index]"
-                >
+                <el-input type="textarea" :rows="3" placeholder="Output Samples" v-model="ruleForm.sampleOutput[index]">
                 </el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row style="text-align:center; margin: 20px">
-            <el-button type="primary" style="width:40%" plain @click="addSample"
-              >Add New Sample</el-button
-            >
-            <el-button
-              type="warning"
-              style="width:40%"
-              plain
-              @click="deleteSample"
-            >
+            <el-button type="primary" style="width:40%" plain @click="addSample">Add New Sample</el-button>
+            <el-button type="warning" style="width:40%" plain @click="deleteSample">
               Delete Last Sample
             </el-button>
           </el-row>
@@ -424,9 +347,7 @@ export default {
       this.$message.error(err);
     },
     handleOnExceed() {
-      this.$message.error(
-        'the files number limit 1, please remove ohter files'
-      );
+      this.$message.error('the files number limit 1, please remove ohter files');
     },
     handleOnRemove() {
       this.ruleForm.testCaseId = '';

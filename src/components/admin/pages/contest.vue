@@ -2,9 +2,7 @@
   <div>
     <div class="header">
       <div class="theader">
-        <el-row
-          style="height:100%; font-size:18px; color:grey; line-height:38px"
-        >
+        <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
           <el-col :span="18">
             <div>Create Contest</div>
           </el-col>
@@ -13,34 +11,17 @@
       <el-divider></el-divider>
     </div>
     <div class="body">
-      <el-form
-        ref="contestForm"
-        :model="contestForm"
-        :rules="rules"
-        label-width="140px"
-        label-position="left"
-      >
+      <el-form ref="contestForm" :model="contestForm" :rules="rules" label-width="140px" label-position="left">
         <el-row :gutter="20">
           <el-col :span="16">
             <el-form-item label="Contest Title" prop="name">
-              <el-input
-                v-model="contestForm.name"
-                placeholder="Title"
-                maxlength="30"
-                show-word-limit
-              >
-              </el-input>
+              <el-input v-model="contestForm.name" placeholder="Title" maxlength="30" show-word-limit> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="10">
-            <el-form-item
-              label="Lock"
-              prop="isLock"
-              style="margin-left:80px"
-              label-width="60px"
-            >
+            <el-form-item label="Lock" prop="isLock" style="margin-left:80px" label-width="60px">
               <el-switch v-model="contestForm.isLock"></el-switch>
             </el-form-item>
           </el-col>
@@ -50,11 +31,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row
-          :gutter="20"
-          style="margin-left:50px"
-          v-show="contestForm.isLock"
-        >
+        <el-row :gutter="20" style="margin-left:50px" v-show="contestForm.isLock">
           <el-form-item label="Password" label-width="90px" prop="password">
             <el-input
               placeholder="请输入密码"
@@ -65,24 +42,12 @@
             ></el-input>
           </el-form-item>
         </el-row>
-        <el-row
-          :gutter="20"
-          style="margin-left:50px"
-          v-show="contestForm.always === false"
-        >
+        <el-row :gutter="20" style="margin-left:50px" v-show="contestForm.always === false">
           <el-form-item label="Start Time" label-width="90px" prop="startTime">
-            <el-date-picker
-              v-model="contestForm.startTime"
-              type="datetime"
-              placeholder="Start Time"
-            />
+            <el-date-picker v-model="contestForm.startTime" type="datetime" placeholder="Start Time" />
           </el-form-item>
           <el-form-item label="End Time" label-width="90px" prop="endTime">
-            <el-date-picker
-              v-model="contestForm.endTime"
-              type="datetime"
-              placeholder="End Time"
-            />
+            <el-date-picker v-model="contestForm.endTime" type="datetime" placeholder="End Time" />
           </el-form-item>
         </el-row>
         <el-row>
@@ -92,15 +57,8 @@
         </el-row>
         <el-form-item>
           <div class="button-area">
-            <el-button style="width:140px" @click="resetForm('contestForm')"
-              >Reset Form</el-button
-            >
-            <el-button
-              style="width:140px"
-              type="primary"
-              @click="submitForm('contestForm')"
-              >Create</el-button
-            >
+            <el-button style="width:140px" @click="resetForm('contestForm')">Reset Form</el-button>
+            <el-button style="width:140px" type="primary" @click="submitForm('contestForm')">Create</el-button>
           </div>
         </el-form-item>
       </el-form>

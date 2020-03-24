@@ -14,18 +14,10 @@
               class="edit-form-body"
             >
               <el-form-item label="昵称" prop="nickname">
-                <el-input
-                  type="text"
-                  v-model="ruleForm.nickname"
-                  autocomplete="off"
-                ></el-input>
+                <el-input type="text" v-model="ruleForm.nickname" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="邮箱" prop="email">
-                <el-input
-                  type="text"
-                  v-model="ruleForm.email"
-                  autocomplete="off"
-                ></el-input>
+                <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item class="form-button">
                 <el-button type="primary" @click="submitForm('ruleForm')">

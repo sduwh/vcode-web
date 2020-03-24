@@ -2,9 +2,7 @@
   <div>
     <div class="header">
       <div class="theader">
-        <el-row
-          style="height:100%; font-size:18px; color:grey; line-height:38px"
-        >
+        <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
           <el-col :span="18">
             <div>About</div>
           </el-col>
@@ -13,12 +11,7 @@
       <el-divider></el-divider>
     </div>
     <div class="body">
-      <el-form
-        ref="dataForm"
-        :model="dataForm"
-        :rules="rules"
-        label-position="left"
-      >
+      <el-form ref="dataForm" :model="dataForm" :rules="rules" label-position="left">
         <el-row>
           <el-form-item prop="doc">
             <MarkdownPro v-model="dataForm.doc"></MarkdownPro>
@@ -29,12 +22,7 @@
             <el-button style="width:140px" @click="resetForm('dataForm')">
               Reset Form
             </el-button>
-            <el-button
-              style="width:140px"
-              type="primary"
-              @click="submitForm('dataForm')"
-              >Update</el-button
-            >
+            <el-button style="width:140px" type="primary" @click="submitForm('dataForm')">Update</el-button>
           </div>
         </el-form-item>
       </el-form>

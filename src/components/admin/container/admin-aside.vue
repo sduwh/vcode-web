@@ -1,19 +1,9 @@
 <template>
   <div id="aside" class="aside">
-    <el-menu
-      style="height:100%"
-      :router="true"
-      :default-active="activeIndex"
-      @select="handleSelect"
-      unique-opened
-    >
+    <el-menu style="height:100%" :router="true" :default-active="activeIndex" @select="handleSelect" unique-opened>
       <div class="demo-image image">
         <div class="block" v-for="fit in fits" :key="fit">
-          <el-image
-            style="width: 100px; height: 100px; border-radius: 50%"
-            :src="url"
-            :fit="fit"
-          ></el-image>
+          <el-image style="width: 100px; height: 100px; border-radius: 50%" :src="url" :fit="fit"></el-image>
         </div>
       </div>
       <el-menu-item index="index">
@@ -26,9 +16,7 @@
         <el-menu-item index="user">user</el-menu-item>
       </el-submenu>
       <el-submenu index="problem-menu">
-        <template slot="title">
-          <i class="el-icon-star-off"></i>Problem
-        </template>
+        <template slot="title"> <i class="el-icon-star-off"></i>Problem </template>
         <el-menu-item index="problem-list">ProblemList</el-menu-item>
         <el-menu-item index="problem-create">Create</el-menu-item>
       </el-submenu>

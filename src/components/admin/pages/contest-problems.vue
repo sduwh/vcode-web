@@ -1,19 +1,13 @@
 <template>
   <div>
-    <el-page-header
-      @back="goBack"
-      title="Back"
-      :content="contestName"
-    ></el-page-header>
+    <el-page-header @back="goBack" title="Back" :content="contestName"></el-page-header>
     <el-table :data="problemTable" style="width: 100%">
       <el-table-column label="OriginId" prop="originId"> </el-table-column>
       <el-table-column label="Title" prop="title"> </el-table-column>
       <el-table-column label="Author" prop="author"> </el-table-column>
       <el-table-column align="right">
         <template slot="header">
-          <el-button size="mini" @click="handleAddProblemsButton()"
-            >Add Problem</el-button
-          >
+          <el-button size="mini" @click="handleAddProblemsButton()">Add Problem</el-button>
         </template>
         <template slot-scope="scope">
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">
@@ -25,8 +19,7 @@
 
     <el-dialog title="Add Problems" :visible.sync="dialogVisible" width="60%">
       <el-table :data="addProblemTable" style="width: 100%" max-height="500">
-        <el-table-column label="OriginId" prop="originId" width="150">
-        </el-table-column>
+        <el-table-column label="OriginId" prop="originId" width="150"> </el-table-column>
         <el-table-column label="Title" prop="title"> </el-table-column>
         <el-table-column align="right">
           <template slot="header" slot-scope="scope">
