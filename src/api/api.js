@@ -31,6 +31,9 @@ const api = {
   deleteContest(params) {
     return axios.post('/contest/delete', params);
   },
+  checkContestPassword(params) {
+    return axios.get('/contest/password', { params });
+  },
   getContestProblemList(params) {
     return axios.get('/contest/problems', { params });
   },
