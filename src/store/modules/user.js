@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 // 尝试从localStorage恢复数据
 const state = {
   nickname: window.localStorage.getItem('nickname') ? window.localStorage.getItem('nickname') : null,

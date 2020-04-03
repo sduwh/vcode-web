@@ -1,3 +1,4 @@
+import api from 'api/api';
 <template>
   <div class="contests">
     <div class="theader">
@@ -6,12 +7,7 @@
           <div>Contest List</div>
         </el-col>
         <el-col :span="6">
-          <el-input
-            placeholder="请输入Title关键字"
-            prefix-icon="el-icon-search"
-            v-model="search"
-          >
-          </el-input>
+          <el-input placeholder="请输入Title关键字" prefix-icon="el-icon-search" v-model="search"> </el-input>
         </el-col>
       </el-row>
     </div>
@@ -21,34 +17,59 @@
         :data="
           tableData
             .slice((currentPage - 1) * pagesize, currentPage * pagesize)
-            .filter(
-              data => !search || data.title.toLowerCase().includes(search)
-            )
+            .filter(data => !search || data.title.toLowerCase().includes(search))
         "
         style="width: 100%"
       >
-        <el-table-column prop="title" label="Title" width="400%"></el-table-column>
-        <el-table-column prop="time" label="Time" width="350%"></el-table-column>
+        <el-table-column prop="name" label="Title" width="400%"></el-table-column>
+        <el-table-column prop="time" label="Time" width="350%" v-slot="scope">
+          <div v-if="scope.row.always">
+            <el-tag size="medium" type="success"> No Time Limit</el-tag>
+          </div>
+          <div v-else>
+            <el-tag size="medium" type="primary">
+              {{ new Date(scope.row.startTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}</el-tag
+            >
+            -
+            <el-tag size="medium" type="primary">
+              {{ new Date(scope.row.endTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}</el-tag
+            >
+          </div>
+        </el-table-column>
         <el-table-column prop="status" label="Status">
           <template slot-scope="scope">
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium" :type="scope.row.status === 'Ended' ? 'danger' : 'primary'">{{ scope.row.status }}</el-tag>
+              <div v-if="scope.row.always">
+                <el-tag size="medium" type="primary">opening</el-tag>
+              </div>
+              <div v-else-if="new Date().getTime() - new Date(scope.row.startTime) < 0">
+                <el-tag size="medium" type="primary">Ready</el-tag>
+              </div>
+              <div v-else-if="new Date().getTime() - new Date(scope.row.endTime) > 0">
+                <el-tag size="medium" type="danger">End</el-tag>
+              </div>
+              <div v-else>
+                <el-tag size="medium" type="primary">Started</el-tag>
+              </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="openness" label="Openness">
+        <el-table-column prop="lock" label="Lock">
           <template slot-scope="scope">
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium" :type="scope.row.openness === 'Public' ? 'success' : 'warning'">{{ scope.row.openness }}</el-tag>
+              <div v-if="scope.row.lock">
+                <el-tag size="medium" type="warning">lock</el-tag>
+              </div>
+              <div v-else>
+                <el-tag size="medium" type="success">unlock</el-tag>
+              </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="manager" label="Manager"></el-table-column>
+        <el-table-column prop="ownerAccount" label="Manager"></el-table-column>
         <el-table-column label="Operation">
           <template slot-scope="scope">
-            <el-button size="mini" @click="SearchDetails(scope.$index)" 
-              >查看</el-button
-            >
+            <el-button size="mini" @click="SearchDetails(scope.row)">View</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,128 +78,92 @@
           class="page"
           background
           width="40%"
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[5, 10, 20, 30, 40]"
           :page-size="pagesize"
-          :total="tableData.length"
-          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          layout="prev, pager, next"
         >
         </el-pagination>
       </div>
     </div>
-    <el-dialog
-      title="Password"
-      :visible.sync="dialogVisible"
-      width="30%">
+    <el-dialog title="Password" :visible.sync="dialogVisible" width="30%">
       <el-input placeholder="password" v-model="password" show-password></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="checkPass">确 定</el-button>
+        <el-button @click="dialogVisible = false">Cancle</el-button>
+        <el-button type="primary" @click="checkPass">Confirm</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import api from 'api/api';
+
 export default {
+  mounted() {
+    this.getContestList(1);
+  },
   data() {
     return {
       search: '',
-      tableData: [
-        {
-          title: 'SDUWH-《数据结构课程设计》-队列-2019软件',
-          time: '2020-03-02 10:00:00 ~ 2020-03-07 18:00:00',
-          status: 'Ended',
-          openness: 'Public',
-          manager: 'Manager',
-          password: null
-        },
-        {
-          title: 'SDUWH-《数据结构课程设计》-队列-2018软件',
-          time: '2020-03-02 10:00:00 ~ 2020-03-07 18:00:00',
-          status: ' in progress',
-          openness: 'Public',
-          manager: 'Manager',
-          password: null
-        },
-                {
-          title: 'SDUWH-《数据结构课程设计》-队列-2018软件',
-          time: '2020-03-02 10:00:00 ~ 2020-03-07 18:00:00',
-          status: ' in progress',
-          openness: 'Private',
-          manager: 'Manager',
-          password: 123
-        },
-        {
-          title: 'SDUWH-《数据结构课程设计》-队列-2018软件',
-          time: '2020-03-02 10:00:00 ~ 2020-03-07 18:00:00',
-          status: 'Ended',
-          openness: 'Private',
-          manager: 'Manager',
-          password: 456
-        },
-                {
-          title: 'SDUWH-《数据结构课程设计》-队列-2018软件',
-          time: '2020-03-02 10:00:00 ~ 2020-03-07 18:00:00',
-          status: 'Ended',
-          openness: 'Public',
-          manager: 'Manager',
-          password: null
-        },
-        {
-          title: 'SDUWH-《数据结构课程设计》-队列-2018软件',
-          time: '2020-03-02 10:00:00 ~ 2020-03-07 18:00:00',
-          status: 'Ended',
-          openness: 'Public',
-          manager: 'Manager',
-          password: null
-        },
-      ],
+      tableData: [],
       currentPage: 1,
       pagesize: 10,
       dialogVisible: false,
       password: '',
       index: null,
+      total: 0,
+      currentContest: null,
     };
   },
   methods: {
-    handleSizeChange(val) {
-      this.pagesize = val;
-      this.tableData = this.allData.slice(
-        (this.currentPage - 1) * this.pagesize,
-        this.currentPage * this.pagesize
-      );
-      this.totalCount = this.allData.length;
+    handleCurrentChange(pageNum) {
+      this.getContestList(pageNum);
     },
-    handleCurrentChange(val) {
-      this.currentPage = val;
-      this.tableData = this.allData.slice(
-        (this.currentPage - 1) * this.pagesize,
-        this.currentPage * this.pagesize
-      );
-      this.totalCount = this.allData.length;
-    },
-    SearchDetails(index) {
-      if(this.tableData[index].password !== null){
-        this.password = null
-        this.dialogVisible = true
-        this.index = index
+    SearchDetails(row) {
+      if (row.lock === true) {
+        this.password = '';
+        this.dialogVisible = true;
+        this.currentContest = row;
+      } else {
+        this.$router.push(`/contest/${row.name}`);
       }
-      else{
-        this.$router.push(`/contest/${this.tableData[index].title}`);
-      }            
     },
     checkPass() {
-      console.log(this.password)
-      console.log(this.tableData[this.index].password)
-      if(this.password == this.tableData[this.index].password){
-        this.$router.push(`/contest/${this.tableData[this.index].title}`);
-      }else{
-        this.$message.error('请输入正确密码');
-      }
-    }
+      api
+        .checkContestPassword({
+          password: this.password,
+          contestName: this.currentContest.name,
+        })
+        .then(res => {
+          const { data } = res;
+          if (data.code === 1) {
+            const checkData = data.data;
+            if (checkData.result === true) {
+              this.$router.push(`/contest/${this.currentContest.name}`);
+            } else {
+              this.$message.error('Password is wrong');
+            }
+          }
+        });
+    },
+    getContestList(pageNum) {
+      api
+        .getContests({
+          page: pageNum,
+          size: this.pagesize,
+          search: this.search,
+        })
+        .then(res => {
+          let { data } = res;
+          if (data.code === 1) {
+            data = data.data;
+            this.total = data.total;
+            this.tableData = data.contestList;
+          }
+        });
+    },
   },
 };
 </script>

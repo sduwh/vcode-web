@@ -1,10 +1,6 @@
 <template>
   <div id="create" class="create">
-    <Edit
-      :problem="problem"
-      title="EditProblem"
-      @saveFubction="updateProblem"
-    ></Edit>
+    <Edit :problem="problem" title="EditProblem" @saveFubction="updateProblem"></Edit>
   </div>
 </template>
 

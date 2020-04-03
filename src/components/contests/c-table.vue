@@ -2,10 +2,7 @@
   <div id="c-table">
     <ul>
       <li v-for="(contest, index) in tableInfo" :key="index">
-        <router-link
-          class="title"
-          :to="{ name: 'ConTestDetail', params: { id: contest.id } }"
-        >
+        <router-link class="title" :to="{ name: 'ConTestDetail', params: { id: contest.id } }">
           {{ contest.name }}
           <i class="el-icon-lock" v-show="contest.lock"></i>
         </router-link>
@@ -45,8 +42,8 @@ export default {
     },
   },
   methods: {
-    timeFormat(d) {
-      var d = new Date(d);
+    timeFormat(date) {
+      const d = new Date(date);
       return (
         // eslint-disable-next-line prefer-template
         d.getFullYear() +

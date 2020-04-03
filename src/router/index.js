@@ -162,6 +162,9 @@ const router = new Router({
         {
           path: 'contest/:id',
           name: 'Contest',
+          meta: {
+            requireLogin: true,
+          },
           component: Contest,
         },
         {

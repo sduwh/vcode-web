@@ -6,10 +6,7 @@
       </div>
       <div class="desc">
         <span class="copyright"
-          >Powered by
-          <a :href="footerInfo.github" target="_blank">{{
-            footerInfo.copyright
-          }}</a></span
+          >Powered by <a :href="footerInfo.github" target="_blank">{{ footerInfo.copyright }}</a></span
         >
         <span>|</span>
         <span class="version">Version {{ footerInfo.version }}</span>

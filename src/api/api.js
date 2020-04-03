@@ -22,6 +22,9 @@ const api = {
   getContests(params) {
     return axios.get('/contest/list', { params });
   },
+  getContest(params) {
+    return axios.get('/contest/detail', { params });
+  },
   createContest(params) {
     return axios.post('/contest/create', params);
   },
@@ -30,6 +33,9 @@ const api = {
   },
   deleteContest(params) {
     return axios.post('/contest/delete', params);
+  },
+  checkContestPassword(params) {
+    return axios.get('/contest/password', { params });
   },
   getContestProblemList(params) {
     return axios.get('/contest/problems', { params });
@@ -44,13 +50,19 @@ const api = {
     return axios.get('/submission/problem/user', { params });
   },
   getSubmission(params) {
-    return axios.get('/submission', params);
+    return axios.get('/submission', { params });
+  },
+  getContestSubmission(params) {
+    return axios.get('/submission/contest', { params });
   },
   uploadSubmussion(params) {
     return axios.post('/submission', params);
   },
   getRank(params) {
-    return axios.get('/rank', params);
+    return axios.get('/rank', { params });
+  },
+  getContestRank(params) {
+    return axios.get('/rank/contest', { params });
   },
   getTags(params) {
     return axios.get('/tag/all', { params });

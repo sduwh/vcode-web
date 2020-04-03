@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 // 尝试从sessionStorage恢复数据
 const state = {
   activeIndex: window.sessionStorage.getItem('adminActivateIndex')

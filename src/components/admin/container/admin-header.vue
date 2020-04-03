@@ -15,9 +15,7 @@
         >
           <el-submenu index="more">
             <template slot="title">More</template>
-            <el-menu-item index="index" @click="handleBackIndex"
-              >返回首页</el-menu-item
-            >
+            <el-menu-item index="index" @click="handleBackIndex">返回首页</el-menu-item>
             <el-menu-item index="logout">退出</el-menu-item>
           </el-submenu>
         </el-menu>

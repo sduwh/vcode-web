@@ -12,18 +12,15 @@
       <el-table-column prop="result" label="Status">
         <template slot-scope="scope">
           <div slot="reference">
-            <el-tag size="small" :type="statusTag(scope.row.result)">{{
-              solveStatus(scope.row)
-            }}</el-tag>
+            <el-tag size="small" :type="statusTag(scope.row.result)">{{ solveStatus(scope.row) }}</el-tag>
           </div>
         </template>
       </el-table-column>
       <el-table-column prop="problem" label="Problem">
         <template slot-scope="scope">
-          <router-link
-            :to="{ name: 'ProblemDetail', params: { id: scope.row.problem } }"
-            >{{ scope.row.problem }}</router-link
-          >
+          <router-link :to="{ name: 'ProblemDetail', params: { id: scope.row.problem } }">{{
+            scope.row.problem
+          }}</router-link>
         </template>
       </el-table-column>
       <el-table-column prop="statistic_info.time_cost" label="Time">
@@ -60,12 +57,10 @@ export default {
   },
   methods: {
     solveTime(row) {
-      return row.statistic_info.time_cost === undefined
-        ? '--'
-        : `${row.statistic_info.time_cost}ms`;
+      return row.statistic_info.time_cost === undefined ? '--' : `${row.statistic_info.time_cost}ms`;
     },
     solveStatus(row) {
-      let map = {
+      const map = {
         '4': 'Runtime Error',
         '-2': 'Compile Erroe',
         '0': 'Accept',
@@ -91,13 +86,11 @@ export default {
       }
     },
     solveMemory(memory) {
-      return memory === undefined
-        ? '--'
-        : `${parseInt(memory / (1024 * 1024))}MB`;
+      return memory === undefined ? '--' : `${parseInt(memory / (1024 * 1024))}MB`;
     },
-    timeFormat(d) {
+    timeFormat(date) {
       // eslint-disable-next-line no-var
-      var d = new Date(d);
+      const d = new Date(date);
       return (
         // eslint-disable-next-line prefer-template
         d.getFullYear() +

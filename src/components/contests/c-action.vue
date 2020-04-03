@@ -1,13 +1,7 @@
 <template>
   <div id="c-action">
     <div class="search">
-      <el-input
-        placeholder="keyword"
-        size="small"
-        suffix-icon="el-icon-search"
-        v-model="input"
-      >
-      </el-input>
+      <el-input placeholder="keyword" size="small" suffix-icon="el-icon-search" v-model="input"></el-input>
     </div>
   </div>
 </template>
