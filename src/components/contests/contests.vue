@@ -30,7 +30,6 @@ import api from 'api/api';
             <el-tag size="medium" type="primary">
               {{ new Date(scope.row.startTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}</el-tag
             >
-
             -
             <el-tag size="medium" type="primary">
               {{ new Date(scope.row.endTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}</el-tag
@@ -110,7 +109,7 @@ export default {
       search: '',
       tableData: [],
       currentPage: 1,
-      pagesize: 3,
+      pagesize: 10,
       dialogVisible: false,
       password: '',
       index: null,
@@ -119,8 +118,8 @@ export default {
     };
   },
   methods: {
-    handleCurrentChange(val) {
-      this.getContestList(val);
+    handleCurrentChange(pageNum) {
+      this.getContestList(pageNum);
     },
     SearchDetails(row) {
       if (row.lock === true) {
@@ -157,7 +156,6 @@ export default {
           search: this.search,
         })
         .then(res => {
-          console.log(res);
           let { data } = res;
           if (data.code === 1) {
             data = data.data;

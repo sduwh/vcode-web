@@ -42,8 +42,8 @@ export default {
     },
   },
   methods: {
-    timeFormat(d) {
-      var d = new Date(d);
+    timeFormat(date) {
+      const d = new Date(date);
       return (
         // eslint-disable-next-line prefer-template
         d.getFullYear() +

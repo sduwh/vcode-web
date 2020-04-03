@@ -11,10 +11,11 @@
       <div class="e-panel">
         <div class="virtual-header">virtual header</div>
         <div class="editor">
-          <codemirror v-model="code" ref="myEditor" :options="editorOption"></codemirror>
+          <codemirror v-model="code" ref="codeEditor" :options="editorOption"></codemirror>
         </div>
       </div>
     </div>
+
     <div class="footer">
       <div class="console-btn">
         <el-button size="mini" @click="changeIsConsoleShow">Console</el-button>
@@ -41,10 +42,20 @@ export default {
   components: {
     codemirror,
   },
+  props: {
+    contestName: {
+      type: String,
+      required: true,
+    },
+    problemOriginId: {
+      type: String,
+      required: true,
+    },
+  },
   mounted() {
     this.editor.focus();
     this.editor.setSize('auto', 'auto');
-    console.log(this.$route.params.id);
+    this.editor.refresh();
   },
   data() {
     return {
@@ -82,12 +93,18 @@ export default {
       } else {
         api
           .uploadSubmussion({
-            problemOriginId: this.$route.params.id,
+            problemOriginId: this.problemOriginId,
+            contestName: this.contestName,
             language: this.mapLanguage(this.editorOption.mode),
             code: this.code,
           })
           .then(res => {
-            console.log(res);
+            const { data } = res;
+            if (data.code === 1) {
+              this.$message.success('submit success');
+            } else {
+              this.$message.error(data.message);
+            }
           });
       }
     },
@@ -102,15 +119,16 @@ export default {
   },
   computed: {
     editor() {
-      return this.$refs.myEditor.editor;
+      return this.$refs.codeEditor.editor;
     },
     editorOption() {
       return {
         mode: this.lableValue,
-        tabSize: 2,
+        tabSize: 4,
         lineNumbers: true,
         lineWrapping: true,
         viewportMargin: Infinity,
+        autoRefresh: true,
         extraKeys: { 'Ctrl-Space': 'autocomplete' },
       };
     },
@@ -145,39 +163,42 @@ export default {
         display inline-block
         padding 4px 10px 5px
 
-    .e-panel
-      width 100%
-      height 100%
-      scroll-y()
+.e-panel
+  width 100%
+  height 100%
+  scroll-y()
 
-      .virtual-header
-        width 100%
-        height 39px
-
-  .footer
-    position relative
+  .virtual-header
     width 100%
-    height 40px
+    height 39px
+
+.footer
+  position relative
+  width 100%
+  height 40px
+  border-top 1px solid #e4e7ed
+  line-height 40px
+
+  .console-btn
+    display flex
+    align-items center
+    justify-content flex-end
+    margin-top 10px
+
+  .console-body
+    position absolute
+    width 100%
+    top -200px
+    left 0
+    min-height 200px
+    background-color #fff
     border-top 1px solid #e4e7ed
-    line-height 40px
 
-    .console-btn
-      display inline-block
-
-    .console-body
-      position absolute
-      width 100%
-      top -200px
-      left 0
-      min-height 200px
-      background-color #fff
-      border-top 1px solid #e4e7ed
-
-      .result
-        width 90%
-        height 170px
-        margin 15px auto
-        border 1px solid #e4e7ed
-        border-radius 5px
-        padding 0 10px
+    .result
+      width 90%
+      height 170px
+      margin 15px auto
+      border 1px solid #e4e7ed
+      border-radius 5px
+      padding 0 10px
 </style>

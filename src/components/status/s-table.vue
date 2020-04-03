@@ -88,9 +88,9 @@ export default {
     solveMemory(memory) {
       return memory === undefined ? '--' : `${parseInt(memory / (1024 * 1024))}MB`;
     },
-    timeFormat(d) {
+    timeFormat(date) {
       // eslint-disable-next-line no-var
-      var d = new Date(d);
+      const d = new Date(date);
       return (
         // eslint-disable-next-line prefer-template
         d.getFullYear() +

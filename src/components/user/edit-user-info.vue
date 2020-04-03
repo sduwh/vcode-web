@@ -82,10 +82,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
+          this.$message.success('submit');
         } else {
           console.log('error submit!!');
-          return false;
         }
       });
     },
