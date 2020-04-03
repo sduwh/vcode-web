@@ -4,11 +4,11 @@
       <el-table-column prop="create_time" label="When">
         <template slot-scope="scope">
           <div slot="reference">
-            {{ timeFormat(scope.row.create_time) }}
+            {{ new Date(scope.row.createTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="id" label="ID"> </el-table-column>
+      <el-table-column prop="hex" label="ID"> </el-table-column>
       <el-table-column prop="result" label="Status">
         <template slot-scope="scope">
           <div slot="reference">
@@ -16,29 +16,29 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="problem" label="Problem">
+      <el-table-column prop="problemOriginId" label="Problem">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'ProblemDetail', params: { id: scope.row.problem } }">{{
-            scope.row.problem
-          }}</router-link>
+          <router-link :to="{ name: 'ProblemDetail', params: { id: scope.row.problemOriginId } }">
+            {{ scope.row.problemOriginId }}
+          </router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="statistic_info.time_cost" label="Time">
+      <el-table-column prop="time" label="Time">
         <template slot-scope="scope">
           <div slot="reference">
             {{ solveTime(scope.row) }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="statistic_info.memory_cost" label="Memory">
+      <el-table-column prop="memory" label="Memory">
         <template slot-scope="scope">
           <div slot="reference">
-            {{ solveMemory(scope.row.statistic_info.memory_cost) }}
+            {{ solveMemory(scope.row.memory) }}
           </div>
         </template>
       </el-table-column>
       <el-table-column prop="language" label="Language"></el-table-column>
-      <el-table-column prop="username" label="Author"></el-table-column>
+      <el-table-column prop="nickname" label="Author"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -57,59 +57,32 @@ export default {
   },
   methods: {
     solveTime(row) {
-      return row.statistic_info.time_cost === undefined ? '--' : `${row.statistic_info.time_cost}ms`;
+      return row.time === '' ? '--' : `${row.time}ms`;
     },
     solveStatus(row) {
       const map = {
-        '4': 'Runtime Error',
-        '-2': 'Compile Erroe',
-        '0': 'Accept',
-        '-1': 'Wrong Answer',
-        '1': 'Time Limit',
+        '4': 'Unkonw Error',
+        '6': 'Compile Error',
+        '1': 'Accept',
+        '0': 'Wrong Answer',
+        '2': 'Time Out',
+        '3': 'Memory Out',
+        '5': 'Padding',
       };
       return map[row.result];
     },
     statusTag(status) {
       switch (status) {
-        case 0:
-          return 'success';
-        case -1:
-          return 'danger';
-        case -2:
-          return 'warning';
         case 1:
-          return 'warning';
-        case 4:
-          return 'danger';
+          return 'success';
+        case 5:
+          return '';
         default:
           return 'danger';
       }
     },
     solveMemory(memory) {
-      return memory === undefined ? '--' : `${parseInt(memory / (1024 * 1024))}MB`;
-    },
-    timeFormat(date) {
-      // eslint-disable-next-line no-var
-      const d = new Date(date);
-      return (
-        // eslint-disable-next-line prefer-template
-        d.getFullYear() +
-        '-' +
-        // eslint-disable-next-line prefer-template
-        (d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1) +
-        '-' +
-        // eslint-disable-next-line prefer-template
-        (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) +
-        ' ' +
-        // eslint-disable-next-line prefer-template
-        (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()) +
-        ':' +
-        // eslint-disable-next-line prefer-template
-        (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) +
-        ':' +
-        // eslint-disable-next-line prefer-template
-        (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds())
-      );
+      return memory === '' ? '--' : `${parseInt(memory / (1024 * 1024))}MB`;
     },
   },
 };

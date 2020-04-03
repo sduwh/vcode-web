@@ -81,17 +81,17 @@ export default {
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-// @import '~common/stylus/variable.styl'
-//   #v-main, .el-container, .el-header, .el-main, .el-footer
-//     min-width $page-min-width
-.main {
-  width: 90%;
-  margin: 0 auto;
-  border: 1px solid rgba(100, 100, 100, .1);
-  box-shadow: 0px 0px 5px rgba(100, 100, 100, .1);
-  background-color: #fff
-}
-#v-main{
-  background-color: rgba(100, 100, 100, 0.01)
-}
+@import '~common/stylus/variable.styl'
+  #v-main, .el-container, .el-header, .el-main, .el-footer
+    min-width $page-min-width
+// .main {
+//   width: 90%;
+//   margin: 0 auto;
+//   border: 1px solid rgba(100, 100, 100, .1);
+//   box-shadow: 0px 0px 5px rgba(100, 100, 100, .1);
+//   background-color: #fff
+// }
+// #v-main{
+//   background-color: rgba(100, 100, 100, 0.01)
+// }
 </style>

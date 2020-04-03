@@ -49,7 +49,7 @@ const api = {
   getSubmissions(params) {
     return axios.get('/submission/problem/user', { params });
   },
-  getSubmission(params) {
+  getGlobalSubmission(params) {
     return axios.get('/submission', { params });
   },
   getContestSubmission(params) {

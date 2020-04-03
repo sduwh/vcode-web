@@ -28,12 +28,12 @@ import api from 'api/api';
           </div>
           <div v-else>
             <el-tag size="medium" type="primary">
-              {{ new Date(scope.row.startTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}</el-tag
-            >
+              {{ new Date(scope.row.startTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}
+            </el-tag>
             -
             <el-tag size="medium" type="primary">
-              {{ new Date(scope.row.endTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}</el-tag
-            >
+              {{ new Date(scope.row.endTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}
+            </el-tag>
           </div>
         </el-table-column>
         <el-table-column prop="status" label="Status">

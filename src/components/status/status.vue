@@ -1,8 +1,12 @@
 <template>
   <div id="status">
-    <table-wrap :title="title" :paginationInfo="paginationInfo">
+    <table-wrap
+      :title="title"
+      :paginationInfo="paginationInfo"
+      @handleChangePage="getSubmissions($event, paginationInfo.current_page)"
+    >
       <template #table>
-        <s-table :tableInfo="tableInfo" :tableLimit="tableLimit"></s-table>
+        <s-table :tableInfo="tableInfo" :tableLimit="paginationInfo.page_size"></s-table>
       </template>
     </table-wrap>
   </div>
@@ -24,32 +28,34 @@ export default {
     return {
       title: 'Status',
       tableInfo: [],
-      tableLimit: 20,
-      tableInfoCnt: 0,
       paginationInfo: {
         total: 0,
-        page_size: 0,
+        page_size: 15,
         hide_on_single_page: false,
         current_page: 1,
       },
     };
   },
   created() {
-    api.getSubmissions('').then(res => {
-      this.tableInfo = res.data.data.results;
-      this.tableInfoCnt = res.data.data.total;
-      this.initPaginationInfo();
-      this.solveTableInfo();
-    });
+    this.getSubmissions(1);
   },
   methods: {
-    solveTableInfo() {
-      const len = this.tableLimit < this.tableInfoCnt ? this.tableLimit : this.tableInfoCnt;
-      this.tableInfo = this.tableInfo.slice(0, len);
-    },
-    initPaginationInfo() {
-      this.paginationInfo.total = this.tableInfoCnt;
-      this.paginationInfo.page_size = this.tableLimit;
+    getSubmissions(pageNum) {
+      api
+        .getGlobalSubmission({
+          page: pageNum,
+          size: this.paginationInfo.page_size,
+          search: '',
+        })
+        .then(res => {
+          const { data } = res;
+          if (data.code === 1) {
+            const submissionData = data.data;
+            console.log(submissionData);
+            this.tableInfo = submissionData.submissionList;
+            this.paginationInfo.total = submissionData.total;
+          }
+        });
     },
   },
 };
