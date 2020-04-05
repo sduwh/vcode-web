@@ -1,7 +1,5 @@
 <template>
-  <div id="r-action">
-    <img src="../../common/image/rankChart.jpg" alt="" />
-  </div>
+  <div id="r-action"></div>
 </template>
 
 <script>

@@ -67,9 +67,6 @@ const api = {
   getTags(params) {
     return axios.get('/tag/all', { params });
   },
-  getUserRank(params) {
-    return axios.get('user-rank', params);
-  },
   login(params) {
     return axios.post('/user/login', params);
   },

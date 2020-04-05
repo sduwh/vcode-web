@@ -15,7 +15,6 @@
 
 <script>
 import TableWrap from 'base/table-wrap';
-import VPagination from 'base/v-pagination';
 import RTable from 'components/rank/r-table';
 import RAction from 'components/rank/r-action';
 import api from 'api/api';
@@ -23,17 +22,14 @@ import api from 'api/api';
 export default {
   components: {
     TableWrap,
-    VPagination,
     RTable,
     RAction,
   },
   data() {
     return {
       title: 'Rank',
-      paginationInfo: {},
       tableInfo: [],
       tableLimit: 20,
-      tableInfoCnt: 0,
       paginationInfo: {
         total: 0,
         page_size: 0,
@@ -43,23 +39,18 @@ export default {
     };
   },
   created() {
-    api.getUserRank('').then(res => {
-      this.tableInfo = res.data.data.results;
-      this.tableInfoCnt = res.data.data.total;
-      this._initPaginationInfo();
-      this._solveTableInfo();
+    api.getRank().then(res => {
+      const { data } = res;
+      if (data.code === 1) {
+        const rankData = data.data;
+        console.log(rankData);
+        this.tableInfo = res.data.data.rankList;
+        this.paginationInfo.total = res.data.data.rankList.length;
+        this.paginationInfo.page_size = res.data.data.rankList.length;
+      }
     });
   },
-  methods: {
-    _solveTableInfo() {
-      const len = this.tableLimit < this.tableInfoCnt ? this.tableLimit : this.tableInfoCnt;
-      this.tableInfo = this.tableInfo.slice(0, len);
-    },
-    _initPaginationInfo() {
-      this.paginationInfo.total = this.tableInfoCnt;
-      this.paginationInfo.page_size = this.tableLimit;
-    },
-  },
+  methods: {},
 };
 </script>
 
