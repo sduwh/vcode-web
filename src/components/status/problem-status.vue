@@ -39,7 +39,6 @@ import api from 'api/api';
 
 export default {
   mounted() {
-    console.log(this.$route.params.id);
     this.timer = setInterval(this.getSubmissions, 1000);
   },
   beforeDestroy() {
@@ -86,7 +85,6 @@ export default {
           originId: this.$route.params.id,
         })
         .then(res => {
-          console.log(res);
           const { data } = res;
           if (data.code === 1) {
             const submissionData = data.data;

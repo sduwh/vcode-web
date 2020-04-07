@@ -51,7 +51,6 @@ export default {
           const { data } = res;
           if (data.code === 1) {
             const submissionData = data.data;
-            console.log(submissionData);
             this.tableInfo = submissionData.submissionList;
             this.paginationInfo.total = submissionData.total;
           }

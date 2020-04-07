@@ -20,7 +20,6 @@ export default {
   methods: {
     updateProblem(params) {
       api.updateProblem(params).then(res => {
-        console.log(res);
         if (res.data.code === 1) {
           this.$message.success('update success');
           this.$router.push({

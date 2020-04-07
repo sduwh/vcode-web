@@ -237,7 +237,7 @@ export default {
       inputVisible: false,
       inputValue: '',
       ruleForm: {
-        origin: 'vcode',
+        origin: 'VCODE',
         title: '',
         originId: '',
         description: '',

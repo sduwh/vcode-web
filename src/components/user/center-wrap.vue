@@ -4,7 +4,7 @@
       <div class="title">
         <span class="desc">{{ title }}</span>
         <span style="margin-left: 20px;">
-          <el-button size="mini" round type="primary" @click="goAdmin()">Management</el-button>
+          <el-button size="mini" round type="primary" @click="goAdmin()">Manage</el-button>
         </span>
       </div>
     </div>

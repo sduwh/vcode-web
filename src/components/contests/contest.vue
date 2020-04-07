@@ -327,7 +327,6 @@ export default {
           const { data } = res;
           if (data.code === 1) {
             const rankData = data.data;
-            console.log(rankData);
             const { rankList } = rankData;
             for (let i = 0; i < rankList.length; i++) {
               const user = rankList[i];
@@ -350,7 +349,6 @@ export default {
             }
 
             this.rank = rankList;
-            console.log(rankList);
           }
         });
     },

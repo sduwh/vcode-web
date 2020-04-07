@@ -67,7 +67,6 @@ export default {
   methods: {
     login() {
       // this.$store.commit("user/setLoginStatus", true);
-      console.log(this.$store.getters['user/getLoginStatus']);
       this.$router.push('/login');
     },
     siginIn() {

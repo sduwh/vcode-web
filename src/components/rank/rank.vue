@@ -42,8 +42,6 @@ export default {
     api.getRank().then(res => {
       const { data } = res;
       if (data.code === 1) {
-        const rankData = data.data;
-        console.log(rankData);
         this.tableInfo = res.data.data.rankList;
         this.paginationInfo.total = res.data.data.rankList.length;
         this.paginationInfo.page_size = res.data.data.rankList.length;

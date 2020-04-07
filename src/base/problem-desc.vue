@@ -17,34 +17,34 @@
       <div class="in-out">
         <div class="in">
           <div class="in-title">Input</div>
-          <div class="in-desc" v-html="problemInfo.sampleInput"></div>
+          <div class="in-desc" v-html="problemInfo.input"></div>
         </div>
         <div class="out">
           <div class="out-title">Ouput</div>
-          <div class="out-desc" v-html="problemInfo.sampleOutput"></div>
+          <div class="out-desc" v-html="problemInfo.output"></div>
         </div>
       </div>
-      <div class="example" v-for="(sample, index) in problemInfo.samples" :key="index">
-        <div class="num">{{ `Example${index + 1}` }}</div>
+      <div class="example" v-for="(sample, index) in problemInfo.sampleInput" :key="index">
+        <div class="num">{{ `Example ${index + 1}` }}</div>
         <div class="put-wrap">
           <div class="input">
-            <span class="put-title">Input : </span>
-            <span class="put-content">{{ sample.input }}</span>
+            <span class="put-title">Input : </span><br />
+            <span class="put-content" v-html="sample"></span>
           </div>
           <div class="output">
-            <span class="put-title">Output : </span>
-            <span class="put-content">{{ sample.output }}</span>
+            <span class="put-title">Output : </span><br />
+            <span class="put-content" v-html="problemInfo.sampleOutput[index]"></span>
           </div>
         </div>
       </div>
-      <!-- <div class="hint" v-if="problemInfo.hint != ''">
+      <div class="hint" v-if="problemInfo.hint != ''">
         <div class="hint-title">Hint</div>
         <div class="hint-body" v-html="problemInfo.hint"></div>
-      </div> -->
-      <!-- <div class="source" v-if="problemInfo.source">
+      </div>
+      <div class="source" v-if="problemInfo.source">
         <div class="source-title">Source</div>
         <div class="source-body">{{ problemInfo.source }}</div>
-      </div> -->
+      </div>
       <div class="submit">
         <div class="accept">
           <span>Accept</span>
@@ -93,7 +93,6 @@ export default {
         originId: this.$route.params.id,
       })
       .then(res => {
-        console.log(res);
         let { data } = res;
         if (data.code === 1) {
           data = data.data;
@@ -173,6 +172,9 @@ export default {
             width 100%
             .put-title
               font-weight 500
+            .put-content
+              white-space pre
+              line-height 20px
           .output
             margin-top 8px
       .hint

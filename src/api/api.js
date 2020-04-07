@@ -91,6 +91,9 @@ const api = {
   deleteUserByAdmin(params) {
     return axios.delete('/admin/user/', { params });
   },
+  getAdminIndex() {
+    return axios.get('/admin/index');
+  },
 };
 
 export default api;

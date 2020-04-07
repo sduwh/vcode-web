@@ -32,7 +32,6 @@ export default {
       }
     };
     const validateAccount = (rule, value, callback) => {
-      console.log(value);
       if (value === '') {
         callback(new Error('请输入账号'));
       } else {
