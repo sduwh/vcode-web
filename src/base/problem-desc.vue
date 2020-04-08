@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <div class="hint" v-if="problemInfo.hint != ''">
+      <div class="hint" v-if="problemInfo.hint">
         <div class="hint-title">Hint</div>
         <div class="hint-body" v-html="problemInfo.hint"></div>
       </div>
@@ -71,9 +71,7 @@ import { mapGetters } from 'vuex';
 import api from 'api/api';
 
 export default {
-  mounted() {
-    console.log(this.$route.params.id);
-  },
+  mounted() {},
   data() {
     return {
       problemInfo: {},

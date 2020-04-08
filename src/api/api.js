@@ -49,6 +49,9 @@ const api = {
   getSubmissions(params) {
     return axios.get('/submission/problem/user', { params });
   },
+  getSubmissionDetail(params) {
+    return axios.get('/submission/detail', { params });
+  },
   getGlobalSubmission(params) {
     return axios.get('/submission', { params });
   },

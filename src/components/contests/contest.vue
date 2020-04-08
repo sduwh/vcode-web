@@ -86,19 +86,19 @@
                   </el-col>
                   <el-col :span="24">
                     <div class="overview-title">Hint:</div>
-                    <div class="overview-content">
+                    <div class="overview-content" v-if="item.hint">
                       <MarkdownPreview :initialValue="item.hint"></MarkdownPreview>
                     </div>
                   </el-col>
                   <el-col :span="24">
                     <div class="overview-title">Author:</div>
-                    <div class="overview-content">
+                    <div class="overview-content" v-if="item.author">
                       <MarkdownPreview :initialValue="item.author"></MarkdownPreview>
                     </div>
                   </el-col>
                   <el-col :span="24">
                     <div class="overview-title">Source:</div>
-                    <div class="overview-content">
+                    <div class="overview-content" v-if="item.source">
                       <MarkdownPreview :initialValue="item.source"></MarkdownPreview>
                     </div>
                   </el-col>

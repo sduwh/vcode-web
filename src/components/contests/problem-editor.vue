@@ -22,7 +22,7 @@
         <el-button size="mini" type="primary" @click="handleSubmitClick">Submit</el-button>
       </div>
       <div class="console-body" v-show="isConsoleShow">
-        <div class="result">['a', 'b', 'c']</div>
+        <div class="result">{{ consoleData }}</div>
       </div>
     </div>
   </div>
@@ -57,6 +57,9 @@ export default {
     this.editor.setSize('auto', 'auto');
     this.editor.refresh();
   },
+  beforeDestroy() {
+    clearInterval(this.consoleInterval);
+  },
   data() {
     return {
       lableValue: 'text/x-c++src',
@@ -80,6 +83,9 @@ export default {
       ],
       isConsoleShow: false,
       code: '',
+      submissionIdHex: '',
+      consoleInterval: null,
+      consoleData: 'asdsad',
     };
   },
   methods: {
@@ -101,12 +107,34 @@ export default {
           .then(res => {
             const { data } = res;
             if (data.code === 1) {
-              this.$message.success('submit success');
+              this.$message.success('Submit success');
+              const submissionData = data.data;
+              this.submissionIdHex = submissionData.submissionId;
+              this.consoleInterval = setInterval(this.getConsoleDetail, 1000);
             } else {
               this.$message.error(data.message);
             }
           });
       }
+    },
+    getConsoleDetail() {
+      api
+        .getSubmissionDetail({
+          submissionIdHex: this.submissionIdHex,
+        })
+        .then(res => {
+          const { data } = res;
+          if (data.code === 1) {
+            const submissionData = data.data;
+            const { submission } = submissionData;
+            if (submission.result === 5) {
+              this.consoleData = 'padding';
+            } else {
+              this.consoleData = submission.resultMessage;
+              clearInterval(this.consoleInterval);
+            }
+          }
+        });
     },
     mapLanguage(mode) {
       for (let i = 0; i < this.language.length; i++) {

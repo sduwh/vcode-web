@@ -12,12 +12,12 @@
     </el-table-column>
     <el-table-column label="执行用时" width="100">
       <template slot-scope="scope">
-        {{ scope.row.time.length > 0 ? scrope.row.time : 'N/A' }}
+        {{ scope.row.time != undefined && scope.row.time.length > 0 ? scope.row.time : 'N/A' }}
       </template>
     </el-table-column>
     <el-table-column label="内存占用" width="100">
       <template slot-scope="scope">
-        {{ scope.row.memory.length > 0 ? scrope.row.memory : 'N/A' }}
+        {{ scope.row.memory != undefined && scope.row.memory.length > 0 != null ? scope.row.memory : 'N/A' }}
       </template>
     </el-table-column>
     <el-table-column fixed="right" label="提交结果" width="110">
@@ -47,29 +47,7 @@ export default {
   data() {
     return {
       timer: null,
-      tableData: [
-        {
-          date: '2016-05-02',
-          language: 'language',
-          usedTime: 'Time',
-          usedMemory: 'Memory',
-          result: 'result',
-        },
-        {
-          date: '2016-05-02',
-          language: 'language',
-          usedTime: 'Time',
-          usedMemory: 'Memory',
-          result: 'result',
-        },
-        {
-          date: '2016-05-02',
-          language: 'language',
-          usedTime: 'Time',
-          usedMemory: 'Memory',
-          result: 'result',
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {

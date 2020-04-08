@@ -1,7 +1,7 @@
 <template>
   <div id="problems">
     <el-row type="flex" justify="sapce-around">
-      <el-col :sm="24" :md="18">
+      <el-col :sm="24" :md="24">
         <table-wrap :title="title" :paginationInfo="paginationInfo" @handleChangePage="getProblems($event, pageNum)">
           <template #mode>
             <div class="mode">
@@ -13,33 +13,33 @@
           </template>
         </table-wrap>
       </el-col>
-      <el-col :md="6" class="hidden-sm-and-down">
+      <!-- <el-col :md="6" class="hidden-sm-and-down">
         <p-action :actionInfo="actionInfo"></p-action>
         <tags class="tags" :tagsInfo="tagsInfo"></tags>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>
 
 <script>
 import TableWrap from 'base/table-wrap';
-import Tags from 'base/tags';
-import PAction from 'components/problems/p-action';
+// import Tags from 'base/tags';
+// import PAction from 'components/problems/p-action';
 import PTable from 'components/problems/p-table';
 import api from 'api/api';
 
 export default {
   components: {
     TableWrap,
-    PAction,
-    Tags,
+    // PAction,
+    // Tags,
     PTable,
   },
   created() {
     // 获取标签数据
-    api.getTags('').then(res => {
-      this.tagsInfo = res.data.data;
-    });
+    // api.getTags('').then(res => {
+    //   this.tagsInfo = res.data.data;
+    // });
     // 获取题目数据
     this.getProblems(1);
   },
