@@ -3,20 +3,23 @@
     <CenterWrap :title="title">
       <template #table>
         <div class="edit-body">
-          <el-page-header @back="goBack" content="修改密码"></el-page-header>
+          <el-page-header @back="goBack" content="Reset Password"></el-page-header>
           <div class="edit-form">
             <el-form
               :model="ruleForm"
               status-icon
               :rules="rules"
               ref="ruleForm"
-              label-width="100px"
+              label-width="150px"
               class="edit-form-body"
             >
-              <el-form-item label="密码" prop="pass">
+              <el-form-item label="Old Password" prop="oldPass">
+                <el-input type="password" v-model="ruleForm.oldPass" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="New Password" prop="pass">
                 <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
               </el-form-item>
-              <el-form-item label="确认密码" prop="checkPass">
+              <el-form-item label="Check Password" prop="checkPass">
                 <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item class="form-button">
@@ -33,6 +36,7 @@
 
 <script>
 import CenterWrap from './center-wrap';
+import api from 'api/api';
 
 export default {
   components: {
@@ -59,17 +63,19 @@ export default {
       }
     };
     return {
-      title: '个人中心',
-      userinfo: {
+      title: 'User Center',
+      userInfo: {
         account: this.$store.state.user.account,
         nickname: this.$store.state.user.nickname,
         email: this.$store.state.user.email,
       },
       ruleForm: {
+        oldPass: '',
         pass: '',
         checkPass: '',
       },
       rules: {
+        oldPass: [{ validator: validatePass, trigger: 'blur' }],
         pass: [{ validator: validatePass, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
       },
@@ -85,9 +91,17 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$message.success('submit');
+          api.resetPassword(this.ruleForm).then(res => {
+            const { data } = res;
+            if (data.code === 1) {
+              this.$message.success('Reset password info success');
+              this.$router.push('/user/center');
+            } else {
+              this.$message.error(data.message);
+            }
+          });
         } else {
-          console.log('error submit!!');
+          this.$message.error('Check the form data');
         }
       });
     },
@@ -96,7 +110,6 @@ export default {
     },
     goBack() {
       this.$router.push('/user/center');
-      console.log('go back');
     },
   },
 };
@@ -105,18 +118,20 @@ export default {
 <style scoped>
 .user-edit {
   box-sizing: border-box;
-  padding: 0 50px;
-  padding-bottom: 20px;
+  padding: 0 50px 20px;
 }
+
 .edit-body {
   padding-left: 25px;
   padding-right: 20px;
 }
+
 .edit-form {
   width: 95%;
   display: flex;
   justify-content: center;
 }
+
 .edit-form-body {
   width: 40%;
 }

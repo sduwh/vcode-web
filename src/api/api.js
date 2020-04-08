@@ -76,6 +76,12 @@ const api = {
   signIn(params) {
     return axios.post('/user/sign_in', params);
   },
+  editUserInfo(params) {
+    return axios.post('/user', params);
+  },
+  resetPassword(params) {
+    return axios.post('/user/password', params);
+  },
   editAbout(params) {
     return axios.post('/about/doc', params);
   },

@@ -3,7 +3,7 @@
     <CenterWrap :title="title">
       <template #table>
         <div class="edit-body">
-          <el-page-header @back="goBack" content="编辑资料"> </el-page-header>
+          <el-page-header @back="goBack" content="Edit Data"></el-page-header>
           <div class="edit-form">
             <el-form
               :model="ruleForm"
@@ -35,6 +35,7 @@
 
 <script>
 import CenterWrap from './center-wrap';
+import api from 'api/api';
 
 export default {
   components: {
@@ -56,8 +57,8 @@ export default {
       }
     };
     return {
-      title: '个人中心',
-      userinfo: {
+      title: 'User Center',
+      userInfo: {
         account: this.$store.state.user.account,
         nickname: this.$store.state.user.nickname,
         email: this.$store.state.user.email,
@@ -82,9 +83,19 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$message.success('submit');
+          api.editUserInfo(this.ruleForm).then(res => {
+            const { data } = res;
+            if (data.code === 1) {
+              this.$message.success('Edit user info success');
+              this.ruleForm.account = this.$store.state.user.account;
+              this.$store.commit('user/setUserInfo', this.ruleForm);
+              this.$router.push('/user/center');
+            } else {
+              this.$message.error(data.message);
+            }
+          });
         } else {
-          console.log('error submit!!');
+          this.$message.error('Check the form data');
         }
       });
     },
@@ -93,7 +104,6 @@ export default {
     },
     goBack() {
       this.$router.push('/user/center');
-      console.log('go back');
     },
   },
 };
@@ -102,18 +112,20 @@ export default {
 <style scoped>
 .user-edit {
   box-sizing: border-box;
-  padding: 0 50px;
-  padding-bottom: 20px;
+  padding: 0 50px 20px;
 }
+
 .edit-body {
   padding-left: 25px;
   padding-right: 20px;
 }
+
 .edit-form {
   width: 95%;
   display: flex;
   justify-content: center;
 }
+
 .edit-form-body {
   width: 40%;
 }
