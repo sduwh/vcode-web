@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import TableWrap from 'base/table-wrap';
-// import VPagination from 'base/v-pagination';
-import STable from 'components/status/s-table';
+import TableWrap from 'components/table-wrap';
+// import VPagination from 'components/v-pagination';
+import STable from 'pages/usual/status/s-table';
 import api from 'api/api';
 
 export default {

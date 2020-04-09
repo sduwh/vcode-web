@@ -20,7 +20,7 @@
           <div class="in-desc" v-html="problemInfo.input"></div>
         </div>
         <div class="out">
-          <div class="out-title">Ouput</div>
+          <div class="out-title">Output</div>
           <div class="out-desc" v-html="problemInfo.output"></div>
         </div>
       </div>
@@ -74,7 +74,10 @@ export default {
   mounted() {},
   data() {
     return {
-      problemInfo: {},
+      problemInfo: {
+        submissionNumber: 0,
+        acceptedNumber: 0
+      },
     };
   },
   computed: {

@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import AdminAside from 'components/admin/container/admin-aside';
-import AdminHeader from 'components/admin/container/admin-header';
-import AdminMain from 'components/admin/container/admin-main';
+import AdminAside from 'pages/admin/container/admin-aside';
+import AdminHeader from 'pages/admin/container/admin-header';
+import AdminMain from 'pages/admin/container/admin-main';
 
 export default {
   components: {

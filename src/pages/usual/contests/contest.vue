@@ -30,7 +30,7 @@
           <template>
             <el-tabs v-model="activeProblem">
               <el-tab-pane
-                v-for="(item, index) in problemlist"
+                v-for="(item, index) in problemList"
                 :key="index"
                 :label="'Problem ' + (index + 1)"
                 :name="'Problem ' + (index + 1)"
@@ -73,7 +73,7 @@
                     </div>
                   </el-col>
                   <el-col :span="24">
-                    <div class="overview-title">Time Limie:</div>
+                    <div class="overview-title">Time Limit:</div>
                     <div class="overview-content">
                       <MarkdownPreview :initialValue="item.timeLimit + ' MS'"></MarkdownPreview>
                     </div>
@@ -118,7 +118,7 @@
           </template>
         </el-tab-pane>
 
-        <el-tab-pane label="Submisson" name="submission">
+        <el-tab-pane label="Submission" name="submission">
           <div class="button">
             <el-row>
               <el-col :span="12">
@@ -145,8 +145,8 @@
                     <el-tag v-else-if="scope.row.result === 1" type="success">Success</el-tag>
                     <el-tag v-else-if="scope.row.result === 3" type="danger">MemoryLimit</el-tag>
                     <el-tag v-else-if="scope.row.result === 2" type="danger">TimeLimit</el-tag>
-                    <el-tag v-else-if="scope.row.result === 6" type="danger">Complie Error</el-tag>
-                    <el-tag v-else-if="scope.row.result === 4" type="danger">Unkonw Error</el-tag>
+                    <el-tag v-else-if="scope.row.result === 6" type="danger">Compile Error</el-tag>
+                    <el-tag v-else-if="scope.row.result === 4" type="danger">Unknown Error</el-tag>
                     <el-tag v-else type="danger">Error Answer</el-tag>
                   </div>
                 </template>
@@ -154,14 +154,14 @@
               <el-table-column label="Time">
                 <template slot-scope="scope">
                   <span style="margin-left: 10px">
-                    {{ scope.row.time.length > 0 ? scrope.row.time : 'N/A' }} &nbsp; ms
+                    {{ scope.row.time.length > 0 ? scope.row.time : 'N/A' }} &nbsp; ms
                   </span>
                 </template>
               </el-table-column>
               <el-table-column label="Memory">
                 <template slot-scope="scope">
                   <span style="margin-left: 10px">
-                    {{ scope.row.memory.length > 0 ? scrope.row.memory : 'N/A' }} &nbsp; kb
+                    {{ scope.row.memory.length > 0 ? scope.row.memory : 'N/A' }} &nbsp; kb
                   </span>
                 </template>
               </el-table-column>
@@ -193,7 +193,7 @@
             <el-table :data="rank" border style="width: 100%">
               <el-table-column type="index" label="Rank" width="100"></el-table-column>
               <el-table-column prop="username" label="User"></el-table-column>
-              <el-table-column v-for="(item, index) in problemlist" :key="index" :label="'Problem ' + (index + 1)">
+              <el-table-column v-for="(item, index) in problemList" :key="index" :label="'Problem ' + (index + 1)">
                 <template slot-scope="scope">
                   <div class="rankItem" v-if="scope.row.userProblems[index] == null"></div>
                   <div class="rankItem rankEarliest" v-else-if="scope.row.userProblems[index].earliest">
@@ -243,7 +243,7 @@ export default {
       problemActive: '2',
       overView: {},
       value: '',
-      problemlist: [],
+      problemList: [],
       paginationInfo: {
         pageNum: 1,
         pageSize: 10,
@@ -289,7 +289,7 @@ export default {
           const { data } = res;
           if (data.code === 1) {
             const problemData = data.data;
-            this.problemlist = problemData.problems;
+            this.problemList = problemData.problems;
             this.getContestRank();
           }
         });
@@ -331,11 +331,11 @@ export default {
             for (let i = 0; i < rankList.length; i++) {
               const user = rankList[i];
               const userProblems = [];
-              for (let problemIndex = 0; problemIndex < this.problemlist.length; problemIndex++) {
+              for (let problemIndex = 0; problemIndex < this.problemList.length; problemIndex++) {
                 let pushFlag = false;
                 for (let userSolveIndex = 0; userSolveIndex < user.problemSolvedInfo.length; userSolveIndex++) {
                   if (
-                    this.problemlist[problemIndex].originId === user.problemSolvedInfo[userSolveIndex].problemOriginId
+                    this.problemList[problemIndex].originId === user.problemSolvedInfo[userSolveIndex].problemOriginId
                   ) {
                     userProblems.push(user.problemSolvedInfo[userSolveIndex]);
                     pushFlag = true;

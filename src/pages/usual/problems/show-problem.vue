@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import ProblemDesc from 'base/problem-desc';
-import TableWrap from 'base/table-wrap';
-// import Discuss from 'components/discuss/discuss';
-import ProblemStatus from 'components/status/problem-status';
+import ProblemDesc from 'pages/usual/problems/problem-desc';
+import TableWrap from 'components/table-wrap';
+// import Discuss from 'pages/discuss/discuss';
+import ProblemStatus from 'pages/usual/status/problem-status';
 
 export default {
   components: {

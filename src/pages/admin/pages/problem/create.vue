@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Edit from 'components/admin/pages/problem/edit';
+import Edit from 'pages/admin/pages/problem/edit';
 import api from 'api/api';
 
 export default {

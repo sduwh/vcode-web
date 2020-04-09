@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import TableWrap from 'base/table-wrap';
-// import Tags from 'base/tags';
-// import PAction from 'components/problems/p-action';
-import PTable from 'components/problems/p-table';
+import TableWrap from 'components/table-wrap';
+// import Tags from 'components/tags';
+// import PAction from 'pages/problems/p-action';
+import PTable from 'pages/usual/problems/p-table';
 import api from 'api/api';
 
 export default {

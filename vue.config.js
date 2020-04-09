@@ -10,11 +10,12 @@ module.exports = {
       .set('@', resolve('src'))
       .set('api', resolve('src/api'))
       .set('common', resolve('src/common'))
-      .set('components', resolve('src/components'))
+      .set('pages', resolve('src/pages'))
       .set('router', resolve('src/router'))
       .set('store', resolve('src/store'))
       .set('views', resolve('src/views'))
-      .set('base', resolve('src/base'));
+      .set('components', resolve('src/components'))
+      .set('util', resolve('src/util'));
   },
   devServer: {
     disableHostCheck: true,
