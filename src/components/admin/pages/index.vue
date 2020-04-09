@@ -16,7 +16,7 @@
                       <el-tag style="margin-right:10px">{{ oj }}</el-tag>
                     </span>
                   </el-form-item>
-                  <el-form-item label="Problem Total"> {{ problemForm.problemTotal }} </el-form-item>
+                  <el-form-item label="Problem Total"> {{ problemForm.problemTotal }}</el-form-item>
                   <el-form-item label="Submission">
                     {{ problemForm.submissionTotal }}
                   </el-form-item>
@@ -54,10 +54,10 @@
               <div class="text item">
                 <el-form ref="form" :model="form" label-width="120px">
                   <el-form-item label="Server Num">
-                    asdasd
+                    server num
                   </el-form-item>
                   <el-form-item label="Active server">
-                    123123
+                    active num
                   </el-form-item>
                 </el-form>
               </div>
@@ -74,10 +74,10 @@
               <div class="text item">
                 <el-form ref="form" :model="form" label-width="120px">
                   <el-form-item label="Server Num">
-                    asdasd
+                    server num
                   </el-form-item>
                   <el-form-item label="Active server">
-                    123123
+                    active num
                   </el-form-item>
                 </el-form>
               </div>
@@ -139,6 +139,7 @@ export default {
   display: table;
   content: '';
 }
+
 .clearfix:after {
   clear: both;
 }
@@ -146,6 +147,7 @@ export default {
 .box-card {
   width: 100%;
 }
+
 .card-area {
   width: 100%;
 }
