@@ -12,12 +12,12 @@
     </el-table-column>
     <el-table-column label="执行用时" width="100">
       <template slot-scope="scope">
-        {{ scope.row.time != undefined && scope.row.time.length > 0 ? scope.row.time : 'N/A' }}
+        {{ scope.row.time !== undefined && scope.row.time.length > 0 ? scope.row.time : 'N/A' }}
       </template>
     </el-table-column>
     <el-table-column label="内存占用" width="100">
       <template slot-scope="scope">
-        {{ scope.row.memory != undefined && scope.row.memory.length > 0 != null ? scope.row.memory : 'N/A' }}
+        {{ scope.row.memory !== undefined && scope.row.memory.length > 0 ? scope.row.memory : 'N/A' }}
       </template>
     </el-table-column>
     <el-table-column fixed="right" label="提交结果" width="110">
@@ -26,8 +26,8 @@
         <el-tag v-else-if="scope.row.result === 1" type="success">Success</el-tag>
         <el-tag v-else-if="scope.row.result === 3" type="danger">MemoryLimit</el-tag>
         <el-tag v-else-if="scope.row.result === 2" type="danger">TimeLimit</el-tag>
-        <el-tag v-else-if="scope.row.result === 6" type="danger">Complie Error</el-tag>
-        <el-tag v-else-if="scope.row.result === 4" type="danger">Unkonw Error</el-tag>
+        <el-tag v-else-if="scope.row.result === 6" type="danger">Compile Error</el-tag>
+        <el-tag v-else-if="scope.row.result === 4" type="danger">Unknown Error</el-tag>
         <el-tag v-else type="danger">Error Answer</el-tag>
       </template>
     </el-table-column>

@@ -2,14 +2,14 @@ module.exports = {
   extends: [
     // add more generic rulesets here, such as:
     // 'eslint:recommended',
-    'airbnb-base', // airbnb lint规范
+    'airbnb-components', // airbnb lint规范
     'plugin:vue/essential', // eslint-plugin-vue
     'plugin:prettier/recommended', // eslint-config-prettier
   ],
   // settings: {
   //   'import/resolver': {
   //     webpack: {
-  //       config: 'build/webpack.base.conf.js',
+  //       config: 'build/webpack.components.conf.js',
   //     },
   //   },
   // },

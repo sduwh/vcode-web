@@ -11,7 +11,7 @@
               </div>
               <div class="text item">
                 <el-form ref="problemForm" :model="problemForm" label-width="120px">
-                  <el-form-item label="Suport OJ">
+                  <el-form-item label="Support OJ">
                     <span v-for="oj in problemForm.ojList" :key="oj">
                       <el-tag style="margin-right:10px">{{ oj }}</el-tag>
                     </span>
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       problemForm: {
-        suportOJ: [],
+        ojList: [],
         problemTotal: 0,
         submissionTotal: 0,
       },
@@ -110,6 +110,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * get admin index page data
+     */
     getIndexData() {
       api.getAdminIndex().then(res => {
         const { data } = res;

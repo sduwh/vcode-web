@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import TableWrap from 'base/table-wrap';
-import PTable from 'components/problems/p-table';
+import TableWrap from 'components/table-wrap';
+import PTable from 'pages/usual/problems/p-table';
 import api from 'api/api';
 
 export default {

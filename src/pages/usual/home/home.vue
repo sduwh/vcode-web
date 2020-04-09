@@ -7,7 +7,7 @@
       <ul>
         <li v-for="(item, index) in challenge" :key="index" @click="changeRoute">
           <div class="top">
-            <div class="pic"><img src='../../common/image/challenge.svg' alt=""></div>
+            <div class="pic"><img src='../../usual/image/challenge.svg' alt=""></div>
           </div>
           <div class="bottom">
             <div class="num">5+</div>
@@ -32,17 +32,17 @@ export default {
       //   {
       //     desc: 'More than 5 easy problems...',
       //     title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
-      //     img: '../../common/image/challenge.svg',
+      //     img: '../../usual/image/challenge.svg',
       //   },
       //   {
       //     desc: 'More than 5 medium problems...',
       //     title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
-      //     img: '../../common/image/challenge.svg',
+      //     img: '../../usual/image/challenge.svg',
       //   },
       //   {
       //     desc: 'More than 5 hard problems...',
       //     title: ['problem1', 'problem2', 'problem3', 'problem4', 'problem5'],
-      //     img: '../../common/image/challenge.svg',
+      //     img: '../../usual/image/challenge.svg',
       //   },
       // ],
       date: new Date(),
@@ -128,7 +128,6 @@ export default {
               font-weight 500
     .calendar
       width 800px
-      width 70%
       // height 600px
       box-sizing border-box
       // border 1px solid #000

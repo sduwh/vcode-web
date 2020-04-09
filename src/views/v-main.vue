@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import VHeader from 'components/header/v-header';
-import VFooter from 'components/footer/v-footer';
+import VHeader from 'pages/usual/header/v-header';
+import VFooter from 'pages/usual/footer/v-footer';
 
 export default {
   data() {

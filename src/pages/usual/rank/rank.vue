@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import TableWrap from 'base/table-wrap';
-import RTable from 'components/rank/r-table';
-import RAction from 'components/rank/r-action';
+import TableWrap from 'components/table-wrap';
+import RTable from 'pages/usual/rank/r-table';
+import RAction from 'pages/usual/rank/r-action';
 import api from 'api/api';
 
 export default {

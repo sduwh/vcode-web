@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import ShowProblem from 'base/show-problem';
-import VEditor from 'base/v-editor';
+import ShowProblem from 'pages/usual/problems/show-problem';
+import VEditor from 'pages/usual/problems/problem-editor';
 
 export default {
   components: {

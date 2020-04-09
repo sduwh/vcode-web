@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import VPagination from 'base/v-pagination';
+import VPagination from 'components/v-pagination';
 
 export default {
   props: {
