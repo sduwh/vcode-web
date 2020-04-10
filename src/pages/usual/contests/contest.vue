@@ -255,7 +255,6 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
     },
     submissionRefresh() {
       this.getSubmission(this.paginationInfo.pageNum);

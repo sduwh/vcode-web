@@ -70,7 +70,6 @@ const mutations = {
     }
   },
   setToken(state, token) {
-    console.log(token);
     state.token = token;
     window.localStorage.setItem('token', token);
   },

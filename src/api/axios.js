@@ -15,7 +15,6 @@ function reFreshToken() {
 }
 
 instance.setToken = (token, refreshToken) => {
-  console.log('set token');
   instance.defaults.headers['Authorization'] = token;
   store.commit('user/setToken', token);
   store.commit('user/setRefreshToken', refreshToken);
@@ -52,7 +51,6 @@ instance.interceptors.response.use(
             isRefreshing = true;
             return reFreshToken()
               .then(res => {
-                console.log(res);
                 const { data } = res;
                 if (data.code !== 1) {
                   store.commit('user/logout');

@@ -210,7 +210,6 @@ export default {
       });
     },
     handleClick(scope) {
-      console.log(scope);
     },
     getContestList(pageNum) {
       api
