@@ -3,12 +3,13 @@
 // 尝试从localStorage恢复数据
 const state = {
   nickname: window.localStorage.getItem('nickname') ? window.localStorage.getItem('nickname') : null,
-  email: window.localStorage.getItem('email') ? window.localStorage.getItem('email') : '你还没有设置邮箱～',
+  email: window.localStorage.getItem('email') ? window.localStorage.getItem('email') : "You haven't set a mailbox",
   token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : null,
   account: window.localStorage.getItem('account') ? window.localStorage.getItem('account') : null,
   isLogin: JSON.parse(window.localStorage.getItem('isLogin') ? window.localStorage.getItem('isLogin') : false),
   permissions: window.localStorage.getItem('permissions') ? window.localStorage.getItem('permissions') : null,
   role: window.localStorage.getItem('role') ? window.localStorage.getItem('role') : null,
+  refreshToken: window.localStorage.getItem('refreshToken') ? window.localStorage.getItem('refreshToken') : null,
 };
 
 const getters = {
@@ -33,6 +34,9 @@ const getters = {
   getRole: state => {
     return state.role;
   },
+  getRefreshToken: state => {
+    return state.refreshToken;
+  },
 };
 
 const actions = {};
@@ -50,7 +54,7 @@ const mutations = {
   setEmail(state, email) {
     if (email === undefined) {
       state.email = '';
-      window.localStorage.setItem('email', '你还没有设置邮箱～');
+      window.localStorage.setItem('email', "You haven't set a mailbox");
     } else {
       state.email = email;
       window.localStorage.setItem('email', email);
@@ -66,8 +70,13 @@ const mutations = {
     }
   },
   setToken(state, token) {
+    console.log(token);
     state.token = token;
     window.localStorage.setItem('token', token);
+  },
+  setRefreshToken(state, refreshToken) {
+    state.refreshToken = refreshToken;
+    window.localStorage.setItem('refreshToken', refreshToken);
   },
   setUserInfo(state, data) {
     mutations.setNickname(state, data.nickname);
@@ -96,10 +105,12 @@ const mutations = {
     window.localStorage.removeItem('nickname');
     window.localStorage.removeItem('email');
     window.localStorage.removeItem('token');
+    window.localStorage.removeItem('refreshToken');
     window.localStorage.removeItem('account');
     window.localStorage.removeItem('permissions');
     window.localStorage.removeItem('role');
     mutations.setLoginStatus(state, false);
+    window.localStorage.removeItem('isLogin');
   },
 };
 export default {

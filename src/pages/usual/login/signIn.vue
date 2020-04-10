@@ -75,6 +75,7 @@ export default {
               data = data.data;
               this.$store.commit('user/setUserInfo', data);
               this.$store.commit('user/setToken', data.token);
+              this.$store.commit('user/setRefreshToken', data.refreshToken);
               this.$store.commit('user/setLoginStatus', true);
               this.$router.push('/home');
             } else {

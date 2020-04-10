@@ -68,6 +68,6 @@ export default {
 }
 
 .header-submenu {
-  font: white;
+  font-: white;
 }
 </style>

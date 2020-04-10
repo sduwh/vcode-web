@@ -65,8 +65,10 @@ export default {
             let { data } = res;
             if (data.code === 1) {
               data = data.data;
+              console.log(data);
               this.$store.commit('user/setUserInfo', data.user);
               this.$store.commit('user/setToken', data.token);
+              this.$store.commit('user/setRefreshToken', data.refreshToken);
               this.$store.commit('user/setLoginStatus', true);
               this.$store.commit('user/setPermissions', data.user);
               this.$store.commit('user/setRole', data.user);
