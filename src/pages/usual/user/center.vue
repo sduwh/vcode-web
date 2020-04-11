@@ -43,10 +43,23 @@
 
 <script>
 import CenterWrap from './center-wrap';
+import api from 'api/api';
 
 export default {
   components: {
     CenterWrap,
+  },
+  mounted() {
+    api.getUserInfo().then(res => {
+      const { data } = res;
+      if (data.code === 1) {
+        const userData = data.data;
+        this.$store.commit('user/setUserInfo', userData.user);
+        this.$store.commit('user/setPermissions', userData.user);
+        this.$store.commit('user/setRole', userData.user);
+        this.userInfo = userData.user;
+      }
+    });
   },
   data() {
     return {

@@ -83,15 +83,7 @@ export default {
   data() {
     return {
       total: 0,
-      tableData: [
-        {
-          account: '2016-05-02',
-          nickname: '王小虎',
-          role: '上海市普陀区金沙江路 1518 弄',
-          createTime: '2020-02-02',
-          email: '12213123231@qq.com',
-        },
-      ],
+      tableData: [],
       search: '',
       dialogFormVisible: false,
       userForm: {
@@ -127,6 +119,7 @@ export default {
     handleCurrentChange(val) {
       // Todo: 调用api获取User列表
       this.currentPage = val;
+      this.getUsers(val);
     },
     handleEdit(row) {
       this.dialogFormVisible = true;

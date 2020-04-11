@@ -98,7 +98,7 @@ export default {
         this.$message({ message: '请输入代码', type: 'warning' });
       } else {
         api
-          .uploadSubmussion({
+          .uploadSubmission({
             problemOriginId: this.problemOriginId,
             contestName: this.contestName,
             language: this.mapLanguage(this.editorOption.mode),

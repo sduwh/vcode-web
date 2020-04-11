@@ -58,7 +58,7 @@ const api = {
   getContestSubmission(params) {
     return axios.get('/submission/contest', { params });
   },
-  uploadSubmussion(params) {
+  uploadSubmission(params) {
     return axios.post('/submission', params);
   },
   getRank(params) {
@@ -78,6 +78,9 @@ const api = {
   },
   editUserInfo(params) {
     return axios.post('/user', params);
+  },
+  getUserInfo() {
+    return axios.get('user');
   },
   resetPassword(params) {
     return axios.post('/user/password', params);
