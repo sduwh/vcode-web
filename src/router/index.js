@@ -191,7 +191,7 @@ const router = new Router({
           path: 'problem/:id',
           name: 'ProblemDetail',
           meta: {
-            roles: ['admin', 'teacher', 'captain'],
+            roles: ['admin', 'teacher', 'captain', 'user'],
             requireLogin: true,
           },
           component: ProblemDetail,
@@ -203,7 +203,7 @@ const router = new Router({
         },
         {
           path: '/sign_in',
-          name: 'SiginIn',
+          name: 'SignIn',
           component: SignIn,
         },
         {
@@ -280,13 +280,13 @@ router.beforeEach((to, from, next) => {
     // logout && cleanInfo && redirect login page
     store.commit('user/setLoginStatus', false);
     store.commit('user/logout');
-    return next({ path: '/login' });
+    return next({ path: '/login', query: { redirect: router.currentRoute.fullPath } });
   }
   if (checkUserRole(to) === true) {
     return next();
   }
   // redirect 403 page
-  return next({ path: '/403' });
+  return next({ path: '/403', query: { redirect: router.currentRoute.fullPath } });
 });
 
 export default router;

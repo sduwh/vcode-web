@@ -22,6 +22,14 @@
 import api from 'api/api';
 
 export default {
+  mounted() {
+    console.log(this.$route.query);
+    if (this.$route.query !== undefined && this.$route.query !== null && this.$route.query !== '') {
+      this.nextUrl = this.$route.query.redirect;
+    } else {
+      this.nextUrl = '/home';
+    }
+  },
   data() {
     const validatePass = (rule, value, callback) => {
       // 检查密码
@@ -50,6 +58,7 @@ export default {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         account: [{ validator: validateAccount, trigger: 'blur' }],
       },
+      nextUrl: '',
     };
   },
   methods: {
@@ -71,7 +80,7 @@ export default {
               this.$store.commit('user/setLoginStatus', true);
               this.$store.commit('user/setPermissions', data.user);
               this.$store.commit('user/setRole', data.user);
-              this.$router.push('/home');
+              this.$router.push(this.nextUrl);
             } else {
               this.$message.error(data.message);
             }
@@ -96,6 +105,7 @@ export default {
 .login-form {
   width: 30%;
 }
+
 .login-title {
   font-size: 26px;
 }
