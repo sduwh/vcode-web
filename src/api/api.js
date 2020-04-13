@@ -74,7 +74,7 @@ const api = {
     return axios.post('/user/login', params);
   },
   signIn(params) {
-    return axios.post('/user/sign_in', params);
+    return axios.post('/user/sign-in', params);
   },
   editUserInfo(params) {
     return axios.post('/user', params);

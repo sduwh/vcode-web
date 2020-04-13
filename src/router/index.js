@@ -2,6 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from 'store';
 
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};
+
 Vue.use(Router);
 
 const VMain = () => import('views/v-main');
@@ -33,6 +38,7 @@ const AdminContestProblems = () => import('pages/admin/pages/contest/contest-pro
 const AdminAbout = () => import('pages/admin/pages/about/about');
 const NoPermission = () => import('pages/error/403');
 const ErrorPage = () => import('pages/error/error');
+const NoPage = () => import('pages/error/404')
 
 const router = new Router({
   mode: 'history',
@@ -238,6 +244,11 @@ const router = new Router({
           path: '403',
           name: '403',
           component: NoPermission,
+        },
+        {
+          path: '404',
+          name: '404',
+          component: NoPage,
         },
         {
           path: 'error',

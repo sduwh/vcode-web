@@ -34,7 +34,7 @@ instance.interceptors.request.use(
   error => {
     // Do something for request error
     return Promise.reject(error);
-  }
+  },
 );
 
 // Do something after get response
@@ -85,6 +85,12 @@ instance.interceptors.response.use(
             query: { redirect: router.currentRoute.fullPath },
           });
           break;
+        case 404:
+          router.replace({
+            path: '/404',
+            query: { redirect: router.currentRoute.fullPath },
+          });
+          break;
         default:
           router.replace({
             path: '/error',
@@ -93,7 +99,7 @@ instance.interceptors.response.use(
       }
     }
     return Promise.reject(error.response.data);
-  }
+  },
 );
 
 export default instance;

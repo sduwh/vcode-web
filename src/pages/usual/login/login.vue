@@ -23,8 +23,7 @@ import api from 'api/api';
 
 export default {
   mounted() {
-    console.log(this.$route.query);
-    if (this.$route.query !== undefined && this.$route.query !== null && this.$route.query !== '') {
+    if (this.$route.query.redirect !== undefined && this.$route.query.redirect !== null) {
       this.nextUrl = this.$route.query.redirect;
     } else {
       this.nextUrl = '/home';
@@ -58,7 +57,7 @@ export default {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         account: [{ validator: validateAccount, trigger: 'blur' }],
       },
-      nextUrl: '',
+      nextUrl: '/home',
     };
   },
   methods: {

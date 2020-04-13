@@ -15,24 +15,24 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="Problem ID" prop="originId" label-width="150px">
-              <el-input v-model="ruleForm.originId" placeholder="ID" maxlength="5" show-word-limit> </el-input>
+              <el-input v-model="ruleForm.originId" placeholder="ID" maxlength="5" show-word-limit></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="16">
             <el-form-item label="Problem Title" prop="title" label-width="150px">
-              <el-input v-model="ruleForm.title" placeholder="Title" maxlength="20" show-word-limit> </el-input>
+              <el-input v-model="ruleForm.title" placeholder="Title" maxlength="20" show-word-limit></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="Time Limit(ms)" prop="timeLimit" label-width="150px">
-              <el-input type="number" v-model="ruleForm.timeLimit"> </el-input>
+              <el-input type="number" v-model="ruleForm.timeLimit"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="Memory limit(MB)" prop="memoryLimit" label-width="150px">
-              <el-input type="number" v-model="ruleForm.memoryLimit"> </el-input>
+              <el-input type="number" v-model="ruleForm.memoryLimit"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -135,7 +135,7 @@
         </el-row>
         <el-row>
           <el-form-item label="Source" prop="Source">
-            <el-input v-model="ruleForm.source"> </el-input>
+            <el-input v-model="ruleForm.source"></el-input>
           </el-form-item>
         </el-row>
         <!-- 此功能延后 -->
@@ -161,6 +161,7 @@
                 :on-exceed="handleOnExceed"
                 :on-remove="handleOnRemove"
                 :limit="1"
+                :headers="uploadHeaders"
               >
                 <el-button size="small" type="primary">upload</el-button>
               </el-upload>
@@ -234,6 +235,7 @@ export default {
   data() {
     return {
       uploadUrl: testCaseUploadAPI,
+      uploadHeaders: { Authorization: this.$store.state.user.token },
       inputVisible: false,
       inputValue: '',
       ruleForm: {
@@ -337,6 +339,7 @@ export default {
     // upload file
     handleUploadSuccess(response) {
       if (response.code === 1) {
+        console.log(response);
         const { data } = response;
         this.ruleForm.testCaseId = data.testCaseId;
       } else {
@@ -360,6 +363,7 @@ export default {
 .el-tag + .el-tag {
   margin-left: 10px;
 }
+
 .button-new-tag {
   margin-left: 10px;
   height: 32px;
@@ -367,11 +371,13 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
+
 .input-new-tag {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
 }
+
 .button-area {
   display: flex;
   justify-content: center;

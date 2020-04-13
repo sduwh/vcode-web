@@ -31,65 +31,68 @@
 </template>
 
 <script>
-import api from 'api/api';
-import { MarkdownPro } from 'vue-meditor';
+  import api from 'api/api';
+  import { MarkdownPro } from 'vue-meditor';
 
-export default {
-  components: {
-    MarkdownPro,
-  },
-  mounted() {
-    api.getAbout().then(res => {
-      if (res.data.code === 1) {
-        this.dataForm.doc = res.data.data;
-      } else {
-        this.$message.error('Some error occurred here');
-      }
-    });
-  },
-  data() {
-    return {
-      dataForm: {
-        doc: '',
-      },
-      rules: {
-        doc: [{ required: true }],
-      },
-    };
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          api.editAbout(this.$refs[formName].model).then(res => {
-            if (res.data.code === 1) {
-              this.$message.success('update success');
-            } else {
-              this.$message.error('update error');
-            }
-          });
+  export default {
+    components: {
+      MarkdownPro,
+    },
+    mounted() {
+      api.getAbout().then(res => {
+        if (res.data.code === 1) {
+          this.dataForm.doc = res.data.data;
+        } else if (res.data.code === 0) {
+          this.dataForm.doc = res.data.data;
         } else {
-          this.$message.error('Check the input data');
+          this.$message.error('Some error occurred here');
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    data() {
+      return {
+        dataForm: {
+          doc: '',
+        },
+        rules: {
+          doc: [{ required: true }],
+        },
+      };
     },
-    updateEditorValue(valueName, newValue) {
-      this.dataForm[valueName] = newValue;
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            api.editAbout(this.$refs[formName].model).then(res => {
+              if (res.data.code === 1) {
+                this.$message.success('update success');
+              } else {
+                this.$message.error('update error');
+              }
+            });
+          } else {
+            this.$message.error('Check the input data');
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      updateEditorValue(valueName, newValue) {
+        this.dataForm[valueName] = newValue;
+      },
     },
-  },
-};
+  };
 </script>
 
 <style scoped>
-.el-tag + .el-tag {
-  margin-left: 10px;
-}
-.button-area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+
+  .button-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

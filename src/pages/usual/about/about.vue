@@ -12,7 +12,9 @@ export default {
   mounted() {
     api.getAbout().then(res => {
       if (res.data.code === 1) {
-        this.doc = res.data.data;
+        this.dataForm.doc = res.data.data;
+      } else if (res.data.code === 0) {
+        this.doc = '# Here there is nothing to say';
       } else {
         this.$message.error('Some error occurred here');
       }
@@ -33,8 +35,7 @@ export default {
 <style scoped>
 .about {
   box-sizing: border-box;
-  padding: 0 50px;
-  padding-bottom: 20px;
+  padding: 0 50px 20px;
 }
 
 .about-block {
