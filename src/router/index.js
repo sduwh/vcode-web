@@ -257,6 +257,10 @@ const router = new Router({
         },
       ],
     },
+    {
+      path: '*',    // 404 page
+      redirect: '/404'
+    }
   ],
 });
 
