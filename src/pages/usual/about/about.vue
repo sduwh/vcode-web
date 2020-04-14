@@ -12,7 +12,7 @@ export default {
   mounted() {
     api.getAbout().then(res => {
       if (res.data.code === 1) {
-        this.dataForm.doc = res.data.data;
+        this.doc = res.data.data;
       } else if (res.data.code === 0) {
         this.doc = '# Here there is nothing to say';
       } else {
