@@ -43,48 +43,6 @@
           </div>
         </el-col>
       </el-row>
-      <el-row :gutter="20" class="card-row">
-        <el-col :span="12">
-          <div class="grid-content bg-purple">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>Spider Server</span>
-                <el-button style="float: right; padding: 3px 0" type="text">Manage</el-button>
-              </div>
-              <div class="text item">
-                <el-form ref="form" :model="form" label-width="120px">
-                  <el-form-item label="Server Num">
-                    server num
-                  </el-form-item>
-                  <el-form-item label="Active server">
-                    active num
-                  </el-form-item>
-                </el-form>
-              </div>
-            </el-card>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div class="grid-content bg-purple">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>Judge Server</span>
-                <el-button style="float: right; padding: 3px 0" type="text">Manage</el-button>
-              </div>
-              <div class="text item">
-                <el-form ref="form" :model="form" label-width="120px">
-                  <el-form-item label="Server Num">
-                    server num
-                  </el-form-item>
-                  <el-form-item label="Active server">
-                    active num
-                  </el-form-item>
-                </el-form>
-              </div>
-            </el-card>
-          </div>
-        </el-col>
-      </el-row>
     </div>
   </div>
 </template>
