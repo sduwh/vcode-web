@@ -14,7 +14,7 @@ const Home = () => import('pages/usual/home/home');
 const Problems = () => import('pages/usual/problems/problems');
 const Contests = () => import('pages/usual/contests/contests');
 const Contest = () => import('pages/usual/contests/contest');
-const Status = () => import('pages/usual/status/status');
+const Status = () => import('pages/usual/submission/status');
 const Rank = () => import('pages/usual/rank/rank');
 const Notice = () => import('pages/usual/notice/notice');
 const About = () => import('pages/usual/about/about');
@@ -242,17 +242,17 @@ const router = new Router({
         },
         {
           path: '403',
-          name: '403',
+          name: 'Page403',
           component: NoPermission,
         },
         {
           path: '404',
-          name: '404',
+          name: 'Page404',
           component: NoPage,
         },
         {
           path: 'error',
-          name: 'Error',
+          name: 'PageError',
           component: ErrorPage,
         },
       ],

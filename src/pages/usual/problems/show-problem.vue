@@ -25,7 +25,7 @@
 import ProblemDesc from 'pages/usual/problems/problem-desc';
 import TableWrap from 'components/table-wrap';
 // import Discuss from 'pages/discuss/discuss';
-import ProblemStatus from 'pages/usual/status/problem-status';
+import ProblemStatus from 'pages/usual/submission/problem-submission';
 
 export default {
   components: {

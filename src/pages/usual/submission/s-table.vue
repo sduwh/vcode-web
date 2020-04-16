@@ -8,11 +8,19 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="hex" label="ID"> </el-table-column>
+      <el-table-column prop="hex" label="ID">
+        <template slot-scope="scope">
+          <div slot="reference">
+            {{ scope.row.hex }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="result" label="Status">
         <template slot-scope="scope">
           <div slot="reference">
-            <el-tag size="small" :type="statusTag(scope.row.result)">{{ solveStatus(scope.row) }}</el-tag>
+            <el-button class="button" @click="showSubmissionDetail(scope.row)">
+              <el-tag size="small" :type="statusTag(scope.row.result)">{{ solveStatus(scope.row) }}</el-tag>
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -40,10 +48,18 @@
       <el-table-column prop="language" label="Language"></el-table-column>
       <el-table-column prop="nickname" label="Author"></el-table-column>
     </el-table>
+    <el-dialog title="Submission" :visible.sync="dialogVisible" width="70%">
+      <submission-detail :hex="submissionHex"></submission-detail>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">Close</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import SubmissionDetail from 'pages/usual/submission/submission-detail';
+
 export default {
   props: {
     tableInfo: {
@@ -55,13 +71,22 @@ export default {
       default: 20,
     },
   },
+  components: {
+    SubmissionDetail,
+  },
+  data() {
+    return {
+      submissionHex: '',
+      dialogVisible: false,
+    };
+  },
   methods: {
     solveTime(row) {
       return row.time === '' ? '--' : `${row.time}ms`;
     },
     solveStatus(row) {
       const map = {
-        '4': 'Unkonw Error',
+        '4': 'Unknown Error',
         '6': 'Compile Error',
         '1': 'Accept',
         '0': 'Wrong Answer',
@@ -84,8 +109,17 @@ export default {
     solveMemory(memory) {
       return memory === '' ? '--' : `${parseInt(memory / (1024 * 1024))}MB`;
     },
+    showSubmissionDetail(form) {
+      this.submissionHex = form.hex;
+      this.dialogVisible = true;
+    },
   },
 };
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus"></style>
+<style scoped>
+.button {
+  padding: 0;
+  border-width: 0;
+}
+</style>

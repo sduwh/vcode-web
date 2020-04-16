@@ -15,7 +15,7 @@
 <script>
 import TableWrap from 'components/table-wrap';
 // import VPagination from 'components/v-pagination';
-import STable from 'pages/usual/status/s-table';
+import STable from 'pages/usual/submission/s-table';
 import api from 'api/api';
 
 export default {
