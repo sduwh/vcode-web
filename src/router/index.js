@@ -28,6 +28,8 @@ const UserChangePassword = () => import('pages/usual/user/change-password');
 const AdminProblemCreate = () => import('pages/admin/pages/problem/create');
 const AdminProblemUpdate = () => import('pages/admin/pages/problem/update');
 const AdminProblemList = () => import('pages/admin/pages/problem/list');
+const AdminProblemCrawl = () => import('pages/admin/pages/problem/crawl-problem');
+const AdminProblemCrawlCenter = () => import('pages/admin/pages/problem/crawl-problem-task-center');
 const AdminMain = () => import('views/v-admin');
 const AdminIndex = () => import('pages/admin/pages/index');
 const AdminAdmin = () => import('pages/admin/pages/user/admin');
@@ -38,7 +40,7 @@ const AdminContestProblems = () => import('pages/admin/pages/contest/contest-pro
 const AdminAbout = () => import('pages/admin/pages/about/about');
 const NoPermission = () => import('pages/error/403');
 const ErrorPage = () => import('pages/error/error');
-const NoPage = () => import('pages/error/404')
+const NoPage = () => import('pages/error/404');
 
 const router = new Router({
   mode: 'history',
@@ -103,6 +105,24 @@ const router = new Router({
             requireLogin: true,
           },
           component: AdminProblemList,
+        },
+        {
+          path: 'problem-crawl',
+          name: 'AdminProblemCrawl',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
+          component: AdminProblemCrawl,
+        },
+        {
+          path: 'problem-crawl-center',
+          name: 'AdminProblemCrawlCenter',
+          meta: {
+            roles: ['admin', 'teacher', 'captain'],
+            requireLogin: true,
+          },
+          component: AdminProblemCrawlCenter,
         },
         {
           path: 'contest',
@@ -258,9 +278,9 @@ const router = new Router({
       ],
     },
     {
-      path: '*',    // 404 page
-      redirect: '/404'
-    }
+      path: '*', // 404 pages
+      redirect: '/404',
+    },
   ],
 });
 
@@ -292,7 +312,7 @@ function checkUserRole(to) {
 
 router.beforeEach((to, from, next) => {
   if (!checkUserLogin(to)) {
-    // logout && cleanInfo && redirect login page
+    // logout && cleanInfo && redirect login pages
     store.commit('user/setLoginStatus', false);
     store.commit('user/logout');
     return next({ path: '/login', query: { redirect: router.currentRoute.fullPath } });
@@ -300,7 +320,7 @@ router.beforeEach((to, from, next) => {
   if (checkUserRole(to) === true) {
     return next();
   }
-  // redirect 403 page
+  // redirect 403 pages
   return next({ path: '/403', query: { redirect: router.currentRoute.fullPath } });
 });
 

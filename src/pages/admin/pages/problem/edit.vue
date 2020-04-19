@@ -339,7 +339,7 @@ export default {
     // upload file
     handleUploadSuccess(response) {
       if (response.code === 1) {
-        console.log(response);
+        (response);
         const { data } = response;
         this.ruleForm.testCaseId = data.testCaseId;
       } else {

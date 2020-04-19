@@ -77,7 +77,7 @@ export default {
           ac_rate:
             // eslint-disable-next-line prefer-template
             (tableInfo[i].submissionNumber === 0
-              ? 0
+              ? '0.00'
               : (tableInfo[i].acceptedNumber / tableInfo[i].submissionNumber).toFixed(2)) + '%',
           // tagShow: tableInfo[i].tags[0],
         });
@@ -98,13 +98,14 @@ export default {
           size: 10,
           search: '',
           visible: true,
+          originType: 0,
         })
         .then(res => {
           let { data } = res;
           if (data.code === 1) {
             data = data.data;
             this.tableInfoCnt = data.total;
-            this.solveTableInfo(data.problem_list);
+            this.solveTableInfo(data.problemList);
             this.initPaginationInfo();
             this.loadingStatus = false;
           }

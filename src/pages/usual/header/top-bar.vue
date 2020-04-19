@@ -28,14 +28,14 @@
       <el-col :md="3" class="logInfo hidden-sm-and-down">
         <template>
           <div style="display:flex;">
-            <div v-if="this.$store.state.user.isLogin == false" class="log" @click="login">
+            <div v-if="this.$store.state.user.isLogin === false" class="log" @click="login">
               <span>Login</span>
             </div>
-            <div v-if="this.$store.state.user.isLogin === false" class="log" @click="siginIn">
+            <div v-if="this.$store.state.user.isLogin === false" class="log" @click="signIn">
               <span>Sign in</span>
             </div>
 
-            <!-- logined -->
+            <!-- is login -->
             <div v-if="this.$store.state.user.isLogin === true" class="log" @click="userCenter">
               <span>{{ this.$store.state.user.nickname }}</span>
             </div>
@@ -69,7 +69,7 @@ export default {
       // this.$store.commit("user/setLoginStatus", true);
       this.$router.push('/login');
     },
-    siginIn() {
+    signIn() {
       this.$router.push('/sign_in');
     },
     logout() {

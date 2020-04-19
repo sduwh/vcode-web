@@ -106,6 +106,18 @@ const api = {
   getAdminIndex() {
     return axios.get('/admin/index');
   },
+  getCrawlTaskList(params) {
+    return axios.get('/admin/crawl/list', { params });
+  },
+  createCrawlTask(params) {
+    return axios.post('/admin/crawl', params);
+  },
+  getOJList() {
+    return axios.get('/admin/judge/oj');
+  },
+  cloneCrawlTask(params) {
+    return axios.post('/admin/crawl/clone', params);
+  },
 };
 
 export default api;

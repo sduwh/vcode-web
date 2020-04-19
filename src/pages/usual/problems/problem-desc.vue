@@ -84,7 +84,7 @@ export default {
     ...mapGetters(['problem']),
     // firstTag() {
     //   const tmp = this.problemInfo.tags;
-    //   // console.log(tmp)
+    //   // (tmp)
     //   return tmp[0];
     // },
   },

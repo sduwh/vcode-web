@@ -113,7 +113,6 @@ export default {
       this.dialogVisible = true;
       this.getProblems(1);
     },
-    handleAddButtion() {},
     goBack() {
       this.$router.go(-1);
     },
@@ -145,7 +144,7 @@ export default {
           if (data.code === 1) {
             data = data.data;
             this.itemTotal = data.total;
-            this.addProblemTable = data.problem_list;
+            this.addProblemTable = data.problemList;
           }
         });
     },

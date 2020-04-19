@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     /**
-     * get admin index page data
+     * get admin index pages data
      */
     getIndexData() {
       api.getAdminIndex().then(res => {

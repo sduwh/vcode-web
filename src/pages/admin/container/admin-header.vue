@@ -15,8 +15,8 @@
         >
           <el-submenu index="more">
             <template slot="title">More</template>
-            <el-menu-item index="index" @click="handleBackIndex">返回首页</el-menu-item>
-            <el-menu-item index="logout">退出</el-menu-item>
+            <el-menu-item index="index" @click="handleBackIndex">Go Home</el-menu-item>
+            <el-menu-item index="logout" @click="logout">Logout</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     logout() {
-      // this.$router.push({ name: 'VMain' });
+      this.$store.commit('user/setLoginStatus', false);
+      this.$store.commit('user/logout');
+      this.$router.push('/home');
     },
     handleBackIndex() {
       this.$router.push({ name: 'VMain' });
@@ -45,7 +47,6 @@ export default {
 <style scoped>
 .header {
   height: 100%;
-  font: white;
 }
 .header-icon {
   display: flex;
@@ -65,9 +66,5 @@ export default {
 
 .header-user div {
   margin-right: 10px;
-}
-
-.header-submenu {
-  font-: white;
 }
 </style>

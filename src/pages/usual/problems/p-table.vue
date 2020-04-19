@@ -17,12 +17,12 @@
         <template slot-scope="scope">
           <div slot="reference">
             <el-tag size="medium" :type="tagType(scope.row)">
-              {{ scope.row.difficulty }}
+              {{ difficultyConvert(scope.row) }}
             </el-tag>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="submissionNumber" label="Total" width="120"></el-table-column>
+      <el-table-column prop="submissionNumber" label="Total Submit" width="120"></el-table-column>
       <el-table-column prop="ac_rate" label="AC Rate" width="120"></el-table-column>
       <!-- <el-table-column prop="tags" label="Tags" width='120'>
         <template slot-scope="scope">
@@ -59,12 +59,14 @@ export default {
       };
       return typeMap[row.difficulty];
     },
-    problemDetail(index) {
-      this.setProblem(this.tableInfo[index]);
+    difficultyConvert(row) {
+      const convertMap = {
+        '0': 'Low',
+        '1': 'Mid',
+        '2': 'High',
+      };
+      return convertMap[row.difficulty];
     },
-    ...mapMutations({
-      setProblem: 'SET_PROBLEM',
-    }),
   },
 };
 </script>

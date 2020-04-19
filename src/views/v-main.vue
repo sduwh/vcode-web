@@ -70,7 +70,7 @@ export default {
     handleScroll(e) {
       const event = e || window.event;
       const target = event.target || event.srcElement;
-      // console.log(target.scrollingElement.scrollTop)
+      // (target.scrollingElement.scrollTop)
       if (target.scrollingElement.scrollTop) {
         // 显示 header 组件
         this.isHeaderShow = true;
