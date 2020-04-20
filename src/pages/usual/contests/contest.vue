@@ -254,8 +254,7 @@ export default {
     };
   },
   methods: {
-    handleClick(tab, event) {
-    },
+    handleClick(tab, event) {},
     submissionRefresh() {
       this.getSubmission(this.paginationInfo.pageNum);
     },
@@ -270,8 +269,7 @@ export default {
         .then(res => {
           const { data } = res;
           if (data.code === 1) {
-            const contestData = data.data;
-            this.overView = contestData;
+            this.overView = data.data;
             this.getSubmission(1);
           } else {
             this.$message.error('Contest is not exit');

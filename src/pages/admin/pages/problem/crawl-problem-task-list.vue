@@ -12,7 +12,7 @@
       </el-table-column>
       <el-table-column prop="result" label="Result" width="100">
         <template slot-scope="scope">
-          <el-tag :type="statusMap(scope.row.result)">{{ scope.row.result }} </el-tag>
+          <el-tag :type="statusMap(scope.row.result)">{{ scope.row.result }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="author" label="Author" width="130"></el-table-column>
@@ -37,7 +37,7 @@
       >
       </el-pagination>
     </div>
-    <crawl-problem-task-detail :show-task="showTask" :dialog-visible.sync="dialogVisible" @cloneTask="cloneTask">
+    <crawl-problem-task-detail :show-task.sync="showTask" :dialog-visible.sync="dialogVisible" @cloneTask="cloneTask">
     </crawl-problem-task-detail>
   </div>
 </template>
@@ -60,9 +60,14 @@ export default {
   },
   mounted() {
     this.getTaskList(1);
+    this.timer = setInterval(this.getTaskList, 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
   data() {
     return {
+      timer: null,
       dialogVisible: false,
       pagination: {
         pageSize: 10,
@@ -78,6 +83,7 @@ export default {
           result: '',
           createTime: '',
           author: '',
+          message: '',
         },
       ],
       showTask: {
@@ -88,11 +94,15 @@ export default {
         result: '',
         createTime: '',
         author: '',
+        message: '',
       },
     };
   },
   methods: {
     getTaskList(pageNum) {
+      if (pageNum === undefined) {
+        pageNum = this.pagination.currentPage;
+      }
       api
         .getCrawlTaskList({
           page: pageNum,

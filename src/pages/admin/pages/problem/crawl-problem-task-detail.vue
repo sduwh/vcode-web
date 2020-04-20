@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Task Detail" :visible.sync="dialogVisible" width="50%">
+  <el-dialog title="Task Detail" :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
     <el-form ref="form" :model="showTask" label-width="100px">
       <el-form-item label="Id">
         {{ showTask.hex }}
@@ -15,6 +15,9 @@
       </el-form-item>
       <el-form-item label="Result">
         <el-tag :type="statusMap(showTask.result)"> {{ showTask.result }} </el-tag>
+      </el-form-item>
+      <el-form-item label="Message">
+        {{ showTask.message }}
       </el-form-item>
       <el-form-item label="Create Time">
         {{ new Date(showTask.createTime) | dateFormat('YYYY-MM-DD HH:mm:ss') }}
@@ -45,14 +48,16 @@ export default {
     },
   },
   methods: {
-    handleClone(done) {
+    handleClone() {
       this.$confirm('Sure you want to clone this task.')
         .then(_ => {
           this.$emit('cloneTask', this.showTask);
           this.$emit('update:dialogVisible', false);
-          done();
         })
         .catch(_ => {});
+    },
+    handleClose(){
+      this.$emit('update:dialogVisible', false);
     },
     statusMap(status) {
       return crawlStatusMap(status);
