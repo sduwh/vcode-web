@@ -8,8 +8,8 @@
         </router-link>
         <div v-if="contest.always"><el-tag>always</el-tag></div>
         <div v-else class="status-block">
-          <el-tag v-if="contest.status == 'ready'" type="warning">Ready</el-tag>
-          <el-tag v-else-if="contest.status == 'started'" type="success">
+          <el-tag v-if="contest.status === 'ready'" type="warning">Ready</el-tag>
+          <el-tag v-else-if="contest.status === 'started'" type="success">
             Started
           </el-tag>
           <el-tag v-else type="info">Ended</el-tag>

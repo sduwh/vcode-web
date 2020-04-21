@@ -141,13 +141,15 @@
               <el-table-column label="result">
                 <template slot-scope="scope">
                   <div slot="reference" class="name-wrapper">
-                    <el-tag v-if="scope.row.result === 5">Padding</el-tag>
-                    <el-tag v-else-if="scope.row.result === 1" type="success">Success</el-tag>
-                    <el-tag v-else-if="scope.row.result === 3" type="danger">MemoryLimit</el-tag>
-                    <el-tag v-else-if="scope.row.result === 2" type="danger">TimeLimit</el-tag>
-                    <el-tag v-else-if="scope.row.result === 6" type="danger">Compile Error</el-tag>
-                    <el-tag v-else-if="scope.row.result === 4" type="danger">Unknown Error</el-tag>
-                    <el-tag v-else type="danger">Error Answer</el-tag>
+                    <el-button style="padding: 0;border-width: 0;" @click="showSubmissionDetail(scope.row)">
+                      <el-tag v-if="scope.row.result === 5">Padding</el-tag>
+                      <el-tag v-else-if="scope.row.result === 1" type="success">Success</el-tag>
+                      <el-tag v-else-if="scope.row.result === 3" type="danger">MemoryLimit</el-tag>
+                      <el-tag v-else-if="scope.row.result === 2" type="danger">TimeLimit</el-tag>
+                      <el-tag v-else-if="scope.row.result === 6" type="danger">Compile Error</el-tag>
+                      <el-tag v-else-if="scope.row.result === 4" type="danger">Unknown Error</el-tag>
+                      <el-tag v-else type="danger">Error Answer</el-tag>
+                    </el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -215,7 +217,14 @@
           </template>
         </el-tab-pane>
       </el-tabs>
+      <el-dialog title="Submission" :visible.sync="dialogVisible" width="70%">
+        <submission-detail :hex="submissionHex"></submission-detail>
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">Close</el-button>
+      </span>
+      </el-dialog>
     </template>
+
   </div>
 </template>
 
@@ -223,6 +232,7 @@
 import api from 'api/api';
 import { MarkdownPreview } from 'vue-meditor';
 import problemEditor from './problem-editor';
+import SubmissionDetail from 'pages/usual/submission/submission-detail';
 
 export default {
   mounted() {
@@ -233,9 +243,12 @@ export default {
   components: {
     MarkdownPreview,
     problemEditor,
+    SubmissionDetail
   },
   data() {
     return {
+      submissionHex: '',
+      dialogVisible: false,
       search: '',
       textarea: '',
       activeName: 'overview',
@@ -254,6 +267,10 @@ export default {
     };
   },
   methods: {
+    showSubmissionDetail(form) {
+      this.submissionHex = form.hex;
+      this.dialogVisible = true;
+    },
     handleClick(tab, event) {},
     submissionRefresh() {
       this.getSubmission(this.paginationInfo.pageNum);

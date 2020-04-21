@@ -10,13 +10,19 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 import 'common/stylus/index.styl';
 import VueHighlightJS from 'vue-highlightjs';
 import 'highlight.js/styles/vs.css';
+import cpp from 'highlight.js/lib/languages/cpp';
 import VueCodeMirror from 'vue-codemirror-lite';
 import VueFilterDateFormat from 'vue-filter-date-format';
 
 Vue.use(VueFilterDateFormat);
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
-Vue.use(VueHighlightJS);
+Vue.use(VueHighlightJS, {
+  // Register only languages that you want
+  languages: {
+    cpp,
+  },
+});
 Vue.use(VueCodeMirror);
 Vue.component(CollapseTransition.name, CollapseTransition);
 

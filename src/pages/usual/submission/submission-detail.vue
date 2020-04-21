@@ -23,15 +23,16 @@
         }}
       </el-form-item>
       <el-form-item label="Result">
-        <el-tag v-if="submissionDetailForm.result === 5">Padding</el-tag>
-        <el-tag v-else-if="submissionDetailForm.result === 1" type="success">Success</el-tag>
-        <el-tag v-else-if="submissionDetailForm.result === 3" type="danger">MemoryLimit</el-tag>
-        <el-tag v-else-if="submissionDetailForm.result === 2" type="danger">TimeLimit</el-tag>
-        <el-tag v-else-if="submissionDetailForm.result === 6" type="danger">Compile Error</el-tag>
-        <el-tag v-else-if="submissionDetailForm.result === 4" type="danger">Unknown Error</el-tag>
-        <el-tag v-else type="danger">Error Answer</el-tag>
+        <el-tag :type="localSubmitTagMap(submissionDetailForm.result)">
+          {{ localSubmitStatusMap(submissionDetailForm.result) }}
+        </el-tag>
       </el-form-item>
-      <el-form-item label="Result Info">
+      <el-form-item label="Code">
+        <pre v-highlightjs>
+          <code v-html="submissionDetailForm.code"> </code>
+        </pre>
+      </el-form-item>
+      <el-form-item label="Result Info" class="result-content">
         {{ submissionDetailForm.resultMessage }}
       </el-form-item>
     </el-form>
@@ -40,6 +41,7 @@
 
 <script>
 import api from 'api/api';
+import { submitStatusMap, submitTagMap } from 'util/submitUtil';
 
 export default {
   name: 'problem-submission-detail',
@@ -66,6 +68,12 @@ export default {
     };
   },
   methods: {
+    localSubmitTagMap(status) {
+      return submitTagMap(status);
+    },
+    localSubmitStatusMap(status) {
+      return submitStatusMap(status);
+    },
     showSubmissionDetail(hex) {
       api
         .getSubmissionDetail({
@@ -73,6 +81,7 @@ export default {
         })
         .then(res => {
           const { data } = res;
+          console.log(data);
           if (data.code === 1) {
             const submissionData = data.data;
             this.submissionDetailForm = submissionData.submission;
@@ -89,4 +98,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.result-content {
+  width: 100%;
+  white-space: normal;
+  line-height: 20px;
+  word-wrap:break-word;
+  word-break:break-all;
+}
+</style>

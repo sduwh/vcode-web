@@ -3,7 +3,7 @@
     <div class="main">
       <div class="e-tab">
         <div class="language">
-          <el-select size="mini" v-model="lableValue">
+          <el-select size="mini" v-model="labelValue">
             <el-option v-for="item in language" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </div>
@@ -36,7 +36,7 @@ require('codemirror/mode/clike/clike');
 
 require('codemirror/addon/hint/show-hint.js');
 require('codemirror/addon/hint/show-hint.css');
-
+// TODO 修改提交语言切换BUG，表单未能及时更新
 export default {
   components: {
     codemirror,
@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      lableValue: 'text/x-c++src',
+      labelValue: 'text/x-c++src',
       language: [
         {
           label: 'C++',
@@ -138,7 +138,7 @@ export default {
     },
     editorOption() {
       return {
-        mode: this.lableValue,
+        mode: this.labelValue,
         tabSize: 2,
         lineNumbers: true,
         lineWrapping: true,
