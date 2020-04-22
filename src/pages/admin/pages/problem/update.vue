@@ -1,6 +1,6 @@
 <template>
   <div id="create" class="create">
-    <Edit :problem="problem" title="EditProblem" @saveFubction="updateProblem"></Edit>
+    <Edit :problem="problem" title="EditProblem" @saveFunction="updateProblem"></Edit>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
         if (res.data.code === 1) {
           this.$message.success('update success');
           this.$router.push({
-            name: 'AdminProblemList',
+            name: this.$route.params.backUrlName === undefined ? 'AdminIndex' : this.$route.params.backUrlName,
           });
         } else {
           this.$message.error('update error');

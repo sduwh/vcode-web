@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="header">
-      <div class="theader">
-        <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
-          <el-col :span="18">
-            <div>{{ title }}</div>
-          </el-col>
-        </el-row>
-      </div>
+      <el-row style="height:100%; font-size:18px; color:grey; line-height:38px">
+        <el-col :span="18">
+          <div>{{ title }}</div>
+        </el-col>
+      </el-row>
       <el-divider></el-divider>
     </div>
     <div class="body">
@@ -61,8 +59,8 @@
               <el-checkbox-group v-model="ruleForm.languages">
                 <el-checkbox label="C" name="C"></el-checkbox>
                 <el-checkbox label="C++" name="C++"></el-checkbox>
-                <el-checkbox label="Python3" name="Python3"></el-checkbox>
-                <el-checkbox label="Java" name="Java"></el-checkbox>
+                <el-checkbox label="Python3" name="PYTHON3"></el-checkbox>
+                <el-checkbox label="Java" name="JAVA"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-col>
@@ -149,7 +147,7 @@
             </el-form-item>
           </el-col>
         </el-row> -->
-        <el-row>
+        <el-row v-if="ruleForm.origin === 'VCODE'">
           <el-col :span="6">
             <el-form-item label="TestCase" prop="TestCase">
               <el-upload
@@ -226,6 +224,7 @@ export default {
     problem: {
       type: Object,
       required: true,
+      default: {},
     },
     title: {
       type: String,
@@ -308,7 +307,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.$refs[formName].model.testCaseId === '') {
+          if (this.$refs[formName].model.origin === 'VCODE' && this.$refs[formName].model.testCaseId === '') {
             this.$message.error('please upload test case file');
           } else {
             const difficultMap = {
@@ -320,7 +319,10 @@ export default {
             const problem = this.$refs[formName].model;
             problem.difficulty = difficultMap[difficulty];
             problem.author = 'admin';
-            this.$emit('saveFubction', problem);
+            if (problem.origin !== 'VCODE') {
+              problem.testCaseId = '';
+            }
+            this.$emit('saveFunction', problem);
           }
         } else {
           this.$message.error('check the input data');
@@ -339,7 +341,6 @@ export default {
     // upload file
     handleUploadSuccess(response) {
       if (response.code === 1) {
-        (response);
         const { data } = response;
         this.ruleForm.testCaseId = data.testCaseId;
       } else {

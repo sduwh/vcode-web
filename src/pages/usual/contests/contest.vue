@@ -220,11 +220,10 @@
       <el-dialog title="Submission" :visible.sync="dialogVisible" width="70%">
         <submission-detail :hex="submissionHex"></submission-detail>
         <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Close</el-button>
-      </span>
+          <el-button @click="dialogVisible = false">Close</el-button>
+        </span>
       </el-dialog>
     </template>
-
   </div>
 </template>
 
@@ -243,7 +242,7 @@ export default {
   components: {
     MarkdownPreview,
     problemEditor,
-    SubmissionDetail
+    SubmissionDetail,
   },
   data() {
     return {
@@ -391,7 +390,6 @@ export default {
   margin-left: 10px;
   white-space: pre-line;
   color: #606266;
-  font-family: '宋体';
 }
 .button {
   position: relative;

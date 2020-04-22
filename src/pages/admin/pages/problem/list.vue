@@ -78,7 +78,7 @@ export default {
     handleEdit(index) {
       this.$router.push({
         name: 'AdminProblemUpdate',
-        params: { problem: JSON.stringify(this.tableData[index]) },
+        params: { problem: JSON.stringify(this.tableData[index]),backUrlName:"AdminProblemList" },
       });
     },
     handleDelete(index) {

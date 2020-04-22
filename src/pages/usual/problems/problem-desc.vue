@@ -135,6 +135,7 @@ export default {
         line-height 1.5
         p
           margin-bottom 15px
+          white-space pre
       .in-out
         width 100%
         padding-top 15px
