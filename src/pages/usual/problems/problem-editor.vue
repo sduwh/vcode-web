@@ -29,6 +29,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror-lite';
+import { languageMap } from 'util/codeEditerUtil';
 import api from 'api/api';
 
 require('codemirror/mode/python/python');
@@ -36,7 +37,7 @@ require('codemirror/mode/clike/clike');
 
 require('codemirror/addon/hint/show-hint.js');
 require('codemirror/addon/hint/show-hint.css');
-// TODO 修改提交语言切换BUG，表单未能及时更新
+
 export default {
   components: {
     codemirror,
@@ -124,12 +125,7 @@ export default {
         });
     },
     mapLanguage(mode) {
-      for (let i = 0; i < this.language.length; i++) {
-        if (this.language[i].value === mode) {
-          return this.language[i].label.toLowerCase();
-        }
-      }
-      return '';
+      return languageMap(this.language, mode);
     },
   },
   computed: {

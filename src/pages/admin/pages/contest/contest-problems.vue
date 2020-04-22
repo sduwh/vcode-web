@@ -138,6 +138,7 @@ export default {
           size: 7,
           search: this.search,
           visible: true,
+          originType: 0,
         })
         .then(res => {
           let { data } = res;

@@ -30,6 +30,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror-lite';
+import { languageMap } from 'util/codeEditerUtil';
 import api from 'api/api';
 
 require('codemirror/mode/python/python');
@@ -85,7 +86,7 @@ export default {
       code: '',
       submissionIdHex: '',
       consoleInterval: null,
-      consoleData: 'asdsad',
+      consoleData: 'Judge Result Info',
     };
   },
   methods: {
@@ -137,12 +138,7 @@ export default {
         });
     },
     mapLanguage(mode) {
-      for (let i = 0; i < this.language.length; i++) {
-        if (this.language[i].value === mode) {
-          return this.language[i].label.toLowerCase();
-        }
-      }
-      return '';
+      return languageMap(this.language, mode);
     },
   },
   computed: {
