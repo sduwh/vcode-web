@@ -142,13 +142,7 @@
                 <template slot-scope="scope">
                   <div slot="reference" class="name-wrapper">
                     <el-button style="padding: 0;border-width: 0;" @click="showSubmissionDetail(scope.row)">
-                      <el-tag v-if="scope.row.result === 5">Padding</el-tag>
-                      <el-tag v-else-if="scope.row.result === 1" type="success">Success</el-tag>
-                      <el-tag v-else-if="scope.row.result === 3" type="danger">MemoryLimit</el-tag>
-                      <el-tag v-else-if="scope.row.result === 2" type="danger">TimeLimit</el-tag>
-                      <el-tag v-else-if="scope.row.result === 6" type="danger">Compile Error</el-tag>
-                      <el-tag v-else-if="scope.row.result === 4" type="danger">Unknown Error</el-tag>
-                      <el-tag v-else type="danger">Error Answer</el-tag>
+                      <el-tag :type="tagMap(scope.row.result)">{{ statusMap(scope.row.result) }}</el-tag>
                     </el-button>
                   </div>
                 </template>
@@ -230,8 +224,9 @@
 <script>
 import api from 'api/api';
 import { MarkdownPreview } from 'vue-meditor';
-import problemEditor from './problem-editor';
+import problemEditor from './problem-code-editor';
 import SubmissionDetail from 'pages/usual/submission/submission-detail';
+import { submitStatusMap, submitTagMap } from 'util/submitUtil';
 
 export default {
   mounted() {
@@ -269,6 +264,12 @@ export default {
     showSubmissionDetail(form) {
       this.submissionHex = form.hex;
       this.dialogVisible = true;
+    },
+    statusMap(status) {
+      return submitStatusMap(status);
+    },
+    tagMap(status) {
+      return submitTagMap(status);
     },
     handleClick(tab, event) {},
     submissionRefresh() {

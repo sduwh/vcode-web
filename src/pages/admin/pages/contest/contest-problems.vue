@@ -139,6 +139,7 @@ export default {
           search: this.search,
           visible: true,
           originType: 0,
+          level: 0,
         })
         .then(res => {
           let { data } = res;

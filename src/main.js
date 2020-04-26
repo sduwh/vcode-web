@@ -11,16 +11,23 @@ import 'common/stylus/index.styl';
 import VueHighlightJS from 'vue-highlightjs';
 import 'highlight.js/styles/vs.css';
 import cpp from 'highlight.js/lib/languages/cpp';
+import python from 'highlight.js/lib/languages/python';
+import java from 'highlight.js/lib/languages/java';
 import VueCodeMirror from 'vue-codemirror-lite';
+import 'codemirror/theme/eclipse.css';
 import VueFilterDateFormat from 'vue-filter-date-format';
-
+import enLocale from 'element-ui/lib/locale/lang/en';
+// TODO 检查并重构部分代码
+// TODO 重新设置codeMirror配置
 Vue.use(VueFilterDateFormat);
 Vue.config.productionTip = false;
-Vue.use(ElementUI);
+Vue.use(ElementUI, { enLocale });
 Vue.use(VueHighlightJS, {
   // Register only languages that you want
   languages: {
     cpp,
+    python,
+    java,
   },
 });
 Vue.use(VueCodeMirror);

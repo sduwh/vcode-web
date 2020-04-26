@@ -5,14 +5,12 @@
         <span>Action</span>
         <el-button style="float: right; padding: 3px 0" type="text">Reset</el-button>
       </div>
-      <!-- <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div> -->
-      <!-- difficulty, search, tags, mode[recommend, upgrade, challenge] -->
       <el-form label-width="70px" :label-position="labelPosition" size="small">
-        <el-form-item label="搜索">
-          <el-input v-model="search" placeholder="关键词"></el-input>
+        <el-form-item label="Search">
+          <el-input v-model="search" placeholder="Key Word"></el-input>
         </el-form-item>
-        <el-form-item label="难度">
-          <el-select v-model="level" placeholder="难度">
+        <el-form-item label="Difficulty">
+          <el-select v-model="level" placeholder="difficulty">
             <el-option
               v-for="(level, index) in actionInfo.difficulty"
               :key="index"
@@ -21,13 +19,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="模式">
-          <el-select v-model="mode" placeholder="模式">
-            <el-option v-for="(mode, index) in actionInfo.mode" :key="index" :label="mode" :value="mode"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="标签">
-          <el-switch v-model="label"></el-switch>
+        <el-form-item>
+          <el-button size="small" type="primary" @click="searchProblem">Search</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -40,11 +33,24 @@ export default {
   data() {
     return {
       search: '',
-      level: '',
-      mode: '',
-      label: '',
+      level: 'all',
       labelPosition: 'right',
     };
+  },
+  methods: {
+    searchProblem() {
+      const levelMap = {
+        all: 0,
+        low: 1,
+        mid: 2,
+        high: 3,
+      };
+      let actionData = {
+        search: this.search,
+        level: levelMap[this.level],
+      };
+      this.$emit('searchProblem', actionData);
+    },
   },
 };
 </script>

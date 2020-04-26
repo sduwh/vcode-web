@@ -3,7 +3,7 @@
     <CenterWrap :title="title">
       <template #table>
         <div class="edit-body">
-          <el-page-header @back="goBack" content="Reset Password"></el-page-header>
+          <el-page-header @back="goBack" content="Reset Password" title="Back"></el-page-header>
           <div class="edit-form">
             <el-form
               :model="ruleForm"
@@ -45,7 +45,7 @@ export default {
   data() {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('Please enter the password'));
       } else {
         if (this.ruleForm.checkPass !== '') {
           this.$refs.ruleForm.validateField('checkPass');
@@ -55,9 +55,9 @@ export default {
     };
     const validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请再次输入密码'));
+        callback(new Error('Please enter the password again'));
       } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'));
+        callback(new Error('Passwords don\'t match!'));
       } else {
         callback();
       }

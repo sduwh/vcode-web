@@ -1,8 +1,8 @@
 <template>
   <div id="user-center" class="user-center">
-    <CenterWrap :title="title">
+    <CenterWrap :title="title" class="center-wrap">
       <template #table>
-        <div class="body-card">
+        <div class="body-card" style="margin-top: 50px">
           <el-card class="info-card">
             <div class="info-card-item">
               <span class="info-card-title">Account</span>
@@ -86,11 +86,13 @@ export default {
 .user-center {
   box-sizing: border-box;
   padding: 0 50px 20px;
+  min-height: 400px;
 }
 
 .body-card {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .info-card {

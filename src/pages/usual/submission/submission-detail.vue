@@ -81,7 +81,6 @@ export default {
         })
         .then(res => {
           const { data } = res;
-          console.log(data);
           if (data.code === 1) {
             const submissionData = data.data;
             this.submissionDetailForm = submissionData.submission;

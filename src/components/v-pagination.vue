@@ -7,6 +7,7 @@
       :total="paginationInfo.total"
       :hide-on-single-page="paginationInfo.hide_on_single_page"
       :page-size="paginationInfo.page_size"
+      :current-page="paginationInfo.current_page"
       @current-change="handleCurrentChange"
     ></el-pagination>
   </div>

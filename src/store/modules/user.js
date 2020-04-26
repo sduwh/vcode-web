@@ -91,6 +91,9 @@ const mutations = {
     window.localStorage.setItem('permissions', user.permission);
   },
   setRole(state, user) {
+    if (user.role === undefined || user.role === null) {
+      user.role = 'user';
+    }
     state.role = user.role;
     window.localStorage.setItem('role', user.role);
   },
@@ -101,6 +104,7 @@ const mutations = {
     mutations.setAccount(state, '');
     mutations.setRole(state, { role: '' });
     mutations.setPermissions(state, { permission: '' });
+    mutations.setLoginStatus(state, false);
     window.localStorage.removeItem('nickname');
     window.localStorage.removeItem('email');
     window.localStorage.removeItem('token');
@@ -108,7 +112,6 @@ const mutations = {
     window.localStorage.removeItem('account');
     window.localStorage.removeItem('permissions');
     window.localStorage.removeItem('role');
-    mutations.setLoginStatus(state, false);
     window.localStorage.removeItem('isLogin');
   },
 };

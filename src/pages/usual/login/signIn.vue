@@ -3,7 +3,7 @@
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="login-form">
       <el-form-item><span class="login-title">Sign In</span></el-form-item>
       <el-form-item label="Account" prop="account">
-        <el-input type="text" v-model="ruleForm.account"></el-input>
+        <el-input type="text" v-model="ruleForm.account" maxlength="12"></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="pass">
         <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
@@ -77,6 +77,8 @@ export default {
               this.$store.commit('user/setToken', data.token);
               this.$store.commit('user/setRefreshToken', data.refreshToken);
               this.$store.commit('user/setLoginStatus', true);
+              this.$store.commit('user/setPermissions', data.user);
+              this.$store.commit('user/setRole', data.user);
               this.$router.push('/home');
             } else {
               this.$message.error(data.message);

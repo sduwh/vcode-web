@@ -3,7 +3,7 @@
     <CenterWrap :title="title">
       <template #table>
         <div class="edit-body">
-          <el-page-header @back="goBack" content="Edit Data"></el-page-header>
+          <el-page-header @back="goBack" content="Edit Data" title="Back"></el-page-header>
           <div class="edit-form">
             <el-form
               :model="ruleForm"
@@ -14,7 +14,7 @@
               class="edit-form-body"
             >
               <el-form-item label="昵称" prop="nickname">
-                <el-input type="text" v-model="ruleForm.nickname" autocomplete="off"></el-input>
+                <el-input type="text" v-model="ruleForm.nickname" maxlength="12" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="邮箱" prop="email">
                 <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>

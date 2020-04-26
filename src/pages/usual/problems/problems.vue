@@ -1,7 +1,7 @@
 <template>
   <div id="problems">
     <el-row type="flex" justify="sapce-around">
-      <el-col :sm="24" :md="24">
+      <el-col :sm="24" :md="18">
         <table-wrap :title="title" :paginationInfo="paginationInfo" @handleChangePage="getProblems($event, pageNum)">
           <template #mode>
             <div class="mode">
@@ -13,26 +13,26 @@
           </template>
         </table-wrap>
       </el-col>
-      <!-- <el-col :md="6" class="hidden-sm-and-down">
-        <p-action :actionInfo="actionInfo"></p-action>
-        <tags class="tags" :tagsInfo="tagsInfo"></tags>
-      </el-col> -->
+      <el-col :md="6" class="hidden-sm-and-down">
+        <p-action :actionInfo="actionInfo" @searchProblem="searchProblem"></p-action>
+        <!--        <tags class="tags" :tagsInfo="tagsInfo"></tags>-->
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
 import TableWrap from 'components/table-wrap';
-// import Tags from 'components/tags';
-// import PAction from 'pages/problems/p-action';
+import Tags from 'components/tags';
+import PAction from 'pages/usual/problems/p-action';
 import PTable from 'pages/usual/problems/p-table';
 import api from 'api/api';
 
 export default {
   components: {
     TableWrap,
-    // PAction,
-    // Tags,
+    PAction,
+    Tags,
     PTable,
   },
   created() {
@@ -49,8 +49,9 @@ export default {
       title: 'Problem List',
       actionInfo: {
         difficulty: ['all', 'low', 'mid', 'high'],
-        mode: ['recommend', 'upgrade', 'challenge'],
       },
+      level: 0,
+      search: '',
       tagsInfo: [],
       tableInfo: [],
       tableInfoCnt: 0,
@@ -72,10 +73,8 @@ export default {
       this.tableInfo = [];
       const len = tableInfo.length;
       for (let i = 0; i < len; i++) {
-        // eslint-disable-next-line prefer-object-spread
         const obj = Object.assign({}, tableInfo[i], {
           ac_rate:
-            // eslint-disable-next-line prefer-template
             (tableInfo[i].submissionNumber === 0
               ? '0.00'
               : (tableInfo[i].acceptedNumber / tableInfo[i].submissionNumber).toFixed(2)) + '%',
@@ -96,9 +95,10 @@ export default {
         .getProblems({
           page: pageNum,
           size: 10,
-          search: '',
+          search: this.search,
           visible: true,
           originType: 0,
+          level: this.level,
         })
         .then(res => {
           let { data } = res;
@@ -108,8 +108,14 @@ export default {
             this.solveTableInfo(data.problemList);
             this.initPaginationInfo();
             this.loadingStatus = false;
+            this.paginationInfo.current_page = pageNum;
           }
         });
+    },
+    searchProblem(searchData) {
+      this.level = searchData.level;
+      this.search = searchData.search;
+      this.getProblems(1);
     },
   },
 };
@@ -117,16 +123,20 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable.styl'
-  #problems
-    width 100%
-    .el-row
-      padding 0 20px
-      .el-col
-        padding 0 10px
-        .mode
-          display inline-block
-          margin-left 15px
-          vertical-align middle
-        .tags
-          margin-top 20px
+#problems
+  width 100%
+
+  .el-row
+    padding 0 20px
+
+    .el-col
+      padding 0 10px
+
+      .mode
+        display inline-block
+        margin-left 15px
+        vertical-align middle
+
+      .tags
+        margin-top 20px
 </style>

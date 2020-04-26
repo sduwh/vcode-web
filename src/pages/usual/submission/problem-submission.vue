@@ -13,12 +13,12 @@
       </el-table-column>
       <el-table-column label="执行用时" min-width="100">
         <template slot-scope="scope">
-          {{ scope.row.time !== undefined && scope.row.time.length > 0 ? scope.row.time : 'N/A' }}
+          {{ scope.row.time !== undefined && scope.row.time.length > 0 ? scope.row.time + "ms" : 'N/A' }}
         </template>
       </el-table-column>
       <el-table-column label="内存占用" min-width="100">
         <template slot-scope="scope">
-          {{ scope.row.memory !== undefined && scope.row.memory.length > 0 ? scope.row.memory : 'N/A' }}
+          {{ scope.row.memory !== undefined && scope.row.memory.length > 0 ? scope.row.memory + "KB" : 'N/A' }}
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="提交结果" min-width="120">
@@ -45,7 +45,6 @@ import { submitTagMap, submitStatusMap } from 'util/submitUtil';
 import SubmissionDetail from 'pages/usual/submission/submission-detail';
 
 export default {
-  // TODO 调整submission结果UI
   mounted() {
     this.timer = setInterval(this.getSubmissions, 1000);
   },

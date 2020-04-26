@@ -59,6 +59,7 @@
 
 <script>
 import SubmissionDetail from 'pages/usual/submission/submission-detail';
+import { submitStatusMap } from 'util/submitUtil';
 
 export default {
   props: {
@@ -85,16 +86,7 @@ export default {
       return row.time === '' ? '--' : `${row.time}ms`;
     },
     solveStatus(row) {
-      const map = {
-        '4': 'Unknown Error',
-        '6': 'Compile Error',
-        '1': 'Accept',
-        '0': 'Wrong Answer',
-        '2': 'Time Out',
-        '3': 'Memory Out',
-        '5': 'Padding',
-      };
-      return map[row.result];
+      return submitStatusMap(row.result);
     },
     statusTag(status) {
       switch (status) {
@@ -107,11 +99,13 @@ export default {
       }
     },
     solveMemory(memory) {
-      return memory === '' ? '--' : `${parseInt(memory / (1024 * 1024))}MB`;
+      return memory === '' ? '--' : memory + `KB`;
     },
     showSubmissionDetail(form) {
-      this.submissionHex = form.hex;
-      this.dialogVisible = true;
+      if (form.userAccount === this.$store.state.user.account) {
+        this.submissionHex = form.hex;
+        this.dialogVisible = true;
+      }
     },
   },
 };

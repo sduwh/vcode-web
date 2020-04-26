@@ -25,7 +25,7 @@
 
     <el-dialog title="User" :visible.sync="dialogFormVisible">
       <el-form :model="userForm">
-        <el-form-item label="Nickname" :label-width="formLabelWidth">
+        <el-form-item label="Nickname" :label-width="formLabelWidth" maxlength="12">
           <el-input v-model="userForm.nickname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Email" :label-width="formLabelWidth">
@@ -39,7 +39,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancle</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">
+        <el-button type="primary" @click="handleUserFormSave">
           Save
         </el-button>
       </div>

@@ -18,7 +18,7 @@
           </el-col>
           <el-col :span="16">
             <el-form-item label="Problem Title" prop="title" label-width="150px">
-              <el-input v-model="ruleForm.title" placeholder="Title" maxlength="20" show-word-limit></el-input>
+              <el-input v-model="ruleForm.title" placeholder="Title" maxlength="50" show-word-limit></el-input>
             </el-form-item>
           </el-col>
         </el-row>

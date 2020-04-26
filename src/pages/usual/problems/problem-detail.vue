@@ -13,7 +13,7 @@
 
 <script>
 import ShowProblem from 'pages/usual/problems/show-problem';
-import VEditor from 'pages/usual/problems/problem-editor';
+import VEditor from 'pages/usual/problems/problem-code-editor';
 
 export default {
   components: {

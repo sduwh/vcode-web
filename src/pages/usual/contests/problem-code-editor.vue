@@ -9,12 +9,12 @@
         </div>
       </div>
       <div class="e-panel">
-        <div class="virtual-header">virtual header</div>
         <div class="editor">
-          <codemirror v-model="code" ref="myEditor" :options="editorOption"></codemirror>
+          <code-editor :code.sync="code" :mode="labelValue"></code-editor>
         </div>
       </div>
     </div>
+
     <div class="footer">
       <div class="console-btn">
         <el-button size="mini" @click="changeIsConsoleShow">Console</el-button>
@@ -28,23 +28,23 @@
 </template>
 
 <script>
-import { codemirror } from 'vue-codemirror-lite';
 import { languageMap } from 'util/codeEditerUtil';
+import codeEditor from 'components/code-editor';
 import api from 'api/api';
-
-require('codemirror/mode/python/python');
-require('codemirror/mode/clike/clike');
-
-require('codemirror/addon/hint/show-hint.js');
-require('codemirror/addon/hint/show-hint.css');
 
 export default {
   components: {
-    codemirror,
+    codeEditor,
   },
-  mounted() {
-    this.editor.focus();
-    this.editor.setSize('auto', 'auto');
+  props: {
+    contestName: {
+      type: String,
+      required: true,
+    },
+    problemOriginId: {
+      type: String,
+      required: true,
+    },
   },
   beforeDestroy() {
     clearInterval(this.consoleInterval);
@@ -74,7 +74,7 @@ export default {
       code: '',
       submissionIdHex: '',
       consoleInterval: null,
-      consoleData: '',
+      consoleData: 'Judge Result Info',
     };
   },
   methods: {
@@ -83,13 +83,16 @@ export default {
     },
     handleSubmitClick() {
       // 如果代码为空，则不发起网络请求
-      if (this.editor.getValue().length === 0) {
-        this.$message({ message: '请输入代码', type: 'warning' });
+      if (this.code.length === 0) {
+        this.$message({ message: 'Please input the code', type: 'warning' });
+      } else if (this.code.length < 50) {
+        this.$message({ message: 'The length of code must be more than 50', type: 'warning' });
       } else {
         api
           .uploadSubmission({
-            problemOriginId: this.$route.params.id,
-            language: this.mapLanguage(this.editorOption.mode),
+            problemOriginId: this.problemOriginId,
+            contestName: this.contestName,
+            language: this.mapLanguage(this.labelValue),
             code: this.code,
           })
           .then(res => {
@@ -128,21 +131,6 @@ export default {
       return languageMap(this.language, mode);
     },
   },
-  computed: {
-    editor() {
-      return this.$refs.myEditor.editor;
-    },
-    editorOption() {
-      return {
-        mode: this.labelValue,
-        tabSize: 2,
-        lineNumbers: true,
-        lineWrapping: true,
-        viewportMargin: Infinity,
-        extraKeys: { 'Ctrl-Space': 'autocomplete' },
-      };
-    },
-  },
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -156,11 +144,10 @@ export default {
   .main
     position relative
     width 100%
-    height calc(100vh - 100px - 40px)
+    height 400px
     // background-color gray
 
     .e-tab
-      position absolute
       top 0
       left 0
       width 100%
@@ -173,39 +160,42 @@ export default {
         display inline-block
         padding 4px 10px 5px
 
-    .e-panel
-      width 100%
-      height 100%
-      scroll-y()
+.e-panel
+  width 100%
+  max-height calc(100% - 40px)
+  height calc(100% - 40px)
+  scroll-y()
 
-      .virtual-header
-        width 100%
-        height 39px
+  .editor
+    height 100%
 
-  .footer
-    position relative
+.footer
+  position relative
+  width 100%
+  height 40px
+  border-top 1px solid #e4e7ed
+  line-height 40px
+
+  .console-btn
+    display flex
+    align-items center
+    justify-content flex-end
+    margin-top 10px
+
+  .console-body
+    position absolute
     width 100%
-    height 40px
+    top -200px
+    left 0
+    min-height 200px
+    background-color #fff
     border-top 1px solid #e4e7ed
-    line-height 40px
 
-    .console-btn
-      display inline-block
-
-    .console-body
-      position absolute
-      width 100%
-      top -200px
-      left 0
-      min-height 200px
-      background-color #fff
-      border-top 1px solid #e4e7ed
-
-      .result
-        width 90%
-        height 170px
-        margin 15px auto
-        border 1px solid #e4e7ed
-        border-radius 5px
-        padding 0 10px
+    .result
+      width 90%
+      height 170px
+      margin 15px auto
+      border 1px solid #e4e7ed
+      border-radius 5px
+      padding 0 10px
 </style>

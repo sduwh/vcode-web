@@ -15,7 +15,7 @@
       @selection-change="handleSelectionChange"
       :data="
         tableData
-          .slice((currentPage - 1) * pagesize, currentPage * pagesize)
+          .slice((currentPage - 1) * pageSize, currentPage * pageSize)
           .filter(data => !search || data.nickname.toLowerCase().includes(search))
       "
       style="width: 100%"
@@ -42,7 +42,7 @@
         width="40%"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-size="pagesize"
+        :page-size="pageSize"
         :total="total"
         layout="prev, pager, next"
       >
@@ -52,7 +52,7 @@
     <el-dialog title="User" :visible.sync="dialogFormVisible">
       <el-form :model="userForm">
         <el-form-item label="Nickname" :label-width="formLabelWidth">
-          <el-input v-model="userForm.nickname" autocomplete="off"></el-input>
+          <el-input v-model="userForm.nickname" autocomplete="off" maxlength="12"></el-input>
         </el-form-item>
         <el-form-item label="Email" :label-width="formLabelWidth">
           <el-input v-model="userForm.email" autocomplete="off"></el-input>
@@ -111,13 +111,12 @@ export default {
       ],
       formLabelWidth: '120px',
       currentPage: 1,
-      pagesize: 10,
+      pageSize: 10,
       multipleSelection: [],
     };
   },
   methods: {
     handleCurrentChange(val) {
-      // Todo: 调用api获取User列表
       this.currentPage = val;
       this.getUsers(val);
     },
@@ -155,7 +154,7 @@ export default {
       api
         .getUsers({
           page: pageNum,
-          size: this.pagesize,
+          size: this.pageSize,
           search: this.search,
         })
         .then(res => {

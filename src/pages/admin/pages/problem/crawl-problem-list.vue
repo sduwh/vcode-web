@@ -71,7 +71,7 @@ export default {
     handleEdit(index) {
       this.$router.push({
         name: 'AdminProblemUpdate',
-        params: { problem: JSON.stringify(this.tableData[index]), backUrlName:"AdminProblemCrawl" },
+        params: { problem: JSON.stringify(this.tableData[index]), backUrlName: 'AdminProblemCrawl' },
       });
     },
     handleDelete(index) {
@@ -123,6 +123,7 @@ export default {
           search: this.search,
           visible: false,
           originType: 2,
+          level: 0,
         })
         .then(res => {
           let { data } = res;
