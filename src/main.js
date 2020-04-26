@@ -17,8 +17,8 @@ import VueCodeMirror from 'vue-codemirror-lite';
 import 'codemirror/theme/eclipse.css';
 import VueFilterDateFormat from 'vue-filter-date-format';
 import enLocale from 'element-ui/lib/locale/lang/en';
-// TODO 检查并重构部分代码
-// TODO 重新设置codeMirror配置
+
+
 Vue.use(VueFilterDateFormat);
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { enLocale });

@@ -229,15 +229,19 @@ import SubmissionDetail from 'pages/usual/submission/submission-detail';
 import { submitStatusMap, submitTagMap } from 'util/submitUtil';
 
 export default {
-  mounted() {
-    this.getContest();
-    this.getProblems();
-  },
   name: 'contest',
   components: {
     MarkdownPreview,
     problemEditor,
     SubmissionDetail,
+  },
+  mounted() {
+    this.getContest();
+    this.getProblems();
+    this.submissionTimer = setInterval(this.getSubmission, 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.submissionTimer);
   },
   data() {
     return {
@@ -258,6 +262,7 @@ export default {
       },
       submission: [],
       rank: [],
+      submissionTimer: null,
     };
   },
   methods: {
@@ -309,6 +314,9 @@ export default {
         });
     },
     getSubmission(pageNum) {
+      if (pageNum === undefined || pageNum === null) {
+        pageNum = this.paginationInfo.pageNum;
+      }
       api
         .getContestSubmission({
           contestTitle: this.$route.params.id,
