@@ -5,7 +5,7 @@
         <show-problem></show-problem>
       </el-col>
       <el-col :span="14">
-        <v-editor></v-editor>
+        <problem-code-editor :language="language"></problem-code-editor>
       </el-col>
     </el-row>
   </div>
@@ -13,12 +13,39 @@
 
 <script>
 import ShowProblem from 'pages/usual/problems/show-problem';
-import VEditor from 'pages/usual/problems/problem-code-editor';
+import ProblemCodeEditor from 'pages/usual/problems/problem-code-editor';
+import api from 'api/api';
+import { getLanguagesArray } from 'util/codeEditerUtil';
 
 export default {
   components: {
     ShowProblem,
-    VEditor,
+    ProblemCodeEditor,
+  },
+  mounted() {
+    this.getProblem();
+  },
+  data() {
+    return {
+      problem: Object,
+      language: [],
+    };
+  },
+  methods: {
+    getProblem() {
+      api
+        .getProblem({
+          originId: this.$route.params.id,
+        })
+        .then(res => {
+          let { data } = res;
+          if (data.code === 1) {
+            data = data.data;
+            this.problem = data;
+            this.language = getLanguagesArray(this.problem.choiceLanguages);
+          }
+        });
+    },
   },
 };
 </script>

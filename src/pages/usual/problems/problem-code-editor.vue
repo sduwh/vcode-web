@@ -32,6 +32,10 @@ import codeEditor from 'components/code-editor';
 import api from 'api/api';
 
 export default {
+  props: {
+    language: Array,
+    required: true,
+  },
   components: {
     codeEditor,
   },
@@ -41,24 +45,6 @@ export default {
   data() {
     return {
       labelValue: 'text/x-c++src',
-      language: [
-        {
-          label: 'C++',
-          value: 'text/x-c++src',
-        },
-        {
-          label: 'Java',
-          value: 'text/x-java',
-        },
-        {
-          label: 'Python3',
-          value: 'python',
-        },
-        {
-          label: 'C',
-          value: 'text/x-csrc',
-        },
-      ],
       isConsoleShow: false,
       code: '',
       submissionIdHex: '',

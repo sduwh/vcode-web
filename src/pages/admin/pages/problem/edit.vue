@@ -56,11 +56,13 @@
           </el-col> -->
           <el-col :span="16">
             <el-form-item label="Language" prop="language">
-              <el-checkbox-group v-model="ruleForm.languages">
-                <el-checkbox label="C" name="C"></el-checkbox>
-                <el-checkbox label="C++" name="C++"></el-checkbox>
-                <el-checkbox label="Python3" name="PYTHON3"></el-checkbox>
-                <el-checkbox label="Java" name="JAVA"></el-checkbox>
+              <el-checkbox-group v-model="ruleForm.choiceLanguages">
+                <el-checkbox
+                  v-for="(index, language) in ruleForm.languages"
+                  :key="index"
+                  :label="language"
+                  :name="language.toUpperCase()"
+                ></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-col>
@@ -231,6 +233,9 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    console.log(this.problem);
+  },
   data() {
     return {
       uploadUrl: testCaseUploadAPI,
@@ -250,7 +255,8 @@ export default {
         difficulty: 'Low',
         visible: true,
         // ShareSubmission: false,
-        languages: [],
+        languages: ['C', 'C++', 'JAVA', 'PYTHON3', 'GO'],
+        choiceLanguages: [],
         source: '',
         // type: 'ACM',
         // IOMode: 'Standard IO',

@@ -9,6 +9,12 @@ import { codemirror } from 'vue-codemirror-lite';
 
 require('codemirror/mode/python/python');
 require('codemirror/mode/clike/clike');
+require('codemirror/mode/go/go')
+
+require('codemirror/theme/eclipse.css')
+
+require('codemirror/addon/hint/show-hint.js')
+require('codemirror/addon/hint/show-hint.css')
 
 export default {
   props: {
@@ -44,7 +50,7 @@ export default {
       return {
         mode: this.mode,
         tabSize: 2,
-        theme: 'cm-s-eclipse',
+        theme: 'eclipse',
         lineNumbers: true,
         lineWrapping: true,
         viewportMargin: Infinity,

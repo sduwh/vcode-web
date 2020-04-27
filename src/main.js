@@ -14,7 +14,6 @@ import cpp from 'highlight.js/lib/languages/cpp';
 import python from 'highlight.js/lib/languages/python';
 import java from 'highlight.js/lib/languages/java';
 import VueCodeMirror from 'vue-codemirror-lite';
-import 'codemirror/theme/eclipse.css';
 import VueFilterDateFormat from 'vue-filter-date-format';
 import enLocale from 'element-ui/lib/locale/lang/en';
 

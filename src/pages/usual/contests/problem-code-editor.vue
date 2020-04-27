@@ -45,6 +45,10 @@ export default {
       type: String,
       required: true,
     },
+    language: {
+      type: Array,
+      required: true,
+    },
   },
   beforeDestroy() {
     clearInterval(this.consoleInterval);
@@ -52,24 +56,6 @@ export default {
   data() {
     return {
       labelValue: 'text/x-c++src',
-      language: [
-        {
-          label: 'C++',
-          value: 'text/x-c++src',
-        },
-        {
-          label: 'Java',
-          value: 'text/x-java',
-        },
-        {
-          label: 'Python3',
-          value: 'python',
-        },
-        {
-          label: 'C',
-          value: 'text/x-csrc',
-        },
-      ],
       isConsoleShow: false,
       code: '',
       submissionIdHex: '',

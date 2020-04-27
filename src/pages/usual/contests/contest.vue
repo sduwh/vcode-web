@@ -108,7 +108,7 @@
                     <div class="overview-title">Submit:</div>
                     <div class="editor">
                       <div class="editor-div">
-                        <problem-editor :contestName="overView.name" :problemOriginId="item.originId"></problem-editor>
+                        <problem-code-editor :language="mapLanguagesArray(item.choiceLanguages)" :contestName="overView.name" :problemOriginId="item.originId"></problem-code-editor>
                       </div>
                     </div>
                   </el-col>
@@ -224,15 +224,16 @@
 <script>
 import api from 'api/api';
 import { MarkdownPreview } from 'vue-meditor';
-import problemEditor from './problem-code-editor';
+import problemCodeEditor from './problem-code-editor';
 import SubmissionDetail from 'pages/usual/submission/submission-detail';
+import {getLanguagesArray} from 'util/codeEditerUtil'
 import { submitStatusMap, submitTagMap } from 'util/submitUtil';
 
 export default {
   name: 'contest',
   components: {
     MarkdownPreview,
-    problemEditor,
+    problemCodeEditor,
     SubmissionDetail,
   },
   mounted() {
@@ -266,6 +267,9 @@ export default {
     };
   },
   methods: {
+    mapLanguagesArray(languages) {
+      return getLanguagesArray(languages)
+    },
     showSubmissionDetail(form) {
       this.submissionHex = form.hex;
       this.dialogVisible = true;
