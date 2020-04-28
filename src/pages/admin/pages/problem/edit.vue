@@ -58,10 +58,10 @@
             <el-form-item label="Language" prop="language">
               <el-checkbox-group v-model="ruleForm.choiceLanguages">
                 <el-checkbox
-                  v-for="(index, language) in ruleForm.languages"
-                  :key="index"
+                  v-for="language in ruleForm.languages"
+                  :key="language"
                   :label="language"
-                  :name="language.toUpperCase()"
+                  :name="language"
                 ></el-checkbox>
               </el-checkbox-group>
             </el-form-item>

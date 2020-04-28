@@ -21,6 +21,7 @@ export default {
     updateProblem(params) {
       api.updateProblem(params).then(res => {
         if (res.data.code === 1) {
+          console.log(res);
           this.$message.success('update success');
           this.$router.push({
             name: this.$route.params.backUrlName === undefined ? 'AdminIndex' : this.$route.params.backUrlName,
