@@ -50,11 +50,14 @@ export default {
       }
     };
     const validateEmail = (rule, value, callback) => {
+      const res = /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/;
       if (value === '') {
         callback(new Error('请输入邮箱'));
+      } else if (!res.test(value)) {
+        callback(new Error('请输入正确的邮箱'));
       } else {
         callback();
-      }
+      } 
     };
     return {
       title: 'User Center',
