@@ -11,6 +11,9 @@
       <el-form-item label="Verify password" prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
       </el-form-item>
+      <el-form-item label="Email" prop="email">
+        <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">Sign In</el-button>
         <el-button @click="resetForm('ruleForm')">Reset</el-button>
@@ -47,16 +50,28 @@ export default {
         callback();
       }
     };
+    const vaildateEmail = (rule, value, callback) => {
+      const res = /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/;
+      if (value === '') {
+        callback(new Error('请输入邮箱'));
+      } else if (!res.test(value)) {
+        callback(new Error('请输入正确的邮箱'));
+      } else {
+        callback();
+      } 
+    }
     return {
       ruleForm: {
         pass: '',
         checkPass: '',
         account: '',
+        email: ''
       },
       rules: {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         account: [{ validator: validateAccount, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
+        email: [{ validator: vaildateEmail, trigger: 'blur' }]
       },
     };
   },
