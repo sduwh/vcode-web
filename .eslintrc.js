@@ -2,7 +2,7 @@ module.exports = {
   extends: [
     // add more generic rulesets here, such as:
     // 'eslint:recommended',
-    'airbnb-components', // airbnb lint规范
+    'airbnb-base', // airbnb lint规范
     'plugin:vue/essential', // eslint-plugin-vue
     'plugin:prettier/recommended', // eslint-config-prettier
   ],

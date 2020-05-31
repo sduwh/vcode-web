@@ -23,6 +23,7 @@
 </template>
 
 <script>
+// TODO 代码格式化以及 功能不全
 import api from 'api/api';
 
 export default {
@@ -58,20 +59,20 @@ export default {
         callback(new Error('请输入正确的邮箱'));
       } else {
         callback();
-      } 
-    }
+      }
+    };
     return {
       ruleForm: {
         pass: '',
         checkPass: '',
         account: '',
-        email: ''
+        email: '',
       },
       rules: {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         account: [{ validator: validateAccount, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-        email: [{ validator: vaildateEmail, trigger: 'blur' }]
+        email: [{ validator: vaildateEmail, trigger: 'blur' }],
       },
     };
   },
@@ -83,6 +84,7 @@ export default {
             account: this.ruleForm.account,
             password: this.ruleForm.pass,
             rePassword: this.ruleForm.checkPass,
+            email: this.ruleForm.email,
           };
           api.signIn(params).then(res => {
             let { data } = res;
