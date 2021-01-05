@@ -7,7 +7,7 @@
     "build": "vue-cli-service build --host 0.0.0.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.11",
     "element-ui": "^2.8.2",
     "highlight.js": "^9.18.1",
